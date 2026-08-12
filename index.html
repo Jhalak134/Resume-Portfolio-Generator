@@ -7,208 +7,271 @@
   <meta name="description" content="Upload your resume and let AI create a professional, beautiful portfolio that showcases your skills, experience and achievements." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ──────────────────────────────────────────
+  <!-- ══════════════════════════════════════════
        HEADER / NAV
-  ────────────────────────────────────────── -->
+  ══════════════════════════════════════════ -->
   <header class="header" id="top">
     <div class="container nav-container">
 
-      <!-- Logo -->
       <a href="#top" class="logo" id="logo-link">
         <span class="logo-icon" aria-hidden="true">
-          <!-- briefcase-style icon -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="7" width="20" height="14" rx="3" fill="#fff" fill-opacity=".25"/>
-            <rect x="2" y="7" width="20" height="14" rx="3" stroke="#fff" stroke-width="1.8"/>
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="7" width="20" height="14" rx="4" fill="#fff" fill-opacity=".22"/>
+            <rect x="2" y="7" width="20" height="14" rx="4" stroke="#fff" stroke-width="1.8"/>
             <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
             <path d="M12 12v4M10 14h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </span>
-        <span class="logo-text"><strong>Portfolio</strong>Builder</span>
+        <span class="logo-text"><strong>Portfolio</strong><em>Builder</em></span>
       </a>
 
-      <!-- Nav links -->
       <nav class="nav" aria-label="Main navigation">
         <ul class="nav-list" role="list">
           <li><a href="#features" class="nav-link" id="nav-features">Features</a></li>
           <li><a href="#templates" class="nav-link" id="nav-templates">Templates</a></li>
           <li><a href="#about" class="nav-link" id="nav-about">About Us</a></li>
+          <li><a href="#hero" class="nav-cta" id="nav-cta">
+            Generate Now
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a></li>
         </ul>
       </nav>
 
-      <!-- Mobile hamburger -->
       <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
 
-    <!-- Mobile menu -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
         <li><a href="#features" class="nav-link" id="mob-features">Features</a></li>
         <li><a href="#templates" class="nav-link" id="mob-templates">Templates</a></li>
         <li><a href="#about" class="nav-link" id="mob-about">About Us</a></li>
+        <li><a href="#hero" class="nav-link" id="mob-generate">Generate Now</a></li>
       </ul>
     </div>
   </header>
 
-  <!-- ──────────────────────────────────────────
-       HERO SECTION
-  ────────────────────────────────────────── -->
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
   <main>
     <section class="hero" id="hero">
-      <!-- Decorative blobs -->
-      <div class="blob blob-left" aria-hidden="true"></div>
-      <div class="blob blob-right" aria-hidden="true"></div>
-      <div class="dots dots-right" aria-hidden="true"></div>
+      <div class="container hero-inner">
 
-      <div class="container hero-container">
+        <!-- Left: copy + upload -->
+        <div class="hero-text">
+          <div class="hero-badge" id="hero-badge">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            AI-Powered · Resume → Portfolio
+          </div>
 
-        <!-- Badge -->
-        <div class="hero-badge" id="hero-badge">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2l2.09 6.26L21 9l-5.27 4.27L17.18 21 12 17.77 6.82 21l1.45-7.73L3 9l6.91-.74L12 2z" fill="#6C63FF"/>
-          </svg>
-          AI POWERED PORTFOLIO GENERATOR
-        </div>
+          <h1 class="hero-heading">
+            Your resume, reborn as a portfolio that <span class="italic-word">turns heads</span>
+          </h1>
 
-        <!-- Heading -->
-        <h1 class="hero-heading">
-          Turn Your Resume Into a<br />
-          <span class="highlight">Stunning Portfolio</span>
-        </h1>
+          <p class="hero-sub">
+            Upload your resume, pick a template, and let AI craft a polished portfolio that
+            <br class="br-desktop" />
+            showcases your skills, experience and achievements.
+          </p>
 
-        <!-- Sub-copy -->
-        <p class="hero-sub">
-          Upload your resume and let AI create a professional, beautiful portfolio<br class="br-desktop" />
-          that showcases your skills, experience and achievements.
-        </p>
+          <!-- Upload card -->
+          <div class="upload-card" id="upload-card">
+            <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Upload your resume — drag and drop or click to browse">
 
-        <!-- Upload card -->
-        <div class="upload-card" id="upload-card">
-          <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Upload your resume — drag and drop or click to browse">
+              <div class="upload-icon-wrap">
+                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 16V8M12 8l-3 3M12 8l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
 
-            <!-- Cloud icon -->
-            <div class="upload-icon-wrap">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 16V8M12 8l-3 3M12 8l3 3" stroke="#6C63FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" stroke="#6C63FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <p class="upload-title">Upload Your Resume</p>
+              <p class="upload-hint">Drag &amp; drop your file here or click to browse</p>
+
+              <input type="file" id="resume-file-input" accept=".pdf,.docx,.txt" class="file-input-hidden" aria-label="Choose resume file" />
+
+              <button class="btn-choose" id="choose-file-btn" type="button">
+                Choose File
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <p class="upload-meta">Supports PDF, DOCX, TXT &nbsp;•&nbsp; Max file size 10MB</p>
             </div>
 
-            <p class="upload-title">Upload Your Resume</p>
-            <p class="upload-hint">Drag &amp; drop your file here or click to browse</p>
+            <div class="drag-overlay" id="drag-overlay" aria-hidden="true">
+              <span>Drop your file here!</span>
+            </div>
+          </div>
 
-            <!-- Hidden real input -->
-            <input type="file" id="resume-file-input" accept=".pdf,.docx,.txt" class="file-input-hidden" aria-label="Choose resume file" />
+          <!-- File chosen indicator -->
+          <div class="file-chosen" id="file-chosen" aria-live="polite" hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 12l2 2 4-4" stroke="#0ea371" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="9" stroke="#0ea371" stroke-width="1.8"/>
+            </svg>
+            <span id="file-name-display">resume.pdf</span>
+            <button id="remove-file-btn" type="button" aria-label="Remove selected file">✕</button>
+          </div>
 
-            <button class="btn-choose" id="choose-file-btn" type="button">
-              Choose File
+          <p class="security-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#6f6b78" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-4" stroke="#6f6b78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Your data is secure and never stored.
+          </p>
+
+          <!-- Post-upload action panel -->
+          <div class="post-upload-panel" id="post-upload-panel" aria-live="polite" hidden>
+            <div class="pup-header">
+              <div class="pup-check">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <p class="pup-title">Resume ready!</p>
+                <p class="pup-sub" id="pup-filename">resume.pdf</p>
+              </div>
+            </div>
+
+            <div class="pup-template-row">
+              <span class="pup-label">Template:</span>
+              <div class="pup-tmpl-chips" id="pup-tmpl-chips">
+                <button class="pup-chip pup-chip-active" id="pup-chip-classic" data-template="template1.html" type="button">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2"/>
+                    <path d="M9 9h6M9 12h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                  Classic Pro
+                </button>
+                <span class="pup-chip pup-chip-disabled" title="Coming soon">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                  Modern
+                </span>
+                <span class="pup-chip pup-chip-disabled" title="Coming soon">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                  </svg>
+                  Creative
+                </span>
+              </div>
+            </div>
+
+            <button class="btn-generate-main" id="btn-generate-main" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+              Generate My Portfolio
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-
-            <p class="upload-meta">Supports PDF, DOCX, TXT &nbsp;•&nbsp; Max file size 10MB</p>
-          </div>
-
-          <!-- Drag overlay -->
-          <div class="drag-overlay" id="drag-overlay" aria-hidden="true">
-            <span>Drop your file here!</span>
+            <p class="pup-hint">Powered by AI · Takes only a few seconds</p>
           </div>
         </div>
 
-        <!-- File chosen indicator (hidden initially) -->
-        <div class="file-chosen" id="file-chosen" aria-live="polite" hidden>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M9 12l2 2 4-4" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="12" r="9" stroke="#22c55e" stroke-width="1.8"/>
-          </svg>
-          <span id="file-name-display">resume.pdf</span>
-          <button id="remove-file-btn" type="button" aria-label="Remove selected file">✕</button>
-        </div>
+        <!-- Right: live-output showcase -->
+        <div class="hero-showcase" aria-hidden="true">
+          <div class="showcase-stage" id="showcase-stage">
+            <div class="showcase-card" id="showcase-card">
+              <span class="sc-flag">Live Preview</span>
 
-        <!-- Security note -->
-        <p class="security-note">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#6b7280" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="M9 12l2 2 4-4" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Your data is secure and never stored.
-        </p>
+              <div class="sc-head">
+                <div class="sc-avatar">AS</div>
+                <div>
+                  <div class="sc-name">Aarav Sharma</div>
+                  <div class="sc-role">Software Developer</div>
+                </div>
+              </div>
 
-        <!-- ── Post-upload action panel (hidden until file selected) ── -->
-        <div class="post-upload-panel" id="post-upload-panel" aria-live="polite" hidden>
-          <div class="pup-header">
-            <div class="pup-check">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <div class="sc-pills">
+                <span class="sc-pill">Python</span>
+                <span class="sc-pill">JavaScript</span>
+                <span class="sc-pill">React</span>
+                <span class="sc-pill">Flask</span>
+                <span class="sc-pill">SQL</span>
+              </div>
+
+              <div class="sc-grid">
+                <div class="sc-tile">
+                  <div class="sc-tile-label">Experience</div>
+                  <div class="sc-tile-title">Full-Stack Developer</div>
+                  <div class="sc-tile-sub">TechNova · 2024 — Present</div>
+                  <div class="sc-tile-bar"><i style="width:84%"></i></div>
+                </div>
+                <div class="sc-tile">
+                  <div class="sc-tile-label">Education</div>
+                  <div class="sc-tile-title">B.Tech, Computer Science</div>
+                  <div class="sc-tile-sub">ABC University · 2022 — 2026</div>
+                  <div class="sc-tile-bar"><i style="width:72%"></i></div>
+                </div>
+                <div class="sc-tile">
+                  <div class="sc-tile-label">Projects</div>
+                  <div class="sc-tile-title">Task Manager App</div>
+                  <div class="sc-tile-sub">React · Node.js</div>
+                  <div class="sc-tile-bar"><i style="width:64%"></i></div>
+                </div>
+                <div class="sc-tile">
+                  <div class="sc-tile-label">Skills</div>
+                  <div class="sc-tile-title">12 skills detected</div>
+                  <div class="sc-tile-sub">parsed by AI</div>
+                  <div class="sc-tile-bar"><i style="width:90%"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="sc-chip sc-chip-1">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="#0ea371" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
+              AI parsed · 100% structured
             </div>
-            <div>
-              <p class="pup-title">Resume ready!</p>
-              <p class="pup-sub" id="pup-filename">resume.pdf</p>
-            </div>
-          </div>
-
-          <!-- Template picker (inline mini) -->
-          <div class="pup-template-row">
-            <span class="pup-label">Template:</span>
-            <div class="pup-tmpl-chips" id="pup-tmpl-chips">
-              <button class="pup-chip pup-chip-active" id="pup-chip-classic" data-template="template1.html" type="button">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2"/>
-                  <path d="M9 9h6M9 12h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-                Classic Pro
-              </button>
-              <span class="pup-chip pup-chip-disabled" title="Coming soon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
-                  <path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-                Modern
-              </span>
-              <span class="pup-chip pup-chip-disabled" title="Coming soon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                </svg>
-                Creative
-              </span>
+            <div class="sc-chip sc-chip-2">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="#f2a31a" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+              <span>Generated in <strong>6s</strong></span>
             </div>
           </div>
-
-          <!-- Big CTA -->
-          <button class="btn-generate-main" id="btn-generate-main" type="button">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-            Generate My Portfolio
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <p class="pup-hint">Powered by AI · Takes only a few seconds</p>
         </div>
 
       </div>
     </section>
 
-    <!-- ──────────────────────────────────────────
-         FEATURES ROW
-    ────────────────────────────────────────── -->
+    <!-- ══════════════════════════════════════════
+         MARQUEE
+    ══════════════════════════════════════════ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track" id="marquee-track">
+        <span>Your Resume <i>✦</i> AI Parses <i>✦</i> Portfolio, Live <i>✦</i> Pick a Template <i>✦</i> Privacy First <i>✦</i> One Click Away <i>✦</i></span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         FEATURES — bento
+    ══════════════════════════════════════════ -->
     <section class="features" id="features" aria-label="Key Features">
       <div class="container features-container">
 
         <div class="feature-item" id="feat-ai">
           <div class="feature-icon feat-yellow">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="#d97706" stroke-width="2" stroke-linejoin="round"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="feature-text">
@@ -217,13 +280,11 @@
           </div>
         </div>
 
-        <div class="feature-divider" aria-hidden="true"></div>
-
         <div class="feature-item" id="feat-design">
           <div class="feature-icon feat-purple">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="#6C63FF" stroke-width="1.8"/>
-              <path d="M12 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 18c0-2.2 2.7-4 6-4s6 1.8 6 4" stroke="#6C63FF" stroke-width="1.8" stroke-linecap="round"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M12 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 18c0-2.2 2.7-4 6-4s6 1.8 6 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="feature-text">
@@ -232,14 +293,12 @@
           </div>
         </div>
 
-        <div class="feature-divider" aria-hidden="true"></div>
-
         <div class="feature-item" id="feat-responsive">
           <div class="feature-icon feat-blue">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="2" y="3" width="14" height="11" rx="2" stroke="#3b82f6" stroke-width="1.8"/>
-              <rect x="16" y="8" width="6" height="8" rx="1.5" stroke="#3b82f6" stroke-width="1.8"/>
-              <path d="M7 14v3M5 17h4" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="3" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/>
+              <rect x="16" y="8" width="6" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M7 14v3M5 17h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="feature-text">
@@ -248,13 +307,11 @@
           </div>
         </div>
 
-        <div class="feature-divider" aria-hidden="true"></div>
-
         <div class="feature-item" id="feat-secure">
           <div class="feature-icon feat-indigo">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#6C63FF" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M9 12l2 2 4-4" stroke="#6C63FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="feature-text">
@@ -266,13 +323,42 @@
       </div>
     </section>
 
-    <!-- ──────────────────────────────────────────
-         TEMPLATES SECTION (placeholder, expandable)
-    ────────────────────────────────────────── -->
+    <!-- ══════════════════════════════════════════
+         HOW IT WORKS
+    ══════════════════════════════════════════ -->
+    <section class="steps" id="how-it-works" aria-label="How it works">
+      <div class="container">
+        <p class="section-label">How It Works</p>
+        <h2 class="section-heading">From PDF to portfolio in <em>three steps</em></h2>
+        <p class="section-sub">No design skills needed. Just upload, relax, and shine.</p>
+
+        <div class="steps-grid">
+          <div class="step-item reveal">
+            <div class="step-num">01</div>
+            <h3>Upload your resume</h3>
+            <p>Drag &amp; drop a PDF, DOCX, or TXT. Your file is read in your browser and never stored.</p>
+          </div>
+          <div class="step-item reveal">
+            <div class="step-num">02</div>
+            <h3>AI reads between the lines</h3>
+            <p>Gemini extracts your skills, experience, projects and achievements into clean structured data.</p>
+          </div>
+          <div class="step-item reveal">
+            <div class="step-num">03</div>
+            <h3>Your portfolio, live</h3>
+            <p>Pick a template and get a polished, shareable site in seconds — download it as a PDF too.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         TEMPLATES
+    ══════════════════════════════════════════ -->
     <section class="templates-section" id="templates" aria-label="Portfolio Templates">
       <div class="container">
-        <p class="section-label">PORTFOLIO TEMPLATES</p>
-        <h2 class="section-heading">Choose Your Style</h2>
+        <p class="section-label">Portfolio Templates</p>
+        <h2 class="section-heading">Choose your <em>style</em></h2>
         <p class="section-sub">Pick a template, upload your resume above, and generate your portfolio in seconds.</p>
 
         <div class="templates-grid">
@@ -284,22 +370,21 @@
                   <div class="tmpl-avatar"></div>
                   <div class="tmpl-line tmpl-line-sm"></div>
                   <div class="tmpl-line tmpl-line-xs"></div>
-                  <div class="tmpl-line tmpl-line-xs" style="margin-top:14px;"></div>
+                  <div class="tmpl-line tmpl-line-xs" style="margin-top:12px;"></div>
                   <div class="tmpl-line tmpl-line-xs"></div>
                 </div>
                 <div class="tmpl-content">
                   <div class="tmpl-line tmpl-line-lg"></div>
                   <div class="tmpl-line tmpl-line-md"></div>
-                  <div class="tmpl-line tmpl-line-sm" style="margin-top:14px;"></div>
+                  <div class="tmpl-line tmpl-line-sm" style="margin-top:12px;"></div>
                   <div class="tmpl-line tmpl-line-full"></div>
                   <div class="tmpl-line tmpl-line-full"></div>
                   <div class="tmpl-line tmpl-line-md"></div>
-                  <div class="tmpl-line tmpl-line-sm" style="margin-top:14px;"></div>
+                  <div class="tmpl-line tmpl-line-sm" style="margin-top:12px;"></div>
                   <div class="tmpl-line tmpl-line-full"></div>
                   <div class="tmpl-line tmpl-line-lg"></div>
                 </div>
               </div>
-              <!-- Hover overlay with Preview button -->
               <div class="tmpl-hover-overlay" aria-hidden="true">
                 <a href="template1.html" class="btn-preview-tmpl" id="btn-preview-classic" target="_blank">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -315,7 +400,6 @@
               <h3>Classic Professional</h3>
               <p>Clean, structured layout — perfect for all industries.</p>
             </div>
-            <!-- Selected tick -->
             <div class="tmpl-selected-tick" aria-hidden="true">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
@@ -323,14 +407,14 @@
 
           <div class="template-card coming-soon-card" id="template-modern" aria-label="Modern Minimal template — coming soon">
             <div class="template-preview preview-blur">
-              <div class="tmpl-bar" style="background:linear-gradient(90deg,#6C63FF,#a78bfa);"></div>
+              <div class="tmpl-bar" style="background:linear-gradient(90deg,#4f46e5,#8b5cf6);"></div>
               <div class="tmpl-body">
                 <div class="tmpl-content" style="width:100%">
                   <div class="tmpl-line tmpl-line-lg" style="height:18px;border-radius:9px;"></div>
-                  <div class="tmpl-line tmpl-line-md" style="height:10px;border-radius:5px;margin-top:10px;background:#e5e7eb;"></div>
-                  <div class="tmpl-line tmpl-line-full" style="height:8px;margin-top:16px;background:#f3f4f6;"></div>
-                  <div class="tmpl-line tmpl-line-full" style="height:8px;background:#f3f4f6;"></div>
-                  <div class="tmpl-line tmpl-line-sm" style="height:8px;background:#f3f4f6;"></div>
+                  <div class="tmpl-line tmpl-line-md" style="height:10px;border-radius:5px;margin-top:10px;background:#e5e2d8;"></div>
+                  <div class="tmpl-line tmpl-line-full" style="height:8px;margin-top:16px;background:#efece4;"></div>
+                  <div class="tmpl-line tmpl-line-full" style="height:8px;background:#efece4;"></div>
+                  <div class="tmpl-line tmpl-line-sm" style="height:8px;background:#efece4;"></div>
                 </div>
               </div>
             </div>
@@ -346,19 +430,19 @@
 
           <div class="template-card coming-soon-card" id="template-creative" aria-label="Creative Portfolio template — coming soon">
             <div class="template-preview preview-blur">
-              <div class="tmpl-bar" style="background:linear-gradient(90deg,#ec4899,#f97316);"></div>
+              <div class="tmpl-bar" style="background:linear-gradient(90deg,#ff5a36,#f2a31a);"></div>
               <div class="tmpl-body">
                 <div class="tmpl-content" style="width:100%">
                   <div style="display:flex;gap:8px;margin-bottom:10px;">
-                    <div style="width:40px;height:40px;border-radius:50%;background:#fce7f3;flex-shrink:0;"></div>
+                    <div style="width:40px;height:40px;border-radius:50%;background:#ffe7df;flex-shrink:0;"></div>
                     <div style="flex:1;">
-                      <div class="tmpl-line" style="height:10px;width:70%;background:#fbcfe8;border-radius:5px;"></div>
-                      <div class="tmpl-line" style="height:8px;width:50%;background:#fce7f3;border-radius:4px;margin-top:6px;"></div>
+                      <div class="tmpl-line" style="height:10px;width:70%;background:#ffd6c9;border-radius:5px;"></div>
+                      <div class="tmpl-line" style="height:8px;width:50%;background:#ffe7df;border-radius:4px;margin-top:6px;"></div>
                     </div>
                   </div>
-                  <div class="tmpl-line tmpl-line-full" style="height:8px;background:#f3f4f6;"></div>
-                  <div class="tmpl-line tmpl-line-full" style="height:8px;background:#f3f4f6;"></div>
-                  <div class="tmpl-line tmpl-line-sm" style="height:8px;background:#f3f4f6;"></div>
+                  <div class="tmpl-line tmpl-line-full" style="height:8px;background:#efece4;"></div>
+                  <div class="tmpl-line tmpl-line-full" style="height:8px;background:#efece4;"></div>
+                  <div class="tmpl-line tmpl-line-sm" style="height:8px;background:#efece4;"></div>
                 </div>
               </div>
             </div>
@@ -373,10 +457,9 @@
           </div>
         </div>
 
-        <!-- ── Generate Portfolio CTA Banner ── -->
+        <!-- Generate Portfolio CTA banner -->
         <div class="generate-cta" id="generate-cta" aria-live="polite">
           <div class="generate-cta-inner">
-            <!-- Step indicators -->
             <div class="generate-steps">
               <div class="gen-step" id="gen-step-file">
                 <div class="gen-step-icon">
@@ -408,7 +491,6 @@
               </div>
             </div>
 
-            <!-- Action button -->
             <a href="template1.html" class="btn-generate" id="btn-generate-portfolio">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
@@ -425,29 +507,29 @@
       </div>
     </section>
 
-    <!-- ──────────────────────────────────────────
-         ABOUT US SECTION
-    ────────────────────────────────────────── -->
+    <!-- ══════════════════════════════════════════
+         ABOUT
+    ══════════════════════════════════════════ -->
     <section class="about-section" id="about" aria-label="About Us">
       <div class="container about-container">
         <div class="about-text">
-          <p class="section-label">ABOUT US</p>
-          <h2 class="section-heading" style="text-align:left;">We Believe Every <br/><span class="highlight">Talent Deserves</span> a Stage</h2>
+          <p class="section-label">About Us</p>
+          <h2 class="about-heading">We believe every <em>talent</em> deserves a stage</h2>
           <p class="about-body">
             PortfolioBuilder was built with one goal: make professional portfolios accessible to everyone.
             No design skills needed. Just upload your resume and let AI do the heavy lifting.
           </p>
           <ul class="about-list" role="list">
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#6C63FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#6C63FF" stroke-width="1.8"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4f46e5" stroke-width="1.8"/></svg>
               Built with privacy-first architecture
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#6C63FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#6C63FF" stroke-width="1.8"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4f46e5" stroke-width="1.8"/></svg>
               Designed by engineers &amp; designers
             </li>
             <li>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#6C63FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#6C63FF" stroke-width="1.8"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4f46e5" stroke-width="1.8"/></svg>
               Free to generate your first portfolio
             </li>
           </ul>
@@ -475,22 +557,22 @@
 
   </main>
 
-  <!-- ──────────────────────────────────────────
+  <!-- ══════════════════════════════════════════
        FOOTER
-  ────────────────────────────────────────── -->
+  ══════════════════════════════════════════ -->
   <footer class="footer" id="footer">
     <div class="container footer-container">
       <div class="footer-brand">
         <a href="#top" class="logo footer-logo" id="footer-logo">
           <span class="logo-icon logo-icon-dark">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="2" y="7" width="20" height="14" rx="3" fill="#6C63FF" fill-opacity=".15"/>
-              <rect x="2" y="7" width="20" height="14" rx="3" stroke="#6C63FF" stroke-width="1.8"/>
-              <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="#6C63FF" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M12 12v4M10 14h4" stroke="#6C63FF" stroke-width="1.6" stroke-linecap="round"/>
+              <rect x="2" y="7" width="20" height="14" rx="4" fill="#fff" fill-opacity=".22"/>
+              <rect x="2" y="7" width="20" height="14" rx="4" stroke="#fff" stroke-width="1.8"/>
+              <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M12 12v4M10 14h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
           </span>
-          <span class="logo-text logo-text-dark"><strong>Portfolio</strong>Builder</span>
+          <span class="logo-text logo-text-dark"><strong>Portfolio</strong><em>Builder</em></span>
         </a>
         <p>Turn your resume into a stunning portfolio in seconds.</p>
       </div>

@@ -401,7 +401,7 @@ spinStyle.textContent = `@keyframes spin{to{transform:rotate(360deg)}} .spin{ani
 document.head.appendChild(spinStyle);
 
 // ─── Scroll Reveal ────────────────────────────────────────
-const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta');
+const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta,.step-item');
 revealEls.forEach(el => el.classList.add('reveal'));
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
@@ -425,3 +425,35 @@ const navObserver = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '-40% 0px -55% 0px' });
 sections.forEach(s => navObserver.observe(s));
+
+// ─── Marquee: duplicate track for seamless loop ─────────────
+const marqueeTrack = document.getElementById('marquee-track');
+if (marqueeTrack) {
+  marqueeTrack.innerHTML += marqueeTrack.innerHTML;
+}
+
+// ─── Header: shadow on scroll ───────────────────────────────
+const pageHeader = document.querySelector('.header');
+if (pageHeader) {
+  const onScroll = () => pageHeader.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+// ─── Hero showcase: gentle mouse parallax (desktop only) ────
+const showcaseStage = document.getElementById('showcase-stage');
+const showcaseCard = document.getElementById('showcase-card');
+if (showcaseStage && showcaseCard && window.matchMedia('(min-width: 1000px)').matches) {
+  const hero = document.getElementById('hero');
+  hero?.addEventListener('mousemove', (e) => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    showcaseCard.style.transition = 'transform .12s linear';
+    showcaseCard.style.transform = `rotate(${2.5 - x * 4}deg) translateY(${y * -12}px)`;
+  });
+  hero?.addEventListener('mouseleave', () => {
+    showcaseCard.style.transition = '';
+    showcaseCard.style.transform = 'rotate(2.5deg)';
+  });
+}
