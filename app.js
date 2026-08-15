@@ -150,6 +150,11 @@ generateMainBtn?.addEventListener('click', async () => {
   } catch (err) {
     console.error('Portfolio generation error:', err);
     showNotification('❌ Generation failed. Using template with sample data.', 'error');
+    // Clear any portfolioData left over from a PREVIOUS successful generation —
+    // otherwise the template would silently show that old resume's data here
+    // while this message claims it's showing sample/default data.
+    localStorage.removeItem('portfolioData');
+    localStorage.removeItem('portfolioTemplate');
     // Fallback: open template anyway with sample data
     setTimeout(() => { window.location.href = selectedTemplate; }, 1200);
   } finally {
