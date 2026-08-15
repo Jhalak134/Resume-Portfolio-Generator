@@ -328,11 +328,12 @@ function detectExperience(text) {
   if (!expSection) return [{ role: 'Job Title', company: 'Company Name', duration: 'Year – Year', bullets: ['Key responsibility.'] }];
   const lines = expSection[1].split('\n').map(l => l.trim()).filter(Boolean);
   // Very basic: take first few lines as job title / company
+  const bullets = lines.slice(2, 5).filter(l => l.length > 10).map(l => l.replace(/^[•\-*]\s*/, ''));
   return [{
     role: lines[0] || 'Job Title',
     company: lines[1] || 'Company Name',
     duration: detectYear(expSection[1]) || 'Year – Year',
-    bullets: lines.slice(2, 5).filter(l => l.length > 10).map(l => l.replace(/^[•\-*]\s*/, '')) || ['Key responsibility.']
+    bullets: bullets.length ? bullets : ['Key responsibility.']
   }];
 }
 
