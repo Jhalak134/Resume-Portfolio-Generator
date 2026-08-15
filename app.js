@@ -342,9 +342,15 @@ function detectProjects(text) {
   if (!projSection) return [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
   const lines = projSection[1].split('\n').map(l => l.trim()).filter(l => l.length > 3);
   const projects = [];
-  for (let i = 0; i < Math.min(lines.length, 6) && projects.length < 3; i++) {
+  const limit = Math.min(lines.length, 6);
+  let i = 0;
+  while (i < limit && projects.length < 3) {
     if (lines[i].length > 3 && lines[i].length < 60) {
-      projects.push({ name: lines[i], tech: lines[i+1] || 'Tech Stack', github: '#', demo: '#' });
+      const tech = lines[i + 1] || 'Tech Stack';
+      projects.push({ name: lines[i], tech, github: '#', demo: '#' });
+      i += 2; // skip the line we just used as "tech" so it isn't reused as the next project's name
+    } else {
+      i += 1;
     }
   }
   return projects.length ? projects : [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
