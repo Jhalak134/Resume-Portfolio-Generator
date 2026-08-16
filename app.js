@@ -7,12 +7,14 @@ let selectedTemplate = 'template1.html';
 // ─── Hamburger / Mobile Menu ──────────────────────────────
 const hamburger  = document.getElementById('hamburger-btn');
 const mobileMenu = document.getElementById('mobile-menu');
+const siteHeader = document.getElementById('top');
 
 hamburger?.addEventListener('click', () => {
   const isOpen = mobileMenu.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
   mobileMenu.setAttribute('aria-hidden', !isOpen);
+  siteHeader?.classList.toggle('menu-open', isOpen);
 });
 mobileMenu?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
@@ -20,6 +22,7 @@ mobileMenu?.querySelectorAll('a').forEach(link => {
     hamburger?.classList.remove('open');
     hamburger?.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
+    siteHeader?.classList.remove('menu-open');
   });
 });
 
