@@ -29,10 +29,10 @@
 
       <nav class="nav" aria-label="Main navigation">
         <ul class="nav-list" role="list">
+          <li><a href="how-it-works.html" class="nav-link" id="nav-how-it-works">How It Works</a></li>
           <li><a href="features.html" class="nav-link" id="nav-features">Features</a></li>
           <li><a href="templates.html" class="nav-link nav-active" id="nav-templates">Templates</a></li>
-          <li><a href="about.html" class="nav-link" id="nav-about">About Us</a></li>
-          <li><a href="/index.html#hero" class="nav-cta" id="nav-cta">
+          <li><a href="/index.html" class="nav-cta" id="nav-cta">
             Generate Now
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -48,18 +48,17 @@
 
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
+        <li><a href="how-it-works.html" class="nav-link" id="mob-how-it-works">How It Works</a></li>
         <li><a href="features.html" class="nav-link" id="mob-features">Features</a></li>
         <li><a href="templates.html" class="nav-link nav-active" id="mob-templates">Templates</a></li>
-        <li><a href="about.html" class="nav-link" id="mob-about">About Us</a></li>
         <li><a href="index.html#hero" class="nav-link" id="mob-generate">Generate Now</a></li>
       </ul>
     </div>
   </header>
 
   <main>
-    <section class="templates-section" id="templates" aria-label="Portfolio Templates">
+    <section class="templates-section section" id="templates" aria-label="Portfolio Templates">
       <div class="container">
-        <p class="section-label">Portfolio Templates</p>
         <h2 class="section-heading">Choose your <em>style</em></h2>
         <p class="section-sub">Pick a template, upload your resume above, and generate your portfolio in seconds.</p>
 
@@ -159,53 +158,18 @@
           </div>
         </div>
 
-        <!-- Generate Portfolio CTA banner -->
-        <div class="generate-cta" id="generate-cta" aria-live="polite">
-          <div class="generate-cta-inner">
-            <div class="generate-steps">
-              <div class="gen-step" id="gen-step-file">
-                <div class="gen-step-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                    <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                <span>Resume Uploaded</span>
-              </div>
-              <div class="gen-step-arrow">→</div>
-              <div class="gen-step gen-step-done" id="gen-step-template">
-                <div class="gen-step-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/>
-                    <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                <span>Template Selected</span>
-              </div>
-              <div class="gen-step-arrow">→</div>
-              <div class="gen-step" id="gen-step-generate">
-                <div class="gen-step-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                <span>Generate Portfolio</span>
-              </div>
-            </div>
-
-            <a href="template1.html" class="btn-generate" id="btn-generate-portfolio">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M13 2L4.09 12.26 12 12l-1 10L21 11.74 13 12l1-10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-              Generate My Portfolio
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-          <p class="generate-hint" id="generate-hint">Upload your resume on the <a href="/index.html#hero">home page</a> to unlock portfolio generation</p>
-        </div>
-
+      </div>
+    </section>
+    <section class="final-cta" aria-label="Get started">
+      <div class="container">
+        <h2 class="final-cta-heading">Ready to turn heads with <em>your</em> story?</h2>
+        <p class="final-cta-sub">Free to generate your first portfolio. No sign-up required.</p>
+        <a href="/index.html" class="final-cta-btn">
+          Generate My Portfolio
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
     </section>
   </main>
@@ -231,7 +195,7 @@
         <ul role="list">
           <li><a href="features.html" id="footer-features">Features</a></li>
           <li><a href="templates.html" id="footer-templates">Templates</a></li>
-          <li><a href="about.html" id="footer-about">About Us</a></li>
+          <li><a href="how-it-works.html" id="footer-how-it-works">How It Works</a></li>
         </ul>
       </div>
       <div class="footer-links">

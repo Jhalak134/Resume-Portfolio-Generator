@@ -29,9 +29,9 @@
 
       <nav class="nav" aria-label="Main navigation">
         <ul class="nav-list" role="list">
+          <li><a href="/sitepages/how-it-works.html" class="nav-link" id="nav-how-it-works">How It Works</a></li>
           <li><a href="/sitepages/features.html" class="nav-link" id="nav-features">Features</a></li>
           <li><a href="/sitepages/templates.html" class="nav-link" id="nav-templates">Templates</a></li>
-          <li><a href="/sitepages/about.html" class="nav-link" id="nav-about">About Us</a></li>
           <li><a href="/index.html" class="nav-cta" id="nav-cta">
             Generate Now
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -48,9 +48,9 @@
 
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
+        <li><a href="/sitepages/how-it-works.html" class="nav-link" id="mob-how-it-works">How It Works</a></li>
         <li><a href="/sitepages/features.html" class="nav-link" id="mob-features">Features</a></li>
         <li><a href="/sitepages/templates.html" class="nav-link" id="mob-templates">Templates</a></li>
-        <li><a href="/sitepages/about.html" class="nav-link" id="mob-about">About Us</a></li>
         <li><a href="index.html#hero" class="nav-link" id="mob-generate">Generate Now</a></li>
       </ul>
     </div>
@@ -77,7 +77,7 @@
         <div class="hero-upload">
           <!-- Upload card -->
           <div class="upload-card" id="upload-card">
-            <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Upload your resume — drag and drop or click to browse">
+            <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Upload your resume - drag and drop or click to browse">
 
               <div class="upload-icon-wrap">
                 <svg width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -178,21 +178,51 @@
         </div>
       </div>
     </section>
-
-
-    <!-- Final CTA -->
-    <section class="final-cta" aria-label="Get started">
-      <div class="container">
-        <h2 class="final-cta-heading">Ready to turn heads with <em>your</em> story?</h2>
-        <p class="final-cta-sub">Free to generate your first portfolio. No sign-up required.</p>
-        <a href="#hero" class="final-cta-btn">
-          Generate My Portfolio
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+    <section class="about-section" id="why-it-works" aria-label="Why it works">
+      <div class="container about-container">
+        <div class="about-text">
+          <h2 class="about-heading">Built to get you <em>real results</em>, fast</h2>
+          <p class="about-body">
+            Every step runs in seconds, not hours. There's no template to wrestle with and no design
+            decisions to agonize over - the AI does the layout, the copy, and the structure so your
+            portfolio is ready to share the same day you upload your resume.
+          </p>
+          <ul class="about-list" role="list">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4f46e5" stroke-width="1.8"/></svg>
+              Structured output via a Pydantic schema - not regex guesswork
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4f46e5" stroke-width="1.8"/></svg>
+              Falls back to client-side parsing if the API's ever down
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4f46e5" stroke-width="1.8"/></svg>
+              Free to generate your first portfolio
+            </li>
+          </ul>
+        </div>
+        <div class="about-stats">
+          <div class="stat-card" id="stat-resumes">
+            <span class="stat-number stat-number-sm">PDF · DOCX · TXT</span>
+            <span class="stat-label">Upload Formats</span>
+          </div>
+          <div class="stat-card" id="stat-portfolios">
+            <span class="stat-number">&lt;10s</span>
+            <span class="stat-label">Resume to Live Portfolio</span>
+          </div>
+          <div class="stat-card" id="stat-rating">
+            <span class="stat-number stat-number-sm">Pydantic</span>
+            <span class="stat-label">Schema-Validated Output</span>
+          </div>
+          <div class="stat-card" id="stat-uptime">
+            <span class="stat-number">0</span>
+            <span class="stat-label">Resumes Stored Server-Side</span>
+          </div>
+        </div>
       </div>
     </section>
+
   </main>
 
   <footer class="footer" id="footer">
@@ -216,7 +246,7 @@
         <ul role="list">
           <li><a href="/sitepages/features.html" id="footer-features">Features</a></li>
           <li><a href="/sitepages/templates.html" id="footer-templates">Templates</a></li>
-          <li><a href="/sitepages/about.html" id="footer-about">About Us</a></li>
+          <li><a href="/sitepages/how-it-works.html" id="footer-how-it-works">How It Works</a></li>
         </ul>
       </div>
       <div class="footer-links">

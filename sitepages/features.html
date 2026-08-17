@@ -29,10 +29,10 @@
 
       <nav class="nav" aria-label="Main navigation">
         <ul class="nav-list" role="list">
+          <li><a href="how-it-works.html" class="nav-link" id="nav-how-it-works">How It Works</a></li>
           <li><a href="features.html" class="nav-link nav-active" id="nav-features">Features</a></li>
           <li><a href="templates.html" class="nav-link" id="nav-templates">Templates</a></li>
-          <li><a href="about.html" class="nav-link" id="nav-about">About Us</a></li>
-          <li><a href="/index.html#hero" class="nav-cta" id="nav-cta">
+          <li><a href="/index.html" class="nav-cta" id="nav-cta">
             Generate Now
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -48,17 +48,24 @@
 
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
+        <li><a href="how-it-works.html" class="nav-link" id="mob-how-it-works">How It Works</a></li>
         <li><a href="features.html" class="nav-link nav-active" id="mob-features">Features</a></li>
         <li><a href="templates.html" class="nav-link" id="mob-templates">Templates</a></li>
-        <li><a href="about.html" class="nav-link" id="mob-about">About Us</a></li>
         <li><a href="index.html#hero" class="nav-link" id="mob-generate">Generate Now</a></li>
       </ul>
     </div>
   </header>
 
   <main>
-    <section class="features" id="features" aria-label="Key Features">
-      <div class="container features-container">
+    <section class="features section" id="features" aria-label="Key Features">
+      <div class="container">
+        <div class="features-layout">
+          <div class="features-intro">
+            <h2 class="section-heading">Everything you need for a <em>standout portfolio</em></h2>
+            <p class="section-sub">From AI extraction to responsive templates - here's what's under the hood.</p>
+          </div>
+
+          <div class="features-container">
 
         <div class="feature-item" id="feat-ai">
           <div class="feature-icon feat-yellow">
@@ -112,34 +119,79 @@
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <section class="steps" id="how-it-works" aria-label="How it works">
-      <div class="container">
-        <p class="section-label">How It Works</p>
-        <h2 class="section-heading">From PDF to portfolio in <em>three steps</em></h2>
-        <p class="section-sub">No design skills needed. Just upload, relax, and shine.</p>
-
-        <div class="steps-grid">
-          <div class="step-item reveal">
-            <div class="step-num">01</div>
-            <h3>Upload your resume</h3>
-            <p>Drag &amp; drop a PDF, DOCX, or TXT. Your file is read in your browser and never stored.</p>
-          </div>
-          <div class="step-item reveal">
-            <div class="step-num">02</div>
-            <h3>AI reads between the lines</h3>
-            <p>Gemini extracts your skills, experience, projects and achievements into clean structured data.</p>
-          </div>
-          <div class="step-item reveal">
-            <div class="step-num">03</div>
-            <h3>Your portfolio, live</h3>
-            <p>Pick a template and get a polished, shareable site in seconds — download it as a PDF too.</p>
           </div>
         </div>
       </div>
     </section>
+
+    <section class="tips" id="tips" aria-label="Tips for best results">
+      <div class="container">
+        <h2 class="section-heading">Get a <em>cleaner result</em> from your resume</h2>
+        <p class="section-sub">The AI does the heavy lifting, but a bit of structure on your end goes a long way.</p>
+
+        <div class="tips-container">
+
+          <div class="tip-item" id="tip-headers">
+            <button class="tip-toggle" aria-expanded="false">
+              <span class="tip-num">01</span>
+              <span class="tip-title">Use clear section headers</span>
+              <span class="tip-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="tip-panel">
+              <p>Label sections plainly - "Experience," "Education," "Projects," "Skills." The parser looks for these to know where one section ends and the next begins.</p>
+            </div>
+          </div>
+
+          <div class="tip-item" id="tip-numbering">
+            <button class="tip-toggle" aria-expanded="false">
+              <span class="tip-num">02</span>
+              <span class="tip-title">List one item per bullet or number</span>
+              <span class="tip-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="tip-panel">
+              <p>Numbered or bulleted projects and roles parse most reliably. Avoid cramming two projects into a single paragraph.</p>
+            </div>
+          </div>
+
+          <div class="tip-item" id="tip-links">
+            <button class="tip-toggle" aria-expanded="false">
+              <span class="tip-num">03</span>
+              <span class="tip-title">Include your links</span>
+              <span class="tip-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="tip-panel">
+              <p>Add your LinkedIn and GitHub URLs directly in the resume header - they're pulled straight into your portfolio's contact section.</p>
+            </div>
+          </div>
+
+          <div class="tip-item" id="tip-bullets">
+            <button class="tip-toggle" aria-expanded="false">
+              <span class="tip-num">04</span>
+              <span class="tip-title">Keep bullets short and concrete</span>
+              <span class="tip-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="tip-panel">
+              <p>Short, specific achievement lines ("Reduced load time by 40%") translate into portfolio bullets far better than long narrative paragraphs.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section class="final-cta" aria-label="Get started">
+      <div class="container">
+        <h2 class="final-cta-heading">Ready to turn heads with <em>your</em> story?</h2>
+        <p class="final-cta-sub">Free to generate your first portfolio. No sign-up required.</p>
+        <a href="/index.html" class="final-cta-btn">
+          Generate My Portfolio
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    
   </main>
 
   <footer class="footer" id="footer">
@@ -163,7 +215,7 @@
         <ul role="list">
           <li><a href="features.html" id="footer-features">Features</a></li>
           <li><a href="templates.html" id="footer-templates">Templates</a></li>
-          <li><a href="about.html" id="footer-about">About Us</a></li>
+          <li><a href="how-it-works.html" id="footer-how-it-works">How It Works</a></li>
         </ul>
       </div>
       <div class="footer-links">

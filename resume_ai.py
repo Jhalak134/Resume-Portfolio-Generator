@@ -40,7 +40,7 @@ def read_resume(filepath: str) -> str:
 def extract_text_from_bytes(filename: str, data: bytes) -> str:
     """Extract plain text from an uploaded file's raw bytes.
 
-    Supports .txt, .pdf, and .docx — this is what backs the
+    Supports .txt, .pdf, and .docx - this is what backs the
     /api/parse-resume endpoint so PDF/DOCX uploads actually work
     instead of silently failing in the browser.
     """
@@ -135,24 +135,24 @@ class ResumeData(BaseModel):
 # A single worked example is included directly in the prompt because the
 # model was previously chopping numbered/comma-separated resume lines
 # (e.g. "1. Student Management System: manage records, attendance and
-# grades. 2. Personal Portfolio Website") into the wrong fields —
+# grades. 2. Personal Portfolio Website") into the wrong fields -
 # splitting mid-sentence at commas/periods and scattering fragments
 # across separate project or education entries. The example below shows
 # exactly how a numbered list and a multi-line education block should
 # collapse into clean, complete entries.
 PROMPT_TEMPLATE = """You are a resume parser. Convert the resume text below into a JSON object matching the given schema. Do not invent, assume, or add any information that is not explicitly present in the resume text. If a field has no information, use an empty string "" or empty list [].
 
-CRITICAL RULES — read carefully, these have caused mistakes before:
+CRITICAL RULES - read carefully, these have caused mistakes before:
 1. Each numbered or bulleted item (e.g. "1.", "2)", "-") in a "Projects" or "Education" section is exactly ONE entry. Never split a single numbered item into multiple entries, and never let text from one numbered item leak into the previous or next entry.
 2. Never split an entry's text at a comma or period unless the resume itself starts a genuinely new item there (e.g. a new number, a new bullet, or a blank line). "Developed a tool to manage records, attendance and grades." is ONE description, not three.
-3. Put the one-line project summary in "description", not in "tech" or "name". "tech" is ONLY a short comma-separated list of technology/tool names (e.g. "Python, Flask, SQL") — if no technologies are explicitly named for a project, leave "tech" as "".
-4. "name" for a project or "degree"/"school" for education must be a real, complete label copied from the resume — never a lone number, a lone letter, or a sentence fragment like "and grades." or "ment".
+3. Put the one-line project summary in "description", not in "tech" or "name". "tech" is ONLY a short comma-separated list of technology/tool names (e.g. "Python, Flask, SQL") - if no technologies are explicitly named for a project, leave "tech" as "".
+4. "name" for a project or "degree"/"school" for education must be a real, complete label copied from the resume - never a lone number, a lone letter, or a sentence fragment like "and grades." or "ment".
 5. If a paragraph in the resume runs across multiple lines but is clearly about ONE item (no new number/bullet/heading), treat it as ONE entry and merge the lines together.
 6. "linkedin" and "github" should be full URLs if present (e.g. "https://linkedin.com/in/...").
 7. "bullets" (experience) should be short responsibility/achievement phrases, not full paragraphs.
-8. If a field genuinely isn't present anywhere in the resume, use "" or [] — do not guess or fabricate.
+8. If a field genuinely isn't present anywhere in the resume, use "" or [] - do not guess or fabricate.
 
-Worked example — given this resume fragment:
+Worked example - given this resume fragment:
 \"\"\"
 Education:
 B.Tech in Computer Science, ABC University, 2022-2026

@@ -1,4 +1,4 @@
-/* app.js — PortfolioBuilder interactivity */
+/* app.js - PortfolioBuilder interactivity */
 
 // ─── State ────────────────────────────────────────────────
 let resumeFile       = null;          // the actual File object
@@ -23,6 +23,27 @@ mobileMenu?.querySelectorAll('a').forEach(link => {
     hamburger?.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
     siteHeader?.classList.remove('menu-open');
+  });
+});
+
+// ─── Tips Accordion ───────────────────────────────────────
+const tipToggles = document.querySelectorAll('.tip-toggle');
+
+tipToggles.forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const item = toggle.closest('.tip-item');
+    const isOpen = item.classList.contains('open');
+
+    // Keep the section compact: only one tip is open at a time.
+    document.querySelectorAll('.tip-item.open').forEach(openItem => {
+      openItem.classList.remove('open');
+      openItem.querySelector('.tip-toggle')?.setAttribute('aria-expanded', 'false');
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
   });
 });
 
@@ -125,7 +146,7 @@ document.querySelectorAll('.template-card:not(.coming-soon-card)').forEach(card 
   });
 });
 
-// ─── Generate Portfolio — Main Action ────────────────────
+// ─── Generate Portfolio - Main Action ────────────────────
 generateMainBtn?.addEventListener('click', async () => {
   if (!resumeFile) {
     showNotification('❌ Please upload a resume first.', 'error');
@@ -153,7 +174,7 @@ generateMainBtn?.addEventListener('click', async () => {
   } catch (err) {
     console.error('Portfolio generation error:', err);
     showNotification('❌ Generation failed. Using template with sample data.', 'error');
-    // Clear any portfolioData left over from a PREVIOUS successful generation —
+    // Clear any portfolioData left over from a PREVIOUS successful generation -
     // otherwise the template would silently show that old resume's data here
     // while this message claims it's showing sample/default data.
     localStorage.removeItem('portfolioData');
@@ -416,7 +437,7 @@ spinStyle.textContent = `@keyframes spin{to{transform:rotate(360deg)}} .spin{ani
 document.head.appendChild(spinStyle);
 
 // ─── Scroll Reveal ────────────────────────────────────────
-const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta,.step-item');
+const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta,.step-item,.tip-item,.faq-item');
 revealEls.forEach(el => el.classList.add('reveal'));
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
