@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   PORTFOLIOBUILDER — DESIGN SYSTEM
+   PORTFOLIOBUILDER - DESIGN SYSTEM
    Cool paper · ink · indigo/violet · teal
    Display: Newsreader (italic serif)  |  UI: Manrope  |  Mono: IBM Plex Mono
 ═══════════════════════════════════════════════════════════ */
@@ -35,7 +35,7 @@
   --r-xl:   20px;
   --r-pill: 999px;
 
-  /* Elevation — flat, minimal, border-led */
+  /* Elevation - flat, minimal, border-led */
   --shadow-xs: 0 1px 2px rgba(21,22,26,.04);
   --shadow-sm: 0 1px 3px rgba(21,22,26,.05);
   --shadow-md: 0 10px 24px -16px rgba(21,22,26,.18);
@@ -502,7 +502,7 @@ ul[role="list"] { list-style: none; }
   animation: riseIn .7s .4s cubic-bezier(.22,1,.36,1) both;
 }
 
-/* ── Hero showcase — live portfolio preview ── */
+/* ── Hero showcase - live portfolio preview ── */
 .hero-showcase { position: relative; animation: riseIn .8s .35s cubic-bezier(.22,1,.36,1) both; }
 
 .showcase-stage {
@@ -705,7 +705,7 @@ ul[role="list"] { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   FEATURES — bento
+   FEATURES - bento
 ═══════════════════════════════════════════════════════════ */
 .features { background: var(--paper); }
 
