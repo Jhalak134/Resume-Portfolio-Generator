@@ -16,6 +16,7 @@ Then open http://localhost:5000
 """
 
 from flask import Flask, request, jsonify, send_from_directory
+import traceback
 
 from resume_ai import extract_text_from_bytes, get_resume_json, parse_resume_bytes
 
@@ -87,6 +88,7 @@ def parse_resume():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
+        traceback.print_exc()  # full stack trace in the terminal for debugging
         return jsonify({"error": f"Failed to read file: {e}"}), 500
 
     return jsonify({"text": text})
@@ -117,4 +119,6 @@ def extract_portfolio():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
