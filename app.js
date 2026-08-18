@@ -7,12 +7,14 @@ let selectedTemplate = 'template1.html';
 // ─── Hamburger / Mobile Menu ──────────────────────────────
 const hamburger  = document.getElementById('hamburger-btn');
 const mobileMenu = document.getElementById('mobile-menu');
+const siteHeader = document.getElementById('top');
 
 hamburger?.addEventListener('click', () => {
   const isOpen = mobileMenu.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
   mobileMenu.setAttribute('aria-hidden', !isOpen);
+  siteHeader?.classList.toggle('menu-open', isOpen);
 });
 mobileMenu?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
@@ -20,6 +22,28 @@ mobileMenu?.querySelectorAll('a').forEach(link => {
     hamburger?.classList.remove('open');
     hamburger?.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
+    siteHeader?.classList.remove('menu-open');
+  });
+});
+
+// ─── Tips Accordion ───────────────────────────────────────
+const tipToggles = document.querySelectorAll('.tip-toggle');
+
+tipToggles.forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const item = toggle.closest('.tip-item');
+    const isOpen = item.classList.contains('open');
+
+    // Keep the section compact: only one tip is open at a time.
+    document.querySelectorAll('.tip-item.open').forEach(openItem => {
+      openItem.classList.remove('open');
+      openItem.querySelector('.tip-toggle')?.setAttribute('aria-expanded', 'false');
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
   });
 });
 
@@ -129,49 +153,38 @@ generateMainBtn?.addEventListener('click', async () => {
     return;
   }
 
+  // Show loading state
   setGeneratingState(true);
 
   try {
-    // ─ Try the backend first (best quality: real AI parsing)
-    let portfolioData = null;
+    // STEP 1: Read file text
+    const resumeText = await readFileAsText(resumeFile);
 
-    try {
-      portfolioData = await generateViaBackend(resumeFile);
-    } catch (err) {
-      console.warn('Backend unavailable, using client-side fallback:', err.message);
-    }
+    // STEP 2: Extract structured JSON via backend or client-side
+    const portfolioData = await extractPortfolioData(resumeText);
 
-    // ─ Client-side fallback for all file types
-    if (!portfolioData) {
-      const resumeText = await readFileAsText(resumeFile);
-      const meaningfulText = resumeText.replace(/[\s\n\r\t]+/g, '').trim();
-      if (meaningfulText.length < 50) {
-        setGeneratingState(false);
-        showBigError(
-          "Nah, can't work with this 😅",
-          resumeFile.size === 0
-            ? 'The file you uploaded is completely empty. Please add your resume content and try again.'
-            : 'Not enough content found in this file. Make sure your resume has actual text — scanned image PDFs or blank files won\'t work.'
-        );
-        return;
-      }
-      portfolioData = parseResumeClientSide(resumeText);
-    }
-
-    // ─ Store and navigate
+    // STEP 3: Store in localStorage so template can read it
     localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
     localStorage.setItem('portfolioTemplate', selectedTemplate);
+
+    // STEP 4: Navigate to template
     showNotification('🎉 Portfolio generated! Opening...', 'success');
     setTimeout(() => { window.location.href = selectedTemplate; }, 800);
 
   } catch (err) {
     console.error('Portfolio generation error:', err);
-    showNotification('❌ Could not process the file. Please try again.', 'error');
+    showNotification('❌ Generation failed. Using template with sample data.', 'error');
+    // Clear any portfolioData left over from a PREVIOUS successful generation —
+    // otherwise the template would silently show that old resume's data here
+    // while this message claims it's showing sample/default data.
+    localStorage.removeItem('portfolioData');
+    localStorage.removeItem('portfolioTemplate');
+    // Fallback: open template anyway with sample data
+    setTimeout(() => { window.location.href = selectedTemplate; }, 1200);
   } finally {
     setGeneratingState(false);
   }
 });
-
 
 function setGeneratingState(isLoading) {
   if (!generateMainBtn) return;
@@ -196,70 +209,74 @@ function setGeneratingState(isLoading) {
   }
 }
 
-// ─── Backend: one-shot file → portfolio JSON ──────────────
-async function generateViaBackend(file) {
+// ─── Read File as Text ────────────────────────────────────
+function readFileAsText(file) {
+  return new Promise((resolve, reject) => {
+    const ext = file.name.split('.').pop().toLowerCase();
+
+    if (ext === 'txt') {
+      const reader = new FileReader();
+      reader.onload  = e => resolve(e.target.result);
+      reader.onerror = reject;
+      reader.readAsText(file);
+
+    } else if (ext === 'pdf') {
+      // For PDF: send to backend, or use raw text extraction
+      // We'll try backend first, fallback to raw
+      sendToBackend(file).then(resolve).catch(() => {
+        // Fallback: read as text (won't work well for binary PDF)
+        const reader = new FileReader();
+        reader.onload  = e => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsText(file);
+      });
+
+    } else if (ext === 'docx') {
+      sendToBackend(file).then(resolve).catch(() => resolve(''));
+
+    } else {
+      const reader = new FileReader();
+      reader.onload  = e => resolve(e.target.result);
+      reader.onerror = reject;
+      reader.readAsText(file);
+    }
+  });
+}
+
+// ─── Send to Python Backend ───────────────────────────────
+async function sendToBackend(file) {
   const formData = new FormData();
   formData.append('resume', file);
 
-  const res = await fetch('/api/generate-portfolio', {
+  const res = await fetch('/api/parse-resume', {
     method: 'POST',
     body: formData
   });
-
-  if (!res.ok) {
-    const errBody = await res.json().catch(() => ({}));
-    throw new Error(errBody.error || `Server error ${res.status}`);
-  }
-
-  return res.json();
+  if (!res.ok) throw new Error(`Backend error: ${res.status}`);
+  const data = await res.json();
+  return data.text || '';
 }
 
-// ─── Read File as Text (client-side fallback) ─────────────
-// Uses PDF.js for PDFs, Mammoth.js for DOCX, FileReader for TXT
-async function readFileAsText(file) {
-  const ext = file.name.split('.').pop().toLowerCase();
-
-  if (ext === 'pdf') {
-    return await extractPdfText(file);
+// ─── Extract Portfolio Data from Resume Text ──────────────
+async function extractPortfolioData(resumeText) {
+  // Try backend AI extraction first
+  try {
+    const res = await fetch('/api/extract-portfolio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: resumeText })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+  } catch (e) {
+    console.warn('Backend extraction unavailable, using client-side parsing.');
   }
 
-  if (ext === 'docx') {
-    return await extractDocxText(file);
-  }
-
-  // TXT and everything else
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload  = e => resolve(e.target.result);
-    reader.onerror = reject;
-    reader.readAsText(file);
-  });
+  // Fallback: basic client-side text parsing
+  return parseResumeClientSide(resumeText);
 }
-
-async function extractPdfText(file) {
-  // PDF.js needs its worker; point it at the CDN copy
-  if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js not loaded');
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-  const arrayBuffer = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  const pages = [];
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    pages.push(content.items.map(item => item.str).join(' '));
-  }
-  return pages.join('\n');
-}
-
-async function extractDocxText(file) {
-  if (typeof mammoth === 'undefined') throw new Error('Mammoth.js not loaded');
-  const arrayBuffer = await file.arrayBuffer();
-  const result = await mammoth.extractRawText({ arrayBuffer });
-  return result.value || '';
-}
-
 
 // ─── Client-side Resume Parser (fallback) ─────────────────
 function parseResumeClientSide(text) {
@@ -340,11 +357,12 @@ function detectExperience(text) {
   if (!expSection) return [{ role: 'Job Title', company: 'Company Name', duration: 'Year – Year', bullets: ['Key responsibility.'] }];
   const lines = expSection[1].split('\n').map(l => l.trim()).filter(Boolean);
   // Very basic: take first few lines as job title / company
+  const bullets = lines.slice(2, 5).filter(l => l.length > 10).map(l => l.replace(/^[•\-*]\s*/, ''));
   return [{
     role: lines[0] || 'Job Title',
     company: lines[1] || 'Company Name',
     duration: detectYear(expSection[1]) || 'Year – Year',
-    bullets: lines.slice(2, 5).filter(l => l.length > 10).map(l => l.replace(/^[•\-*]\s*/, '')) || ['Key responsibility.']
+    bullets: bullets.length ? bullets : ['Key responsibility.']
   }];
 }
 
@@ -353,9 +371,15 @@ function detectProjects(text) {
   if (!projSection) return [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
   const lines = projSection[1].split('\n').map(l => l.trim()).filter(l => l.length > 3);
   const projects = [];
-  for (let i = 0; i < Math.min(lines.length, 6) && projects.length < 3; i++) {
+  const limit = Math.min(lines.length, 6);
+  let i = 0;
+  while (i < limit && projects.length < 3) {
     if (lines[i].length > 3 && lines[i].length < 60) {
-      projects.push({ name: lines[i], tech: lines[i+1] || 'Tech Stack', github: '#', demo: '#' });
+      const tech = lines[i + 1] || 'Tech Stack';
+      projects.push({ name: lines[i], tech, github: '#', demo: '#' });
+      i += 2; // skip the line we just used as "tech" so it isn't reused as the next project's name
+    } else {
+      i += 1;
     }
   }
   return projects.length ? projects : [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
@@ -407,71 +431,13 @@ function showNotification(message, type = 'info') {
   }, 3800);
 }
 
-// ─── Big Error Modal (empty file, unreadable, etc.) ───────
-function showBigError(title, message) {
-  document.getElementById('big-error-modal')?.remove();
-
-  const overlay = document.createElement('div');
-  overlay.id = 'big-error-modal';
-  overlay.style.cssText = `
-    position:fixed;inset:0;z-index:10000;
-    display:flex;align-items:center;justify-content:center;
-    background:rgba(17,17,27,.55);backdrop-filter:blur(6px);
-    padding:24px;opacity:0;transition:opacity .25s ease;`;
-
-  overlay.innerHTML = `
-    <div id="big-error-card" style="
-      background:#fff;border-radius:20px;padding:36px 32px 28px;
-      max-width:420px;width:100%;text-align:center;
-      box-shadow:0 24px 64px rgba(0,0,0,.22);
-      transform:translateY(24px);transition:transform .3s cubic-bezier(.34,1.56,.64,1);">
-      <div style="
-        width:56px;height:56px;border-radius:50%;
-        background:#fef2f2;border:1.5px solid #fecaca;
-        display:flex;align-items:center;justify-content:center;
-        margin:0 auto 18px;font-size:1.6rem;line-height:1;">😅</div>
-      <h3 style="
-        font-family:'Fraunces','Georgia',serif;font-size:1.18rem;
-        font-weight:800;color:#17171f;margin-bottom:10px;letter-spacing:-.3px;">${title}</h3>
-      <p style="
-        font-size:.88rem;color:#6f6b78;line-height:1.65;
-        margin-bottom:26px;">${message}</p>
-      <button id="big-error-close" style="
-        display:inline-flex;align-items:center;gap:7px;
-        background:linear-gradient(135deg,#4f46e5,#3730a3);color:#fff;
-        font-size:.88rem;font-weight:700;padding:11px 28px;
-        border:none;border-radius:100px;cursor:pointer;
-        box-shadow:0 8px 20px rgba(79,70,229,.35);
-        transition:transform .18s ease,box-shadow .18s ease;">
-        Got it, I'll fix the file
-      </button>
-    </div>`;
-
-  document.body.appendChild(overlay);
-
-  // Animate in
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    overlay.style.opacity = '1';
-    overlay.querySelector('#big-error-card').style.transform = 'translateY(0)';
-  }));
-
-  // Close handlers
-  const close = () => {
-    overlay.style.opacity = '0';
-    overlay.querySelector('#big-error-card').style.transform = 'translateY(16px)';
-    setTimeout(() => overlay.remove(), 250);
-  };
-  overlay.querySelector('#big-error-close').addEventListener('click', close);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-}
-
 // ─── Spin animation for loading ───────────────────────────
 const spinStyle = document.createElement('style');
 spinStyle.textContent = `@keyframes spin{to{transform:rotate(360deg)}} .spin{animation:spin .8s linear infinite}`;
 document.head.appendChild(spinStyle);
 
 // ─── Scroll Reveal ────────────────────────────────────────
-const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta,.step-item');
+const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta,.step-item,.tip-item,.faq-item');
 revealEls.forEach(el => el.classList.add('reveal'));
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {

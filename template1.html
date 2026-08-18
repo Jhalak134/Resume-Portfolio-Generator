@@ -372,12 +372,31 @@
       color: #fff;
     }
 
-    /* Empty state for projects */
-    .no-projects {
+    /* ═══════════════════════════════════════════
+       EMPTY STATE
+    ═══════════════════════════════════════════ */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 28px 16px;
+      color: var(--text-subtle);
       text-align: center;
-      color: #aaa;
-      font-size: 0.95rem;
-      padding: 40px 0;
+    }
+    .empty-state-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .empty-state p {
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      line-height: 1.5;
     }
 
     /* ════════════════════════════════════════
@@ -415,35 +434,107 @@
 </head>
 <body>
 
-<!-- ════════════════════════════════════════
-     HERO — Blue gradient + constellation
-════════════════════════════════════════ -->
-<section id="hero">
-  <canvas id="constellation-canvas"></canvas>
+  <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+  <header id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand" id="nav-logo">
+        <div class="nav-brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="4" fill="white" fill-opacity="0.35"/>
+            <path d="M8 7h5a2.5 2.5 0 0 1 0 5H8V7z M8 12h5.5a3 3 0 0 1 0 6H8v-6z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span id="nav-name">Your Name</span>
+      </a>
 
-  <div class="header">
-    <h1>
-      <span class="site-title" id="hero-name">YOUR NAME</span>
-      <span class="site-description" id="hero-title">Programmer &bull; Developer &bull; Designer</span>
-    </h1>
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#about"        id="nav-about">About</a>
+        <a href="#skills"       id="nav-skills">Skills</a>
+        <a href="#education"    id="nav-education">Education</a>
+        <a href="#experience"   id="nav-experience">Experience</a>
+        <a href="#projects"     id="nav-projects">Projects</a>
+        <a href="#achievements" id="nav-achievements">Achievements</a>
+        <a href="#contact"      id="nav-contact">Contact</a>
+      </nav>
 
-    <div class="header-icons">
-      <a id="social-linkedin" href="#" aria-label="LinkedIn Profile" target="_blank" rel="noopener">
-        <i class="fa fa-linkedin" aria-hidden="true"></i>
-      </a>
-      <a id="social-github" href="#" aria-label="GitHub Profile" target="_blank" rel="noopener">
-        <i class="fa fa-github-alt" aria-hidden="true"></i>
-      </a>
-      <a id="social-email" href="#" aria-label="Send Email">
-        <i class="fa fa-envelope" aria-hidden="true"></i>
-      </a>
-      <a id="social-twitter" href="#" aria-label="Twitter" target="_blank" rel="noopener" style="display:none">
-        <i class="fa fa-twitter" aria-hidden="true"></i>
-      </a>
-      <a id="social-website" href="#" aria-label="Website" target="_blank" rel="noopener" style="display:none">
-        <i class="fa fa-globe" aria-hidden="true"></i>
-      </a>
+      <button class="nav-download" id="nav-download-btn" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Download PDF
+      </button>
+
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+    <div class="nav-mobile" id="mobile-nav" aria-hidden="true">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-dots" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          Open to Opportunities
+        </div>
+
+        <h1 class="hero-name" id="hero-name">
+          <span>Your Name</span>
+        </h1>
+        <p class="hero-title" id="hero-title">Your Professional Title</p>
+        <p class="hero-desc" id="hero-desc">
+          A short and impactful tagline or summary about you and what you do.
+          Passionate about building great products and solving complex problems.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#" class="btn-primary" id="btn-download-portfolio">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download Portfolio
+          </a>
+          <a href="#contact" class="btn-outline" id="btn-contact-me">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            Contact Me
+          </a>
+        </div>
+
+        <div class="hero-socials">
+          <a href="#" class="social-icon" id="social-github" aria-label="GitHub" title="GitHub">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" class="social-icon" id="social-linkedin" aria-label="LinkedIn" title="LinkedIn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
+          </a>
+          <a href="#" class="social-icon" id="social-twitter" aria-label="Twitter" title="Twitter" style="display:none;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="mailto:your@email.com" class="social-icon" id="social-email" aria-label="Email" title="Email">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
 
     <div class="header-links">
       <a href="#about">About Me</a>
@@ -487,16 +578,52 @@
       <p id="tech-desc-1">My favorite languages for systems programming, software engineering, and data analysis.</p>
     </div>
 
-    <div class="tech" id="tech-col-2">
-      <h2 id="tech-h2">Front-End</h2>
-      <div class="tech-icons" id="tech-icons-2">
-        <i class="devicon-react-original colored" title="React"></i>
-        <i class="devicon-bootstrap-plain-wordmark colored" title="Bootstrap"></i>
-        <i class="devicon-html5-plain-wordmark colored" title="HTML5"></i>
-        <i class="devicon-css3-plain-wordmark colored" title="CSS3"></i>
-      </div>
-      <p id="tech-desc-2">My preferred technologies for front-end web development and component design.</p>
-    </div>
+  <!-- ══════════════════════════════════════════
+       EDUCATION + EXPERIENCE
+  ══════════════════════════════════════════ -->
+  <div class="section-row" id="row-edu-exp" style="background:var(--bg);">
+    <div class="container">
+      <div class="two-col">
+
+        <!-- EDUCATION -->
+        <div class="section-card reveal" id="education">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12v5c3.333 2 8.667 2 12 0v-5" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="card-title">Education</span>
+          </div>
+          <div class="edu-list" id="education-list">
+            <div class="edu-item">
+              <div class="edu-timeline">
+                <div class="edu-dot"></div>
+                <div class="edu-line"></div>
+              </div>
+              <div>
+                <div class="edu-degree" id="edu-degree-1">Degree / Course Name</div>
+                <div class="edu-school" id="edu-school-1">University / College Name</div>
+                <div class="edu-year" id="edu-year-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#9ca3af" stroke-width="1.6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  Year – Year
+                </div>
+              </div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-timeline">
+                <div class="edu-dot"></div>
+                <div class="edu-line"></div>
+              </div>
+              <div>
+                <div class="edu-degree" id="edu-degree-2">Another Degree / Course</div>
+                <div class="edu-school" id="edu-school-2">Another Institution</div>
+                <div class="edu-year" id="edu-year-2">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#9ca3af" stroke-width="1.6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  Year – Year
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
     <div class="tech" id="tech-col-3">
       <h2 id="tech-h3">Back-End</h2>
@@ -540,459 +667,547 @@
       </div>
     </div>
   </div>
-</section>
 
-<!-- ════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════ -->
-<footer>
-  <p id="contact-copyright">© 2025 Your Name. All rights reserved.</p>
-</footer>
+  <!-- ══════════════════════════════════════════
+       PROJECTS + ACHIEVEMENTS
+  ══════════════════════════════════════════ -->
+  <div class="section-row" id="row-proj-ach" style="background:#fff;">
+    <div class="container">
+      <div class="two-col">
 
-<script>
-/* ════════════════════════════════════════
-   CONSTELLATION / PARTICLE CANVAS
-════════════════════════════════════════ */
-(function () {
-  const canvas = document.getElementById('constellation-canvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H, pts;
+        <!-- PROJECTS (collapsible) -->
+        <div class="section-card reveal" id="projects">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="card-title">Projects</span>
+          </div>
 
-  const CFG = {
-    count:   70,
-    speed:   0.3,
-    radius:  2,
-    connect: 140,
-  };
+          <!-- Always visible: first 2 projects -->
+          <div class="projects-grid" id="projects-visible">
+            <div class="project-card" id="project-1">
+              <div class="project-thumb t1">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="project-info">
+                <div class="project-name" id="p1-name">Project Title</div>
+                <div class="project-tech" id="p1-tech">React • Node.js</div>
+              </div>
+            </div>
+            <div class="project-card" id="project-2">
+              <div class="project-thumb t2">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#06b6d4" stroke-width="2"/><path d="M9 9h6M9 12h6M9 15h4" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="project-info">
+                <div class="project-name" id="p2-name">Project Title</div>
+                <div class="project-tech" id="p2-tech">Python • Django</div>
+              </div>
+            </div>
+          </div>
 
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
+          <!-- Collapsed extra projects -->
+          <div class="collapsible-content" id="projects-extra">
+            <div class="projects-grid" style="margin-top:14px;">
+              <div class="project-card" id="project-3">
+                <div class="project-thumb t3">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#a78bfa" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="project-info">
+                  <div class="project-name" id="p3-name">Project Title</div>
+                  <div class="project-tech" id="p3-tech">Vue • Firebase</div>
+                </div>
+              </div>
+              <div class="project-card" id="project-4">
+                <div class="project-thumb t4">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="project-info">
+                  <div class="project-name" id="p4-name">Project Title</div>
+                  <div class="project-tech" id="p4-tech">Flutter • Dart</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  function rnd(a, b) { return a + Math.random() * (b - a); }
+          <div class="view-more-wrap">
+            <button class="btn-view-more" id="btn-proj-more" aria-expanded="false">
+              View More
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
 
-  function makePoint() {
-    return {
-      x:  rnd(0, W),
-      y:  rnd(0, H),
-      vx: rnd(-CFG.speed, CFG.speed),
-      vy: rnd(-CFG.speed, CFG.speed),
+        <!-- ACHIEVEMENTS (collapsible) -->
+        <div class="section-card reveal" id="achievements">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="6" stroke="#6366f1" stroke-width="1.8"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="card-title">Achievements</span>
+          </div>
+
+          <!-- Always visible: first 3 achievements -->
+          <div class="achievements-list" id="achievements-visible">
+            <div class="achievement-item" id="achievement-1">
+              <div class="achievement-icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="achievement-title" id="ach-1-title">Achievement / Certification 1</div>
+                <div class="achievement-sub" id="ach-1-sub">Issuer • Year</div>
+              </div>
+            </div>
+            <div class="achievement-item" id="achievement-2">
+              <div class="achievement-icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="achievement-title" id="ach-2-title">Achievement / Certification 2</div>
+                <div class="achievement-sub" id="ach-2-sub">Issuer • Year</div>
+              </div>
+            </div>
+            <div class="achievement-item" id="achievement-3">
+              <div class="achievement-icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="6" stroke="#f59e0b" stroke-width="1.6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div class="achievement-title" id="ach-3-title">Achievement / Certification 3</div>
+                <div class="achievement-sub" id="ach-3-sub">Issuer • Year</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collapsed extra achievements -->
+          <div class="collapsible-content" id="achievements-extra">
+            <div class="achievements-list" style="margin-top:12px;">
+              <div class="achievement-item" id="achievement-4">
+                <div class="achievement-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <div class="achievement-title" id="ach-4-title">Award / Recognition 4</div>
+                  <div class="achievement-sub" id="ach-4-sub">Organization • Year</div>
+                </div>
+              </div>
+              <div class="achievement-item" id="achievement-5">
+                <div class="achievement-icon">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                  <div class="achievement-title" id="ach-5-title">Award / Recognition 5</div>
+                  <div class="achievement-sub" id="ach-5-sub">Organization • Year</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view-more-wrap">
+            <button class="btn-view-more" id="btn-ach-more" aria-expanded="false">
+              View More
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════
+       CONTACT FOOTER
+  ══════════════════════════════════════════ -->
+  <footer id="contact">
+    <div class="contact-inner">
+      <div class="contact-top">
+        <p class="contact-eyebrow">Get In Touch</p>
+        <h2 class="contact-heading">Let's Work Together</h2>
+        <p class="contact-sub">Whether you have a project in mind or just want to connect, feel free to reach out.</p>
+      </div>
+
+      <div class="contact-info-row">
+        <a href="mailto:your.email@example.com" class="contact-pill" id="contact-email-link">
+          <div class="contact-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#818cf8" stroke-width="1.8" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <span id="contact-email">your.email@example.com</span>
+        </a>
+        <div class="contact-pill" id="contact-phone-wrap">
+          <div class="contact-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.41 3.41 2 2 0 0 1 3.4 1.23h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.76-.76a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2.03z" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span id="contact-phone">+91 12345 67890</span>
+        </div>
+        <div class="contact-pill" id="contact-location-wrap">
+          <div class="contact-pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="#818cf8" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="#818cf8" stroke-width="1.8"/></svg>
+          </div>
+          <span id="contact-location">Your Location</span>
+        </div>
+      </div>
+
+      <div class="contact-bottom">
+        <p class="contact-copyright" id="contact-copyright">© 2026 Your Name. All rights reserved.</p>
+        <div class="contact-socials">
+          <a href="#" class="contact-social-btn" id="c-github" aria-label="GitHub">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" class="contact-social-btn" id="c-linkedin" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
+          </a>
+          <a href="#" class="contact-social-btn" id="c-twitter" aria-label="Twitter" style="display:none;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" class="contact-social-btn" id="c-website" aria-label="Website" style="display:none;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.8"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.8"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    </footer>
+
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <button id="back-to-top" aria-label="Back to top">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script>
+    /* ─── Navbar: hamburger toggle ─────────────────── */
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    hamburger?.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      mobileNav.setAttribute('aria-hidden', !open);
+    });
+    mobileNav?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileNav.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    /* ─── Navbar: scroll shadow ────────────────────── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    /* ─── Scroll Reveal ────────────────────────────── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const ro = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 90);
+          ro.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => ro.observe(el));
+
+    /* ─── Active nav on scroll ─────────────────────── */
+    const navMap = {
+      'hero':         '#hero',
+      'about':        '#about',
+      'skills':       '#skills',
+      'education':    '#education',
+      'experience':   '#experience',
+      'projects':     '#projects',
+      'achievements': '#achievements',
+      'contact':      '#contact',
     };
-  }
+    const allNavLinks = document.querySelectorAll('.nav-links a, .nav-mobile a');
 
-  function init() {
-    resize();
-    pts = Array.from({ length: CFG.count }, makePoint);
-  }
+    const no = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const href = navMap[entry.target.id];
+          if (!href) return;
+          allNavLinks.forEach(l => l.classList.remove('active'));
+          document.querySelectorAll(`a[href="${href}"]`).forEach(l => l.classList.add('active'));
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
+    Object.keys(navMap).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) no.observe(el);
+    });
 
-    for (let i = 0; i < pts.length; i++) {
-      const p = pts[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
+    /* ─── View More toggles ────────────────────────── */
+    function setupToggle(btnId, contentId, openLabel = 'View Less', closeLabel = 'View More') {
+      const btn     = document.getElementById(btnId);
+      const content = document.getElementById(contentId);
+      if (!btn || !content) return;
 
-      /* dot */
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, CFG.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.65)';
-      ctx.fill();
+      btn.addEventListener('click', () => {
+        const isOpen = content.classList.toggle('expanded');
+        btn.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+        // Update label
+        const textNode = btn.childNodes[0];
+        textNode.textContent = isOpen ? openLabel + ' ' : closeLabel + ' ';
+      });
+    }
 
-      /* lines to neighbours */
-      for (let j = i + 1; j < pts.length; j++) {
-        const q  = pts[j];
-        const dx = p.x - q.x;
-        const dy = p.y - q.y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-        if (d < CFG.connect) {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(q.x, q.y);
-          ctx.strokeStyle = `rgba(255,255,255,${(1 - d / CFG.connect) * 0.35})`;
-          ctx.lineWidth   = 0.8;
-          ctx.stroke();
+    setupToggle('btn-exp-more',  'experience-extra',  'View Less', 'View More');
+    setupToggle('btn-proj-more', 'projects-extra',    'View Less', 'View More');
+    setupToggle('btn-ach-more',  'achievements-extra','View Less', 'View More');
+
+    /* Download as PDF (print) */
+    const downloadAsPdf = () => window.print();
+    document.getElementById('btn-download-portfolio')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      downloadAsPdf();
+    });
+    document.getElementById('nav-download-btn')?.addEventListener('click', downloadAsPdf);
+
+    /* Scroll progress bar */
+    const progressBar = document.getElementById('scroll-progress');
+    const updateProgress = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      progressBar.style.width = max > 0 ? `${(doc.scrollTop / max) * 100}%` : '0%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    /* Back to top */
+    const backToTopBtn = document.getElementById('back-to-top');
+    const toggleBackToTop = () => backToTopBtn.classList.toggle('show', window.scrollY > 600);
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    toggleBackToTop();
+    backToTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ─── Populate from Resume Data (localStorage) ── */
+    function set(id, text) {
+      const el = document.getElementById(id);
+      if (el && text) el.textContent = text;
+    }
+    function setHref(id, url) {
+      const el = document.getElementById(id);
+      if (el && url && url !== '#') el.href = url;
+    }
+    function showEl(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = '';
+    }
+    function hideEl(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    }
+    function emptyState(cardId, label) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+      // Clear all content after the card-header and replace with empty state
+      const header = card.querySelector('.card-header');
+      // Remove everything after the header
+      while (card.lastChild !== header) card.removeChild(card.lastChild);
+      card.insertAdjacentHTML('beforeend', `
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="#c4bfd4" stroke-width="1.6"/>
+              <path d="M12 8v4M12 16h.01" stroke="#c4bfd4" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p>No ${label} listed on this resume.</p>
+        </div>`);
+    }
+
+    function populateFromData(d) {
+      if (!d) return;
+
+      /* — Navbar & hero — */
+      set('nav-name',   d.name);
+      document.querySelector('#hero-name span').textContent = d.name || 'Your Name';
+      set('hero-title', d.title);
+      set('hero-desc',  d.bio);
+      document.title = `${d.name || 'Your'} — Portfolio`;
+
+      /* — Social links: only show icons that have real data — */
+      if (d.github && d.github !== '#') {
+        setHref('social-github', d.github);
+        setHref('c-github', d.github);
+      } else {
+        hideEl('social-github');
+        hideEl('c-github');
+      }
+      if (d.linkedin && d.linkedin !== '#') {
+        setHref('social-linkedin', d.linkedin);
+        setHref('c-linkedin', d.linkedin);
+      } else {
+        hideEl('social-linkedin');
+        hideEl('c-linkedin');
+      }
+      if (d.email) {
+        setHref('social-email', `mailto:${d.email}`);
+      } else {
+        hideEl('social-email');
+      }
+      if (d.twitter && d.twitter !== '#') {
+        setHref('social-twitter', d.twitter);
+        showEl('social-twitter');
+        setHref('c-twitter', d.twitter);
+        showEl('c-twitter');
+      }
+      // c-twitter and c-website are hidden by default in HTML;
+      // only show if data has them
+      if (d.website && d.website !== '#') {
+        setHref('c-website', d.website);
+        showEl('c-website');
+      }
+
+      /* — About — */
+      set('about-p1', d.bio);
+      const p2 = document.getElementById('about-p2');
+      if (p2 && d.title) p2.textContent = `Specialising in ${d.title}, I bring passion and precision to every project.`;
+
+      /* — Skills — */
+      if (d.skills && d.skills.length) {
+        const half      = Math.ceil(d.skills.length / 2);
+        const primary   = d.skills.slice(0, half);
+        const secondary = d.skills.slice(half);
+        const renderPills = (arr) => arr.map(s =>
+          `<span class="skill-pill"><span class="skill-dot"></span>${s}</span>`).join('');
+        const sp = document.getElementById('skills-primary');
+        const ss = document.getElementById('skills-secondary');
+        if (sp) sp.innerHTML = renderPills(primary);
+        if (ss) ss.innerHTML = renderPills(secondary);
+      }
+
+      /* — Education — */
+      if (d.education && d.education.length) {
+        const list = document.getElementById('education-list');
+        if (list) {
+          list.innerHTML = d.education.map((edu) => `
+            <div class="edu-item">
+              <div class="edu-timeline">
+                <div class="edu-dot"></div>
+                <div class="edu-line"></div>
+              </div>
+              <div>
+                <div class="edu-degree">${edu.degree || ''}</div>
+                <div class="edu-school">${edu.school || ''}</div>
+                <div class="edu-year">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#9ca3af" stroke-width="1.6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  ${edu.year || ''}
+                </div>
+              </div>
+            </div>`).join('');
         }
       }
-    }
-    requestAnimationFrame(draw);
-  }
 
-  window.addEventListener('resize', resize);
-  init();
-  draw();
-})();
-
-/* ════════════════════════════════════════
-   HELPERS
-════════════════════════════════════════ */
-function el(id)          { return document.getElementById(id); }
-function set(id, val)    { const e = el(id); if (e && val) e.textContent = val; }
-function setHref(id, h)  { const e = el(id); if (e && h)   e.href = h; }
-function hide(id)        { const e = el(id); if (e) e.style.display = 'none'; }
-function show(id, d='')  { const e = el(id); if (e) e.style.display = d || ''; }
-
-/* ════════════════════════════════════════
-   MAP SKILLS → DEVICON CLASSES
-════════════════════════════════════════ */
-const DEVICON_MAP = {
-  // Languages
-  'python':     'devicon-python-plain colored',
-  'java':       'devicon-java-plain-wordmark colored',
-  'javascript': 'devicon-javascript-plain colored',
-  'js':         'devicon-javascript-plain colored',
-  'typescript': 'devicon-typescript-plain colored',
-  'ts':         'devicon-typescript-plain colored',
-  'c++':        'devicon-cplusplus-plain colored',
-  'c#':         'devicon-csharp-plain colored',
-  'c':          'devicon-c-plain colored',
-  'go':         'devicon-go-plain colored',
-  'rust':       'devicon-rust-plain',
-  'ruby':       'devicon-ruby-plain colored',
-  'swift':      'devicon-swift-plain colored',
-  'kotlin':     'devicon-kotlin-plain colored',
-  'php':        'devicon-php-plain colored',
-  'r':          'devicon-r-plain colored',
-  'scala':      'devicon-scala-plain colored',
-  'dart':       'devicon-dart-plain colored',
-  'matlab':     'devicon-matlab-plain colored',
-  // Front-End
-  'react':      'devicon-react-original colored',
-  'vue':        'devicon-vuejs-plain colored',
-  'angular':    'devicon-angularjs-plain colored',
-  'html':       'devicon-html5-plain-wordmark colored',
-  'html5':      'devicon-html5-plain-wordmark colored',
-  'css':        'devicon-css3-plain-wordmark colored',
-  'css3':       'devicon-css3-plain-wordmark colored',
-  'bootstrap':  'devicon-bootstrap-plain-wordmark colored',
-  'tailwind':   'devicon-tailwindcss-plain colored',
-  'sass':       'devicon-sass-original colored',
-  'next':       'devicon-nextjs-plain',
-  'nextjs':     'devicon-nextjs-plain',
-  'gatsby':     'devicon-gatsby-plain colored',
-  'svelte':     'devicon-svelte-plain colored',
-  'redux':      'devicon-redux-original colored',
-  // Back-End
-  'node':       'devicon-nodejs-plain colored',
-  'nodejs':     'devicon-nodejs-plain colored',
-  'express':    'devicon-express-original-wordmark',
-  'flask':      'devicon-flask-original',
-  'django':     'devicon-django-plain colored',
-  'fastapi':    'devicon-fastapi-plain colored',
-  'spring':     'devicon-spring-plain colored',
-  'rails':      'devicon-rails-plain colored',
-  // Databases
-  'mongodb':    'devicon-mongodb-plain-wordmark colored',
-  'postgresql': 'devicon-postgresql-plain-wordmark colored',
-  'postgres':   'devicon-postgresql-plain-wordmark colored',
-  'mysql':      'devicon-mysql-plain-wordmark colored',
-  'redis':      'devicon-redis-plain-wordmark colored',
-  'sqlite':     'devicon-sqlite-plain colored',
-  'firebase':   'devicon-firebase-plain colored',
-  // Tools / Cloud
-  'git':        'devicon-git-plain-wordmark colored',
-  'github':     'devicon-github-plain-wordmark',
-  'gitlab':     'devicon-gitlab-plain colored',
-  'docker':     'devicon-docker-plain-wordmark colored',
-  'kubernetes': 'devicon-kubernetes-plain colored',
-  'aws':        'devicon-amazonwebservices-plain-wordmark colored',
-  'azure':      'devicon-azure-plain colored',
-  'gcp':        'devicon-googlecloud-plain colored',
-  'linux':      'devicon-linux-plain colored',
-  'vscode':     'devicon-vscode-plain colored',
-  'visualstudio':'devicon-visualstudio-plain colored',
-  'figma':      'devicon-figma-plain colored',
-  'jira':       'devicon-jira-plain colored',
-  'webpack':    'devicon-webpack-plain colored',
-  'vite':       'devicon-vitejs-plain colored',
-  'nginx':      'devicon-nginx-plain colored',
-  'heroku':     'devicon-heroku-plain colored',
-  'pandas':     'devicon-pandas-plain colored',
-  'numpy':      'devicon-numpy-plain colored',
-  'tensorflow': 'devicon-tensorflow-original colored',
-  'pytorch':    'devicon-pytorch-plain colored',
-};
-
-function skillToDevicon(skill) {
-  const key = skill.toLowerCase().trim();
-  // 1. Exact match (always safe)
-  if (DEVICON_MAP[key]) return DEVICON_MAP[key];
-  // 2. Safe prefix/suffix — only for keys with length >= 4 to avoid
-  //    'c' matching 'javascript', 'r' matching 'react', etc.
-  for (const [k, v] of Object.entries(DEVICON_MAP)) {
-    if (k.length < 4) continue; // skip short ambiguous keys
-    if (key === k) return v;
-    // key starts with the dict key  e.g. 'node.js' → 'node'
-    if (key.startsWith(k) && (key[k.length] === undefined || /[\s\.\-\_\/]/.test(key[k.length]))) return v;
-    // dict key starts with key  e.g. 'postgresql' matched by 'postgres'
-    if (k.startsWith(key) && key.length >= 4) return v;
-  }
-  return null;
-}
-
-function buildSkillIcons(skills) {
-  if (!skills || !skills.length) return '';
-  let html = '';
-  for (const s of skills) {
-    const cls = skillToDevicon(s);
-    if (cls) {
-      html += `<i class="${cls}" title="${s}"></i>`;
-    } else {
-      html += `<span class="skill-chip">${s}</span>`;
-    }
-  }
-  return html;
-}
-
-/* ════════════════════════════════════════
-   GROUP SKILLS INTO CATEGORIES
-════════════════════════════════════════ */
-const CAT_KEYWORDS = {
-  // Only use unambiguous full-word keys (short 1-3 char keys are matched EXACTLY via matchesKeyword)
-  languages: ['python','java','javascript','typescript','golang','ruby','swift','kotlin','php','scala','dart','matlab','lua','perl','haskell','bash','shell','cplusplus','csharp','clang','rust'],
-  frontend:  ['react','vuejs','angular','html','html5','css','css3','bootstrap','tailwind','tailwindcss','sass','scss','nextjs','next.js','gatsby','svelte','redux','jquery','webpack','vite','babel','figma'],
-  backend:   ['nodejs','node.js','express','flask','django','fastapi','spring','rails','graphql','mongodb','postgresql','postgres','mysql','redis','sqlite','firebase','supabase','prisma','sequelize'],
-  tools:     ['git','github','gitlab','docker','kubernetes','aws','azure','gcp','linux','vscode','jenkins','nginx','heroku','terraform','ansible','jira','postman','pandas','numpy','tensorflow','pytorch','scikit'],
-};
-
-/* Normalize and match skill keys without false positives */
-const SHORT_EXACT = new Set(['js','ts','go','r','c','php','css','sql']);
-// Extra aliases: what a user might write → canonical key in DEVICON_MAP
-const ALIASES = {
-  'js': 'javascript', 'ts': 'typescript',
-  'node.js': 'nodejs', 'node js': 'nodejs',
-  'next.js': 'nextjs', 'next js': 'nextjs',
-  'c++': 'c++', 'cpp': 'c++', 'cplusplus': 'c++',
-  'c#': 'c#', 'csharp': 'c#',
-  'golang': 'go',
-  'vue.js': 'vue', 'vuejs': 'vue',
-  'react.js': 'react', 'reactjs': 'react',
-  'tailwindcss': 'tailwind',
-  'postgres': 'postgresql',
-  'mongo': 'mongodb', 'mongo db': 'mongodb',
-  'html5': 'html', 'css3': 'css',
-  'vs code': 'vscode', 'visual studio code': 'vscode',
-  'sklearn': 'scikit', 'scikit-learn': 'scikit',
-};
-
-function normaliseSkill(skill) {
-  return skill.toLowerCase().trim().replace(/\s+/g,'-');
-}
-
-function skillToDevicon(skill) {
-  const raw = skill.toLowerCase().trim();
-  const key = normaliseSkill(skill);
-
-  // Try alias first
-  const aliased = ALIASES[raw] || ALIASES[key];
-  if (aliased && DEVICON_MAP[aliased]) return DEVICON_MAP[aliased];
-
-  // Exact match
-  if (DEVICON_MAP[raw])  return DEVICON_MAP[raw];
-  if (DEVICON_MAP[key])  return DEVICON_MAP[key];
-
-  // Safe prefix match — only keys with 4+ chars to avoid 'c'/'r' false positives
-  for (const [k, v] of Object.entries(DEVICON_MAP)) {
-    if (k.length < 4) continue;
-    if (raw === k || key === k) return v;
-    if (raw.startsWith(k) && (raw.length === k.length || /[\s.\-_/]/.test(raw[k.length]))) return v;
-    if (k.startsWith(raw) && raw.length >= 4) return v;
-  }
-  return null;
-}
-
-function matchesCategory(skillRaw, kw) {
-  // Normalize both to lowercase stripped key
-  const sKey = skillRaw.replace(/[^a-z0-9\+\#]/g, '');
-  const kKey = kw.replace(/[^a-z0-9\+\#]/g, '');
-  if (sKey === kKey) return true;
-  if (kKey.length <= 3) return sKey === kKey; // short keywords exact only
-  if (sKey.startsWith(kKey)) return true;
-  if (kKey.startsWith(sKey) && sKey.length >= 4) return true;
-  return false;
-}
-
-function categoriseSkills(skills) {
-  const cats = { languages:[], frontend:[], backend:[], tools:[], other:[] };
-  const used = new Set();
-  for (const skill of skills) {
-    const key = skill.toLowerCase().replace(/[^a-z0-9\+\#]/g, '');
-    let matched = false;
-    for (const [cat, kws] of Object.entries(CAT_KEYWORDS)) {
-      if (kws.some(kw => matchesCategory(skill.toLowerCase(), kw))) {
-        if (!used.has(skill)) { cats[cat].push(skill); used.add(skill); }
-        matched = true;
-        break;
+      /* — Experience — */
+      const hasExperience = d.experience && d.experience.length &&
+        !(d.experience.length === 1 && d.experience[0].role === 'Job Title' && d.experience[0].company === 'Company Name');
+      if (hasExperience) {
+        const visibleEl = document.getElementById('experience-visible');
+        const extraEl   = document.getElementById('experience-extra');
+        const visible   = d.experience.slice(0, 1);
+        const extra     = d.experience.slice(1);
+        const iconSvg   = (color) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="3" stroke="${color}" stroke-width="1.8"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="${color}" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+        const colors    = ['#06b6d4', '#a78bfa', '#f59e0b', '#22c55e'];
+        const renderExp = (expArr) => expArr.map((exp, i) => `
+          <div class="exp-item">
+            <div class="exp-icon">${iconSvg(colors[i % colors.length])}</div>
+            <div>
+              <div class="exp-role">${exp.role || ''}</div>
+              <div class="exp-meta">
+                <span class="exp-company">${exp.company || ''}</span>
+                ${exp.duration ? `<span class="exp-sep">•</span><span class="exp-duration">${exp.duration}</span>` : ''}
+              </div>
+              <ul class="exp-bullets">
+                ${(exp.bullets || []).map(b => `<li>${b}</li>`).join('')}
+              </ul>
+            </div>
+          </div>`).join('');
+        if (visibleEl) visibleEl.innerHTML = renderExp(visible);
+        if (extraEl)   extraEl.innerHTML   = extra.length ? `<div class="exp-list" style="margin-top:18px;">${renderExp(extra)}</div>` : '';
+        const expMoreWrap = document.querySelector('#experience .view-more-wrap');
+        if (expMoreWrap) expMoreWrap.style.display = extra.length ? '' : 'none';
+      } else {
+        // No experience — show empty state inside the card
+        emptyState('experience', 'experience');
       }
-    }
-    if (!matched && !used.has(skill)) { cats.other.push(skill); used.add(skill); }
-  }
-  // Merge 'other' into smallest non-empty category, or tools
-  const smallest = Object.entries(cats)
-    .filter(([k]) => k !== 'other')
-    .sort((a, b) => a[1].length - b[1].length)[0];
-  if (smallest) smallest[1].push(...cats.other);
-  return cats;
-}
 
-/* ════════════════════════════════════════
-   BUILD SKILLS COLUMNS FROM RESUME DATA
-════════════════════════════════════════ */
-function populateSkills(skills) {
-  if (!skills || !skills.length) return;
-
-  const cats = categoriseSkills(skills);
-  const cols  = [
-    { id: 'tech-col-1', h: 'tech-h1', icons: 'tech-icons-1', desc: 'tech-desc-1',
-      label: 'Languages',  cat: 'languages', descText: 'My preferred programming languages.' },
-    { id: 'tech-col-2', h: 'tech-h2', icons: 'tech-icons-2', desc: 'tech-desc-2',
-      label: 'Front-End',  cat: 'frontend',  descText: 'Technologies for front-end development and design.' },
-    { id: 'tech-col-3', h: 'tech-h3', icons: 'tech-icons-3', desc: 'tech-desc-3',
-      label: 'Back-End',   cat: 'backend',   descText: 'Technologies for back-end programming and databases.' },
-    { id: 'tech-col-4', h: 'tech-h4', icons: 'tech-icons-4', desc: 'tech-desc-4',
-      label: 'Tools',      cat: 'tools',     descText: 'My favorite tools and platforms.' },
-  ];
-
-  for (const col of cols) {
-    const skillsInCat = cats[col.cat] || [];
-    if (skillsInCat.length === 0) continue;
-    set(col.h, col.label);
-    const iconsEl = el(col.icons);
-    if (iconsEl) iconsEl.innerHTML = buildSkillIcons(skillsInCat);
-    set(col.desc, col.descText);
-  }
-}
-
-/* ════════════════════════════════════════
-   BUILD PROJECT CARDS
-════════════════════════════════════════ */
-function buildProjectsHTML(projects) {
-  if (!projects || !projects.length) return '';
-
-  let html = '';
-  projects.forEach((p, i) => {
-    const isEven = i % 2 === 0; // even → image on right, odd → image on left
-
-    // Build tech icon row
-    let techRow = '';
-    if (p.tech) {
-      const techs = p.tech.split(/[,·•\/\s]+/).filter(Boolean);
-      techRow = '<div class="proj-tech-icons">';
-      for (const t of techs) {
-        const cls = skillToDevicon(t.trim());
-        if (cls) {
-          techRow += `<i class="${cls}" title="${t.trim()}" style="font-size:2rem;"></i>`;
-        }
+      /* — Projects — */
+      const hasProjects = d.projects && d.projects.length &&
+        !(d.projects.length === 1 && d.projects[0].name === 'Project Title');
+      if (hasProjects) {
+        const thumbClasses = ['t1','t2','t3','t4'];
+        const projSvgs = [
+          `<polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
+          `<rect x="3" y="3" width="18" height="18" rx="3" stroke="#06b6d4" stroke-width="2"/><path d="M9 9h6M9 12h6M9 15h4" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>`,
+          `<circle cx="12" cy="12" r="9" stroke="#a78bfa" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`,
+          `<path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"/>`,
+        ];
+        const renderProj = (arr) => arr.map((p, i) => `
+          <div class="project-card">
+            <div class="project-thumb ${thumbClasses[i % 4]}">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none">${projSvgs[i % 4]}</svg>
+            </div>
+            <div class="project-info">
+              <div class="project-name">${p.name || 'Project'}</div>
+              <div class="project-tech">${p.tech || ''}</div>
+              <div class="project-links">
+                ${p.github && p.github !== '#' ? `<a href="${p.github}" class="project-link" target="_blank"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</a>` : ''}
+                ${p.demo   && p.demo   !== '#' ? `<a href="${p.demo}"   class="project-link" target="_blank"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Live</a>` : ''}
+              </div>
+            </div>
+          </div>`).join('');
+        const pv = document.getElementById('projects-visible');
+        const pe = document.getElementById('projects-extra');
+        if (pv) pv.innerHTML = renderProj(d.projects.slice(0, 2));
+        if (pe) pe.innerHTML = d.projects.length > 2
+          ? `<div class="projects-grid" style="margin-top:14px;">${renderProj(d.projects.slice(2))}</div>` : '';
+        const projMoreWrap = document.querySelector('#projects .view-more-wrap');
+        if (projMoreWrap) projMoreWrap.style.display = d.projects.length > 2 ? '' : 'none';
+      } else {
+        // No projects — show empty state inside the card
+        emptyState('projects', 'projects');
       }
-      techRow += '</div>';
+
+      /* — Achievements — */
+      const hasAchievements = d.achievements && d.achievements.length > 0;
+      if (hasAchievements) {
+        const starSvg = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+        const renderAch = (arr) => arr.map(a => `
+          <div class="achievement-item">
+            <div class="achievement-icon">${starSvg}</div>
+            <div>
+              <div class="achievement-title">${a.title || ''}</div>
+              <div class="achievement-sub">${a.sub || ''}</div>
+            </div>
+          </div>`).join('');
+        const av = document.getElementById('achievements-visible');
+        const ae = document.getElementById('achievements-extra');
+        if (av) av.innerHTML = renderAch(d.achievements.slice(0, 3));
+        if (ae) ae.innerHTML = d.achievements.length > 3
+          ? `<div class="achievements-list" style="margin-top:12px;">${renderAch(d.achievements.slice(3))}</div>` : '';
+        const achMoreWrap = document.querySelector('#achievements .view-more-wrap');
+        if (achMoreWrap) achMoreWrap.style.display = d.achievements.length > 3 ? '' : 'none';
+      } else {
+        // No achievements — show empty state inside the card
+        emptyState('achievements', 'achievements');
+      }
+
+      /* — Contact — */
+      const emailLink = document.getElementById('contact-email-link');
+      if (emailLink && d.email) { emailLink.href = `mailto:${d.email}`; }
+      set('contact-email',    d.email);
+      set('contact-phone',    d.phone);
+      set('contact-location', d.location);
+      set('contact-copyright', `© ${new Date().getFullYear()} ${d.name || 'Your Name'}. All rights reserved.`);
     }
-
-    // Project screenshot placeholder (gradient)
-    const gradients = [
-      'linear-gradient(135deg,#1565c0,#29b6f6)',
-      'linear-gradient(135deg,#6a1b9a,#e040fb)',
-      'linear-gradient(135deg,#e65100,#ffb300)',
-      'linear-gradient(135deg,#1b5e20,#69f0ae)',
-    ];
-    const grad = gradients[i % gradients.length];
-
-    const projectImg = `
-      <div style="width:100%;height:180px;background:${grad};border-radius:8px;
-        box-shadow:0 8px 32px rgba(0,0,0,0.15);border:1px solid #e0e0e0;
-        display:flex;align-items:center;justify-content:center;">
-        <span style="color:rgba(255,255,255,0.7);font-size:0.9rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;">
-          ${p.name || 'Project'}
-        </span>
-      </div>`;
-
-    const imgDiv = isEven
-      ? `<div class="images-right">${projectImg}</div>`
-      : `<div class="images-left">${projectImg}</div>`;
-
-    const links = [];
-    if (p.github && p.github !== '#') links.push(`<a class="project-link" href="${p.github}" target="_blank" rel="noopener" style="margin:0 6px;">GitHub</a>`);
-    if (p.demo   && p.demo   !== '#') links.push(`<a class="project-link" href="${p.demo}"   target="_blank" rel="noopener" style="margin:0 6px;">Check it out!</a>`);
-    const linksHtml = links.length ? links.join('') : '';
-
-    const textContent = `
-      <h3>${p.name || 'Project'}</h3>
-      ${techRow}
-      <p style="text-align:justify;">${p.description || ''}</p>
-      ${linksHtml}`;
-
-    const textDiv = isEven
-      ? `<div class="contents" style="text-align:center;">${textContent}</div>`
-      : `<div class="contents-right" style="text-align:center;">${textContent}</div>`;
-
-    html += `<div class="user-projects">${isEven ? textDiv + imgDiv : imgDiv + textDiv}</div>`;
-  });
-  return html;
-}
-
-/* ════════════════════════════════════════
-   POPULATE FROM RESUME DATA
-════════════════════════════════════════ */
-function populateFromData(d) {
-  if (!d) return;
-
-  /* — Hero — */
-  const nameEl = el('hero-name');
-  if (nameEl) nameEl.textContent = (d.name || 'Your Name').toUpperCase();
-  if (d.title) {
-    const parts = d.title.split(/[,|·•]+/).map(s => s.trim()).filter(Boolean);
-    el('hero-title').textContent = parts.join(' • ');
-  }
-  document.title = `${d.name || 'Your Name'} — Portfolio`;
-
-  /* Profile avatar initials */
-  const avatarEl = el('profile-avatar-initials');
-  if (avatarEl && d.name) {
-    const parts = d.name.trim().split(/\s+/);
-    avatarEl.textContent = parts.length >= 2
-      ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase()
-      : parts[0].slice(0,2).toUpperCase();
-  }
-
-  /* — Social links — */
-  if (d.linkedin && d.linkedin !== '#') setHref('social-linkedin', d.linkedin);
-  else hide('social-linkedin');
-
-  if (d.github && d.github !== '#') setHref('social-github', d.github);
-  else hide('social-github');
-
-  if (d.email) setHref('social-email', `mailto:${d.email}`);
-  else hide('social-email');
-
-  if (d.twitter && d.twitter !== '#') { setHref('social-twitter', d.twitter); show('social-twitter'); }
-  if (d.website && d.website !== '#') { setHref('social-website', d.website); show('social-website'); }
-
-  /* — About bio — */
-  set('about-p1', d.bio);
-
-  /* — Skills grid — */
-  if (d.skills && d.skills.length) {
-    populateSkills(d.skills);
-  }
-
-  /* — Projects — */
-  const hasProjects = d.projects && d.projects.length &&
-    !(d.projects.length === 1 && d.projects[0].name === 'Project Title');
-
-  const container = el('projects-container');
-  if (container) {
-    if (hasProjects) {
-      container.innerHTML = buildProjectsHTML(d.projects);
-    } else {
-      container.innerHTML = `<div class="no-projects">Your featured projects will appear here after upload.</div>`;
-    }
-  }
-
-  /* — Footer — */
-  set('contact-copyright', `© ${new Date().getFullYear()} ${d.name || 'Your Name'}. All rights reserved.`);
-}
 
 /* ════════════════════════════════════════
    LOAD FROM LOCALSTORAGE
