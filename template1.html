@@ -1805,12 +1805,14 @@
             </div>
           </div>`).join('');
         if (visibleEl) visibleEl.innerHTML = renderExp(visible);
-        if (extraEl)   extraEl.innerHTML   = extra.length ? `<div class="exp-list" style="margin-top:18px;">${renderExp(extra)}</div>` : '';
+        if (extraEl) extraEl.innerHTML = extra.length
+          ? `<div class="exp-list" style="margin-top:18px;">${renderExp(extra)}</div>`
+          : '';
+
         // Hide view-more if no extras
         const expMoreWrap = document.querySelector('#experience .view-more-wrap');
         if (expMoreWrap) expMoreWrap.style.display = extra.length ? '' : 'none';
-                if (visibleEl) visibleEl.innerHTML = renderExp(visible);
-        if (extraEl) extraEl.innerHTML = extra.length ? `<div class="exp-list" style="margin-top:18px;">${renderExp(extra)}</div>` : '';
+
       } else {
         hideSection(document.getElementById('experience'));
       }
@@ -1845,12 +1847,9 @@
           ? `<div class="projects-grid" style="margin-top:14px;">${renderProj(d.projects.slice(2))}</div>` : '';
         const projMoreWrap = document.querySelector('#projects .view-more-wrap');
         if (projMoreWrap) projMoreWrap.style.display = d.projects.length > 2 ? '' : 'none';
-                if (pv) pv.innerHTML = renderProj(d.projects.slice(0, 2));
-        if (pe) pe.innerHTML = d.projects.length > 2
-          ? `<div class="projects-grid" style="margin-top:14px;">${renderProj(d.projects.slice(2))}</div>` : '';
-      } else {
-        hideSection(document.getElementById('projects'));
-      }
+        } else {
+          hideSection(document.getElementById('projects'));
+        }
 
             /* — Achievements — */
       if (d.achievements && d.achievements.length) {
