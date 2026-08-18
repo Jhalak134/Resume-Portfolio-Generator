@@ -4,4 +4,3 @@ python-dotenv
 jinja2
 pypdf
 python-docx
-pydantic

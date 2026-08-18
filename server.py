@@ -1,12 +1,43 @@
+"""
+server.py
+---------
+Flask backend for the Resume Portfolio Generator.
+
+Serves the existing frontend (index.html / app.js / style.css /
+template1.html) as static files, and implements the two endpoints
+app.js already calls but that previously did not exist:
+
+  POST /api/parse-resume       -> { text: "<extracted resume text>" }
+  POST /api/extract-portfolio  -> { ...structured portfolio JSON... }
+
+Run with:
+    python server.py
+Then open http://localhost:5000
+"""
+
 from flask import Flask, request, jsonify, send_from_directory
 
 from resume_ai import extract_text_from_bytes, get_resume_json
 
 app = Flask(__name__, static_folder=".", static_url_path="")
 
+
+# ---------------------------------------------------------------------
+# Static frontend
+# ---------------------------------------------------------------------
+
 @app.route("/")
 def index():
     return send_from_directory(".", "index.html")
+
+
+# Flask's static_url_path="" already serves style.css, app.js,
+# template1.html, etc. straight from this folder.
+
+
+# ---------------------------------------------------------------------
+# API: extract raw text from an uploaded PDF/DOCX/TXT
+# ---------------------------------------------------------------------
 
 @app.route("/api/parse-resume", methods=["POST"])
 def parse_resume():
@@ -25,6 +56,11 @@ def parse_resume():
         return jsonify({"error": f"Failed to read file: {e}"}), 500
 
     return jsonify({"text": text})
+
+
+# ---------------------------------------------------------------------
+# API: turn resume text into structured portfolio JSON via Gemini
+# ---------------------------------------------------------------------
 
 @app.route("/api/extract-portfolio", methods=["POST"])
 def extract_portfolio():
@@ -47,8 +83,4 @@ def extract_portfolio():
 
 
 if __name__ == "__main__":
-    import os
-
-    port = int(os.getenv("PORT", "5000"))
-    debug = os.getenv("FLASK_DEBUG", "0") == "1"
-    app.run(host="0.0.0.0", port=port, debug=debug)
+    app.run(debug=True, port=5000)

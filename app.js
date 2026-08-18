@@ -1,4 +1,4 @@
-/* app.js - PortfolioBuilder interactivity */
+/* app.js — PortfolioBuilder interactivity */
 
 // ─── State ────────────────────────────────────────────────
 let resumeFile       = null;          // the actual File object
@@ -7,14 +7,12 @@ let selectedTemplate = 'template1.html';
 // ─── Hamburger / Mobile Menu ──────────────────────────────
 const hamburger  = document.getElementById('hamburger-btn');
 const mobileMenu = document.getElementById('mobile-menu');
-const siteHeader = document.getElementById('top');
 
 hamburger?.addEventListener('click', () => {
   const isOpen = mobileMenu.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
   hamburger.setAttribute('aria-expanded', isOpen);
   mobileMenu.setAttribute('aria-hidden', !isOpen);
-  siteHeader?.classList.toggle('menu-open', isOpen);
 });
 mobileMenu?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
@@ -22,28 +20,6 @@ mobileMenu?.querySelectorAll('a').forEach(link => {
     hamburger?.classList.remove('open');
     hamburger?.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
-    siteHeader?.classList.remove('menu-open');
-  });
-});
-
-// ─── Tips Accordion ───────────────────────────────────────
-const tipToggles = document.querySelectorAll('.tip-toggle');
-
-tipToggles.forEach(toggle => {
-  toggle.addEventListener('click', () => {
-    const item = toggle.closest('.tip-item');
-    const isOpen = item.classList.contains('open');
-
-    // Keep the section compact: only one tip is open at a time.
-    document.querySelectorAll('.tip-item.open').forEach(openItem => {
-      openItem.classList.remove('open');
-      openItem.querySelector('.tip-toggle')?.setAttribute('aria-expanded', 'false');
-    });
-
-    if (!isOpen) {
-      item.classList.add('open');
-      toggle.setAttribute('aria-expanded', 'true');
-    }
   });
 });
 
@@ -146,7 +122,7 @@ document.querySelectorAll('.template-card:not(.coming-soon-card)').forEach(card 
   });
 });
 
-// ─── Generate Portfolio - Main Action ────────────────────
+// ─── Generate Portfolio — Main Action ────────────────────
 generateMainBtn?.addEventListener('click', async () => {
   if (!resumeFile) {
     showNotification('❌ Please upload a resume first.', 'error');
@@ -174,11 +150,6 @@ generateMainBtn?.addEventListener('click', async () => {
   } catch (err) {
     console.error('Portfolio generation error:', err);
     showNotification('❌ Generation failed. Using template with sample data.', 'error');
-    // Clear any portfolioData left over from a PREVIOUS successful generation -
-    // otherwise the template would silently show that old resume's data here
-    // while this message claims it's showing sample/default data.
-    localStorage.removeItem('portfolioData');
-    localStorage.removeItem('portfolioTemplate');
     // Fallback: open template anyway with sample data
     setTimeout(() => { window.location.href = selectedTemplate; }, 1200);
   } finally {
@@ -357,12 +328,11 @@ function detectExperience(text) {
   if (!expSection) return [{ role: 'Job Title', company: 'Company Name', duration: 'Year – Year', bullets: ['Key responsibility.'] }];
   const lines = expSection[1].split('\n').map(l => l.trim()).filter(Boolean);
   // Very basic: take first few lines as job title / company
-  const bullets = lines.slice(2, 5).filter(l => l.length > 10).map(l => l.replace(/^[•\-*]\s*/, ''));
   return [{
     role: lines[0] || 'Job Title',
     company: lines[1] || 'Company Name',
     duration: detectYear(expSection[1]) || 'Year – Year',
-    bullets: bullets.length ? bullets : ['Key responsibility.']
+    bullets: lines.slice(2, 5).filter(l => l.length > 10).map(l => l.replace(/^[•\-*]\s*/, '')) || ['Key responsibility.']
   }];
 }
 
@@ -371,15 +341,9 @@ function detectProjects(text) {
   if (!projSection) return [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
   const lines = projSection[1].split('\n').map(l => l.trim()).filter(l => l.length > 3);
   const projects = [];
-  const limit = Math.min(lines.length, 6);
-  let i = 0;
-  while (i < limit && projects.length < 3) {
+  for (let i = 0; i < Math.min(lines.length, 6) && projects.length < 3; i++) {
     if (lines[i].length > 3 && lines[i].length < 60) {
-      const tech = lines[i + 1] || 'Tech Stack';
-      projects.push({ name: lines[i], tech, github: '#', demo: '#' });
-      i += 2; // skip the line we just used as "tech" so it isn't reused as the next project's name
-    } else {
-      i += 1;
+      projects.push({ name: lines[i], tech: lines[i+1] || 'Tech Stack', github: '#', demo: '#' });
     }
   }
   return projects.length ? projects : [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
@@ -437,7 +401,7 @@ spinStyle.textContent = `@keyframes spin{to{transform:rotate(360deg)}} .spin{ani
 document.head.appendChild(spinStyle);
 
 // ─── Scroll Reveal ────────────────────────────────────────
-const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta,.step-item,.tip-item,.faq-item');
+const revealEls = document.querySelectorAll('.feature-item,.template-card,.stat-card,.about-text,.about-stats,.generate-cta,.step-item');
 revealEls.forEach(el => el.classList.add('reveal'));
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
