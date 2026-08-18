@@ -499,6 +499,7 @@ ul[role="list"] { list-style: none; }
   font-size: .8rem;
   color: var(--muted);
   margin-top: 2px;
+  margin-bottom: 16px;
   animation: riseIn .7s .4s cubic-bezier(.22,1,.36,1) both;
 }
 
