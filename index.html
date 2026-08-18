@@ -149,7 +149,19 @@
             <div class="pup-template-row">
               <span class="pup-label">Template:</span>
               <div class="pup-tmpl-chips" id="pup-tmpl-chips">
-                <button class="pup-chip pup-chip-active" id="pup-chip-classic" data-template="template1.html" type="button">
+                <button class="pup-chip pup-chip-active" id="pup-chip-particle" data-template="template1.html" type="button">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="5" cy="12" r="1.5" fill="currentColor"/>
+                    <circle cx="12" cy="6" r="1.5" fill="currentColor"/>
+                    <circle cx="19" cy="12" r="1.5" fill="currentColor"/>
+                    <circle cx="12" cy="18" r="1.5" fill="currentColor"/>
+                    <line x1="5" y1="12" x2="12" y2="6" stroke="currentColor" stroke-width="1.3"/>
+                    <line x1="12" y1="6" x2="19" y2="12" stroke="currentColor" stroke-width="1.3"/>
+                    <line x1="5" y1="12" x2="12" y2="18" stroke="currentColor" stroke-width="1.3"/>
+                  </svg>
+                  Constellation
+                </button>
+                <button class="pup-chip" id="pup-chip-classic" data-template="template2.html" type="button">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2"/>
                     <path d="M9 9h6M9 12h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -362,7 +374,53 @@
         <p class="section-sub">Pick a template, upload your resume above, and generate your portfolio in seconds.</p>
 
         <div class="templates-grid">
-          <div class="template-card active-template" id="template-classic" tabindex="0" role="button" aria-pressed="true" aria-label="Classic Professional template — selected" data-template="template1.html">
+
+          <!-- ── TEMPLATE 1: Constellation Blue (AVS1508-style) ── -->
+          <div class="template-card active-template" id="template-particle" tabindex="0" role="button" aria-pressed="true" aria-label="Constellation Blue template — selected" data-template="template1.html">
+            <div class="template-preview" style="background:linear-gradient(135deg,#1565c0 0%,#1976d2 40%,#29b6f6 100%);">
+              <!-- Constellation dots -->
+              <div style="position:absolute;inset:0;overflow:hidden;">
+                <div style="position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.8);top:18%;left:25%;"></div>
+                <div style="position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.7);top:38%;left:62%;"></div>
+                <div style="position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.6);top:60%;left:40%;"></div>
+                <div style="position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.75);top:22%;left:78%;"></div>
+                <div style="position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.65);top:72%;left:82%;"></div>
+                <div style="position:absolute;width:1px;height:28px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);top:18%;left:25%;transform:rotate(38deg);"></div>
+                <div style="position:absolute;width:1px;height:22px;background:linear-gradient(to bottom,rgba(255,255,255,.25),transparent);top:22%;left:78%;transform:rotate(-22deg);"></div>
+              </div>
+              <!-- Hero text simulation -->
+              <div style="position:relative;z-index:1;text-align:center;padding:22px 10px 14px;">
+                <div style="width:75%;height:9px;background:rgba(255,255,255,.85);border-radius:4px;margin:0 auto 6px;"></div>
+                <div style="width:55%;height:5px;background:rgba(255,255,255,.5);border-radius:3px;margin:0 auto 14px;"></div>
+                <div style="display:flex;justify-content:center;gap:6px;margin-bottom:8px;">
+                  <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);"></div>
+                  <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);"></div>
+                  <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);"></div>
+                </div>
+                <div style="width:50%;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin:0 auto;"></div>
+              </div>
+              <div class="tmpl-hover-overlay" aria-hidden="true">
+                <a href="template1.html" class="btn-preview-tmpl" id="btn-preview-particle" target="_blank">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  Preview Template
+                </a>
+              </div>
+            </div>
+            <div class="template-meta">
+              <span class="template-badge">Available Now</span>
+              <h3>Constellation Blue</h3>
+              <p>Blue gradient hero with constellation particles — AVS1508 style.</p>
+            </div>
+            <div class="tmpl-selected-tick" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <!-- ── TEMPLATE 2: Classic Professional (existing) ── -->
+          <div class="template-card" id="template-classic" tabindex="0" role="button" aria-pressed="false" aria-label="Classic Professional template" data-template="template2.html">
             <div class="template-preview">
               <div class="tmpl-bar tmpl-bar-dark"></div>
               <div class="tmpl-body">
@@ -386,7 +444,7 @@
                 </div>
               </div>
               <div class="tmpl-hover-overlay" aria-hidden="true">
-                <a href="template1.html" class="btn-preview-tmpl" id="btn-preview-classic" target="_blank">
+                <a href="template2.html" class="btn-preview-tmpl" id="btn-preview-classic" target="_blank">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                     <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
@@ -405,6 +463,7 @@
             </div>
           </div>
 
+          <!-- ── TEMPLATE 3: Modern Minimal (Coming Soon) ── -->
           <div class="template-card coming-soon-card" id="template-modern" aria-label="Modern Minimal template — coming soon">
             <div class="template-preview preview-blur">
               <div class="tmpl-bar" style="background:linear-gradient(90deg,#4f46e5,#8b5cf6);"></div>
@@ -428,6 +487,7 @@
             </div>
           </div>
 
+          <!-- ── TEMPLATE 4: Creative Portfolio (Coming Soon) ── -->
           <div class="template-card coming-soon-card" id="template-creative" aria-label="Creative Portfolio template — coming soon">
             <div class="template-preview preview-blur">
               <div class="tmpl-bar" style="background:linear-gradient(90deg,#ff5a36,#f2a31a);"></div>
@@ -455,6 +515,7 @@
               <p>Eye-catching design for designers and creatives.</p>
             </div>
           </div>
+
         </div>
 
         <!-- Generate Portfolio CTA banner -->
