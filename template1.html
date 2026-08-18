@@ -4,135 +4,147 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Name — Portfolio</title>
-  <meta name="description" content="Personal portfolio showcasing projects, skills, and story." />
-
-  <!-- Fonts -->
+  <meta name="description" content="Professional portfolio showcasing skills, experience, projects and achievements." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <!-- Devicon: tech stack icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
-
-  <!-- Font Awesome for social icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
   <style>
-    /* ════════════════════════════════════════
+    /* ─────────────────────────────────────────────
        RESET & BASE
-    ════════════════════════════════════════ */
+    ───────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      font-family: 'Raleway', sans-serif;
-      background: #fff;
+      font-family: 'Lato', sans-serif;
       color: #333;
-      line-height: 1.6;
+      background: #fff;
       overflow-x: hidden;
+      line-height: 1.7;
     }
     a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    img, svg { display: block; }
 
-    /* ════════════════════════════════════════
-       HERO — Blue gradient + constellation canvas
-    ════════════════════════════════════════ */
+    /* ─────────────────────────────────────────────
+       SCROLL REVEAL
+    ───────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─────────────────────────────────────────────
+       ① HERO — Blue-to-cyan gradient + particles
+    ───────────────────────────────────────────── */
     #hero {
       position: relative;
-      width: 100%;
       min-height: 100vh;
-      background: linear-gradient(135deg, #1565c0 0%, #1976d2 25%, #1e88e5 50%, #29b6f6 75%, #00e5ff 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background: linear-gradient(135deg, #1a56db 0%, #1a8fd1 45%, #00b4d8 100%);
       overflow: hidden;
+      text-align: center;
+      padding: 80px 24px 60px;
     }
 
-    /* Constellation canvas sits behind everything */
+    /* Canvas sits behind everything */
     #constellation-canvas {
       position: absolute;
       inset: 0;
       z-index: 0;
+      pointer-events: none;
     }
 
-    /* Header content centred on top of canvas */
-    .header {
+    .hero-content {
       position: relative;
       z-index: 1;
-      text-align: center;
-      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
     }
 
-    .site-title {
-      display: block;
-      font-size: clamp(2.4rem, 7vw, 5.5rem);
+    /* Big bold ALL-CAPS name */
+    .hero-name {
+      font-family: 'Raleway', sans-serif;
       font-weight: 900;
-      letter-spacing: 3px;
-      color: #fff;
+      font-size: clamp(2.6rem, 8vw, 6.5rem);
+      letter-spacing: 4px;
       text-transform: uppercase;
-      margin-bottom: 12px;
-      line-height: 1.1;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.25);
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 18px;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.18);
     }
 
-    .site-description {
-      display: block;
-      font-size: clamp(0.95rem, 2.5vw, 1.45rem);
+    /* Subtitle — roles separated by bullets */
+    .hero-roles {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(0.95rem, 2.5vw, 1.25rem);
       font-weight: 400;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: rgba(255,255,255,0.92);
-      margin-bottom: 36px;
+      margin-bottom: 32px;
     }
 
     /* Social icon circles */
-    .header-icons {
+    .hero-socials {
       display: flex;
-      justify-content: center;
       gap: 14px;
-      margin-bottom: 22px;
-    }
-    .header-icons a {
-      display: flex;
-      align-items: center;
       justify-content: center;
-      width: 46px;
-      height: 46px;
+      margin-bottom: 28px;
+    }
+    .hero-soc {
+      width: 46px; height: 46px;
       border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.6);
+      border: 2px solid rgba(255,255,255,0.7);
+      display: flex; align-items: center; justify-content: center;
       color: #fff;
-      font-size: 1.1rem;
       transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
-    .header-icons a:hover {
-      background: rgba(255,255,255,0.2);
+    .hero-soc:hover {
+      background: rgba(255,255,255,0.18);
       border-color: #fff;
-      transform: translateY(-3px);
+      transform: scale(1.12);
     }
 
-    /* "About Me" / "Projects" text links */
-    .header-links {
+    /* In-page nav links */
+    .hero-nav {
       display: flex;
-      justify-content: center;
-      gap: 28px;
-    }
-    .header-links a {
+      gap: 32px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 1px;
       color: rgba(255,255,255,0.85);
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.5px;
+    }
+    .hero-nav a {
+      position: relative;
       transition: color 0.2s;
     }
-    .header-links a:hover { color: #fff; }
+    .hero-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 2px;
+      background: #fff;
+      transition: width 0.25s;
+    }
+    .hero-nav a:hover { color: #fff; }
+    .hero-nav a:hover::after { width: 100%; }
 
-    /* Down chevron */
-    .down-arrow {
+    /* Scroll-down chevron */
+    .scroll-down {
       position: absolute;
       bottom: 28px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1;
       color: rgba(255,255,255,0.7);
-      font-size: 1.4rem;
       animation: bounce 2s ease-in-out infinite;
       cursor: pointer;
     }
@@ -141,1086 +153,1148 @@
       50%      { transform: translateX(-50%) translateY(8px); }
     }
 
-    /* ════════════════════════════════════════
-       ABOUT SECTION
-    ════════════════════════════════════════ */
-    #about {
+    /* ─────────────────────────────────────────────
+       SHARED SECTION STYLES
+    ───────────────────────────────────────────── */
+    .section {
       padding: 80px 24px;
-      background: #fff;
     }
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section-alt { background: #f8f9fc; }
 
-    /* "My Story" header */
-    .user-details {
+    .section-title {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      letter-spacing: 0.5px;
+      color: #1a1a2e;
       text-align: center;
       margin-bottom: 48px;
+      position: relative;
     }
-    .user-details h1 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 800;
-      color: #222;
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, #1a56db, #00b4d8);
+      border-radius: 2px;
+      margin: 10px auto 0;
+    }
+
+    /* ─────────────────────────────────────────────
+       ② MY STORY
+    ───────────────────────────────────────────── */
+    .story-avatar-wrap {
+      display: flex;
+      justify-content: center;
       margin-bottom: 28px;
     }
-
-    /* Profile photo */
-    .profile-photo {
-      width: 150px;
-      height: 150px;
+    .story-avatar {
+      width: 130px; height: 130px;
       border-radius: 50%;
-      object-fit: cover;
-      margin: 0 auto 28px;
-      border: 4px solid #e8eaf6;
-      box-shadow: 0 8px 32px rgba(25,118,210,0.15);
-    }
-
-    /* Profile photo placeholder (initials avatar) */
-    .profile-avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #1976d2, #29b6f6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 28px;
-      font-size: 3rem;
-      font-weight: 900;
+      background: linear-gradient(135deg, #1a56db, #00b4d8);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Raleway', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
       color: #fff;
-      letter-spacing: -2px;
-      border: 4px solid #e8eaf6;
-      box-shadow: 0 8px 32px rgba(25,118,210,0.2);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 8px 32px rgba(26,86,219,0.25);
     }
-
-    .user-details p {
-      max-width: 700px;
-      margin: 0 auto;
-      font-size: 0.97rem;
-      color: #555;
+    .story-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .story-body {
+      font-size: 1rem;
+      color: #444;
       line-height: 1.85;
       text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .story-body .hi {
+      color: #1a56db;
+      font-weight: 700;
     }
 
-    /* ════════════════════════════════════════
-       SKILLS / TECH STACK — 4-column grid
-    ════════════════════════════════════════ */
-    .user {
-      max-width: 960px;
-      margin: 0 auto;
+    /* ─────────────────────────────────────────────
+       ③ SKILLS — 4-column grid (Languages / Frontend / Backend / Tools)
+    ───────────────────────────────────────────── */
+    .skills-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      padding: 0 24px 80px;
-    }
-
-    .tech {
+      gap: 32px 24px;
       text-align: center;
     }
-    .tech h2 {
-      font-size: 1.1rem;
+    .skill-col-title {
+      font-family: 'Raleway', sans-serif;
       font-weight: 700;
-      color: #222;
+      font-size: 1.05rem;
+      color: #1a1a2e;
       margin-bottom: 18px;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.5px;
     }
-
-    /* Devicon icons */
-    .tech i {
-      font-size: 2.8rem;
-      margin: 6px 8px;
-    }
-
-    /* Tech logos (SVG/img fallbacks) */
-    .tech-icons {
+    .skill-icons {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
       gap: 8px;
-      margin-bottom: 16px;
+      justify-content: center;
+      margin-bottom: 14px;
     }
-    .tech-icons img {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-    }
-    .tech-icons i {
-      font-size: 2.8rem;
-      line-height: 1;
-    }
-
-    /* Dynamic skill tags from resume data */
-    .skill-chip {
-      display: inline-block;
-      background: #e3f2fd;
-      color: #1565c0;
-      border-radius: 4px;
+    .skill-icon-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eef2ff;
+      border: 1.5px solid #c7d2fe;
+      color: #3730a3;
       font-size: 0.78rem;
       font-weight: 600;
-      padding: 4px 10px;
-      margin: 3px 2px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
     }
-
-    .tech p {
+    .skill-icon-pill:hover {
+      background: #c7d2fe;
+      border-color: #818cf8;
+      transform: translateY(-2px);
+    }
+    .skill-col-desc {
       font-size: 0.8rem;
-      color: #777;
+      color: #666;
       line-height: 1.6;
-      margin-top: 12px;
     }
+    .skill-col-desc .hl { color: #1a56db; font-weight: 600; }
 
-    /* ════════════════════════════════════════
-       PROJECTS SECTION
-    ════════════════════════════════════════ */
-    #projects {
-      background: #fafafa;
-      padding: 80px 24px;
-    }
-
-    #projects .user-details {
-      margin-bottom: 52px;
-    }
-    #projects .user-details h1 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 800;
-      color: #222;
-    }
-
-    /* Alternating project rows */
-    .user-projects {
-      max-width: 900px;
-      margin: 0 auto 60px;
+    /* Fallback flat list (all skills in one row) */
+    .skills-flat {
       display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-    .user-projects:last-child { margin-bottom: 0; }
-
-    /* Image side — right (default, odd) */
-    .images-right {
-      flex: 0 0 48%;
-      order: 2;
-    }
-    /* Image side — left (even) */
-    .images-left {
-      flex: 0 0 48%;
-      order: 1;
-    }
-
-    .user-projects .images-right img,
-    .user-projects .images-left img {
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      border: 1px solid #e0e0e0;
-    }
-
-    /* Text content */
-    .contents {
-      flex: 1;
-      order: 1;
-      text-align: center;
-    }
-    .contents-right {
-      flex: 1;
-      order: 2;
-      text-align: center;
-    }
-
-    .contents h3,
-    .contents-right h3 {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #222;
-      margin-bottom: 12px;
-    }
-
-    /* Tech icons row in projects */
-    .proj-tech-icons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
       flex-wrap: wrap;
-    }
-    .proj-tech-icons img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
+      gap: 10px;
+      justify-content: center;
     }
 
-    .contents p,
-    .contents-right p {
-      font-size: 0.88rem;
-      color: #555;
-      line-height: 1.8;
-      text-align: justify;
-      margin-bottom: 18px;
+    /* ─────────────────────────────────────────────
+       ④ FEATURED PROJECTS — alternating rows
+    ───────────────────────────────────────────── */
+    .projects-list { display: flex; flex-direction: column; gap: 60px; }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .project-row.reverse { direction: rtl; }
+    .project-row.reverse > * { direction: ltr; }
+
+    .proj-img-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.12);
+      background: linear-gradient(135deg, #e0e7ff, #bfdbfe);
+      aspect-ratio: 16/10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .proj-img-inner {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .proj-placeholder-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1a56db, #00b4d8);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .proj-placeholder-label {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #3730a3;
+      letter-spacing: 0.5px;
     }
 
-    /* "Check it out!" button */
-    .project-link {
+    .proj-info { padding: 4px 0; }
+    .proj-name {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #1a1a2e;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .proj-tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .proj-tech-badge {
       display: inline-block;
-      border: 1.5px solid #1976d2;
-      color: #1976d2;
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 8px 22px;
-      border-radius: 4px;
-      transition: background 0.2s, color 0.2s;
-    }
-    .project-link:hover {
-      background: #1976d2;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: #fff;
+      background: linear-gradient(90deg, #1a56db, #00b4d8);
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.3px;
+    }
+    .proj-desc {
+      font-size: 0.92rem;
+      color: #555;
+      line-height: 1.75;
+      margin-bottom: 18px;
+      text-align: justify;
+    }
+    .proj-links-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .proj-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: 'Raleway', sans-serif;
+      padding: 8px 20px;
+      border-radius: 4px;
+      border: 1.5px solid #1a56db;
+      color: #1a56db;
+      background: transparent;
+      transition: background 0.2s, color 0.2s, transform 0.18s;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+    }
+    .proj-btn:hover {
+      background: #1a56db;
+      color: #fff;
+      transform: translateY(-2px);
     }
 
-    /* ═══════════════════════════════════════════
-       EMPTY STATE
-    ═══════════════════════════════════════════ */
-    .empty-state {
+    /* ─────────────────────────────────────────────
+       ⑤ EXPERIENCE — clean timeline
+    ───────────────────────────────────────────── */
+    .exp-list { display: flex; flex-direction: column; gap: 32px; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .exp-year {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: #1a56db;
+      letter-spacing: 0.5px;
+      padding-top: 3px;
+      text-align: right;
+    }
+    .exp-role {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #1a1a2e;
+      margin-bottom: 3px;
+    }
+    .exp-company {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1a56db;
+      margin-bottom: 10px;
+    }
+    .exp-bullets {
+      list-style: none;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 28px 16px;
-      color: var(--text-subtle);
-      text-align: center;
+      gap: 5px;
     }
-    .empty-state-icon {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: #555;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.65;
+    }
+    .exp-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #1a56db;
+      font-size: 0.75rem;
+    }
+
+    /* ─────────────────────────────────────────────
+       ⑥ EDUCATION
+    ───────────────────────────────────────────── */
+    .edu-list { display: flex; flex-direction: column; gap: 24px; }
+    .edu-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .edu-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .edu-year {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: #1a56db;
+      letter-spacing: 0.5px;
+      padding-top: 3px;
+      text-align: right;
+    }
+    .edu-degree {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: #1a1a2e;
+      margin-bottom: 3px;
+    }
+    .edu-school {
+      font-size: 0.88rem;
+      color: #1a56db;
+      font-weight: 600;
+    }
+
+    /* ─────────────────────────────────────────────
+       ⑦ ACHIEVEMENTS
+    ───────────────────────────────────────────── */
+    .ach-list { display: flex; flex-direction: column; gap: 18px; }
+    .ach-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 20px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .ach-item:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 4px 16px rgba(26,86,219,0.08);
+    }
+    .ach-star-ico {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: #fef3c7;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+    .ach-title {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.97rem;
+      color: #1a1a2e;
+      margin-bottom: 2px;
+    }
+    .ach-sub { font-size: 0.83rem; color: #777; }
+
+    /* ─────────────────────────────────────────────
+       ⑧ CONTACT
+    ───────────────────────────────────────────── */
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .contact-card:hover {
+      border-color: #1a56db;
+      box-shadow: 0 4px 16px rgba(26,86,219,0.1);
+      transform: translateY(-2px);
+    }
+    .contact-card-ico {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: #eef2ff;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .empty-state p {
-      font-size: 0.82rem;
-      color: var(--text-subtle);
-      line-height: 1.5;
+    .contact-card-lbl {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+    .contact-card-val {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      word-break: break-all;
     }
 
-    /* ════════════════════════════════════════
+    /* ─────────────────────────────────────────────
+       VIEW MORE
+    ───────────────────────────────────────────── */
+    .view-more-wrap { text-align: center; margin-top: 32px; }
+    .btn-view-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: 'Raleway', sans-serif;
+      color: #1a56db;
+      background: transparent;
+      border: 1.5px solid #1a56db;
+      padding: 10px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-view-more:hover { background: #1a56db; color: #fff; }
+    .extra-content { display: none; }
+    .extra-content.open { display: block; }
+
+    /* ─────────────────────────────────────────────
        FOOTER
-    ════════════════════════════════════════ */
+    ───────────────────────────────────────────── */
     footer {
-      background: #222;
-      color: rgba(255,255,255,0.6);
+      background: #1a1a2e;
+      color: rgba(255,255,255,0.55);
       text-align: center;
       padding: 24px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.3px;
     }
-    #contact-copyright { color: rgba(255,255,255,0.55); }
+    #contact-copyright { color: rgba(255,255,255,0.6); }
 
-    /* ════════════════════════════════════════
-       RESPONSIVE
-    ════════════════════════════════════════ */
-    @media (max-width: 900px) {
-      .user { grid-template-columns: repeat(2, 1fr); }
+    /* ─────────────────────────────────────────────
+       EMPTY STATE
+    ───────────────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9rem;
+      padding: 32px;
+      font-style: italic;
     }
-    @media (max-width: 680px) {
-      .user { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .user-projects {
-        flex-direction: column;
-        gap: 24px;
-      }
-      .images-right, .images-left { order: 0 !important; flex: none; width: 100%; }
-      .contents, .contents-right { order: 0 !important; }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .project-row { grid-template-columns: 1fr; }
+      .project-row.reverse { direction: ltr; }
+      .exp-item, .edu-item { grid-template-columns: 1fr; }
+      .exp-year, .edu-year { text-align: left; }
+      .hero-name { letter-spacing: 2px; }
+      .hero-nav { flex-wrap: wrap; gap: 18px; }
     }
     @media (max-width: 420px) {
-      .user { grid-template-columns: 1fr 1fr; }
-      .site-title { letter-spacing: 1px; }
+      .skills-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════
-       NAVBAR
-  ══════════════════════════════════════════ -->
-  <header id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-brand" id="nav-logo">
-        <div class="nav-brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="3" width="18" height="18" rx="4" fill="white" fill-opacity="0.35"/>
-            <path d="M8 7h5a2.5 2.5 0 0 1 0 5H8V7z M8 12h5.5a3 3 0 0 1 0 6H8v-6z" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span id="nav-name">Your Name</span>
-      </a>
+<!-- ① HERO ─────────────────────────────────── -->
+<section id="hero">
+  <canvas id="constellation-canvas"></canvas>
 
-      <nav class="nav-links" aria-label="Main Navigation">
-        <a href="#about"        id="nav-about">About</a>
-        <a href="#skills"       id="nav-skills">Skills</a>
-        <a href="#education"    id="nav-education">Education</a>
-        <a href="#experience"   id="nav-experience">Experience</a>
-        <a href="#projects"     id="nav-projects">Projects</a>
-        <a href="#achievements" id="nav-achievements">Achievements</a>
-        <a href="#contact"      id="nav-contact">Contact</a>
-      </nav>
+  <div class="hero-content">
+    <h1 class="hero-name" id="hero-name">Your Name</h1>
 
-      <button class="nav-download" id="nav-download-btn" type="button">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <p class="hero-roles" id="hero-roles">
+      Programmer &nbsp;•&nbsp; Web Developer &nbsp;•&nbsp; Problem Solver
+    </p>
+
+    <div class="hero-socials">
+      <a href="#" class="hero-soc" id="soc-linkedin" aria-label="LinkedIn" target="_blank" rel="noopener">
+        <!-- LinkedIn -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
         </svg>
-        Download PDF
-      </button>
-
-      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      </a>
+      <a href="#" class="hero-soc" id="soc-github" aria-label="GitHub" target="_blank" rel="noopener">
+        <!-- GitHub -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+        </svg>
+      </a>
+      <a href="#" class="hero-soc" id="soc-email" aria-label="Email">
+        <!-- Email -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </a>
+      <a href="#" class="hero-soc" id="soc-twitter" aria-label="Twitter" target="_blank" rel="noopener" style="display:none;">
+        <!-- Twitter -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+        </svg>
+      </a>
     </div>
-    <div class="nav-mobile" id="mobile-nav" aria-hidden="true">
-      <a href="#about">About</a>
+
+    <nav class="hero-nav">
+      <a href="#story">About Me</a>
       <a href="#skills">Skills</a>
-      <a href="#education">Education</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
-      <a href="#achievements">Achievements</a>
+      <a href="#education">Education</a>
       <a href="#contact">Contact</a>
-    </div>
-  </header>
-
-  <main>
-
-  <!-- ══════════════════════════════════════════
-       HERO
-  ══════════════════════════════════════════ -->
-  <section id="hero">
-    <div class="hero-dots" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-tag">
-          <span class="hero-tag-dot"></span>
-          Open to Opportunities
-        </div>
-
-        <h1 class="hero-name" id="hero-name">
-          <span>Your Name</span>
-        </h1>
-        <p class="hero-title" id="hero-title">Your Professional Title</p>
-        <p class="hero-desc" id="hero-desc">
-          A short and impactful tagline or summary about you and what you do.
-          Passionate about building great products and solving complex problems.
-        </p>
-
-        <div class="hero-cta">
-          <a href="#" class="btn-primary" id="btn-download-portfolio">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Download Portfolio
-          </a>
-          <a href="#contact" class="btn-outline" id="btn-contact-me">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            Contact Me
-          </a>
-        </div>
-
-        <div class="hero-socials">
-          <a href="#" class="social-icon" id="social-github" aria-label="GitHub" title="GitHub">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#" class="social-icon" id="social-linkedin" aria-label="LinkedIn" title="LinkedIn">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
-          </a>
-          <a href="#" class="social-icon" id="social-twitter" aria-label="Twitter" title="Twitter" style="display:none;">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="mailto:your@email.com" class="social-icon" id="social-email" aria-label="Email" title="Email">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-      </div>
-
-    <div class="header-links">
-      <a href="#about">About Me</a>
-      <a href="#projects">Projects</a>
-    </div>
+    </nav>
   </div>
 
-  <a class="down-arrow" href="#about" aria-label="Scroll down">
-    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+  <!-- Scroll chevron -->
+  <a href="#story" class="scroll-down" aria-label="Scroll down">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
   </a>
 </section>
 
-<!-- ════════════════════════════════════════
-     ABOUT — My Story + Tech Stack
-════════════════════════════════════════ -->
-<section id="about">
-
-  <div class="user-details">
-    <h1>My Story</h1>
-    <!-- Profile photo / avatar -->
-    <div id="profile-avatar-wrap">
-      <div class="profile-avatar" id="profile-avatar-initials">YN</div>
+<!-- ② MY STORY ──────────────────────────────── -->
+<section class="section" id="story">
+  <div class="section-inner">
+    <h2 class="section-title reveal">My Story</h2>
+    <div class="story-avatar-wrap reveal">
+      <div class="story-avatar" id="story-avatar">
+        <span id="story-initials">YN</span>
+      </div>
     </div>
-    <p id="about-p1">
-      Passionate developer and designer with a love for building things that live on the internet.
-      Open to opportunities in Software Engineering, Data Science, and Machine Learning.
+    <p class="story-body reveal" id="story-bio">
+      I am a <span class="hi">passionate developer</span> with a love for building elegant, performant software.
+      I enjoy exploring the fields of <span class="hi">Software Engineering</span>, <span class="hi">Web Development</span>,
+      and am always open to new opportunities and collaborations.
     </p>
-  </div>
-
-  <!-- Tech stack — 4 columns (populated by JS from resume data, or show defaults) -->
-  <div class="user" id="skills-grid">
-
-    <div class="tech" id="tech-col-1">
-      <h2 id="tech-h1">Languages</h2>
-      <div class="tech-icons" id="tech-icons-1">
-        <i class="devicon-python-plain colored" title="Python"></i>
-        <i class="devicon-java-plain-wordmark colored" title="Java"></i>
-        <i class="devicon-cplusplus-plain colored" title="C++"></i>
-        <i class="devicon-javascript-plain colored" title="JavaScript"></i>
-      </div>
-      <p id="tech-desc-1">My favorite languages for systems programming, software engineering, and data analysis.</p>
-    </div>
-
-  <!-- ══════════════════════════════════════════
-       EDUCATION + EXPERIENCE
-  ══════════════════════════════════════════ -->
-  <div class="section-row" id="row-edu-exp" style="background:var(--bg);">
-    <div class="container">
-      <div class="two-col">
-
-        <!-- EDUCATION -->
-        <div class="section-card reveal" id="education">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12v5c3.333 2 8.667 2 12 0v-5" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <span class="card-title">Education</span>
-          </div>
-          <div class="edu-list" id="education-list">
-            <div class="edu-item">
-              <div class="edu-timeline">
-                <div class="edu-dot"></div>
-                <div class="edu-line"></div>
-              </div>
-              <div>
-                <div class="edu-degree" id="edu-degree-1">Degree / Course Name</div>
-                <div class="edu-school" id="edu-school-1">University / College Name</div>
-                <div class="edu-year" id="edu-year-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#9ca3af" stroke-width="1.6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  Year – Year
-                </div>
-              </div>
-            </div>
-            <div class="edu-item">
-              <div class="edu-timeline">
-                <div class="edu-dot"></div>
-                <div class="edu-line"></div>
-              </div>
-              <div>
-                <div class="edu-degree" id="edu-degree-2">Another Degree / Course</div>
-                <div class="edu-school" id="edu-school-2">Another Institution</div>
-                <div class="edu-year" id="edu-year-2">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#9ca3af" stroke-width="1.6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  Year – Year
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-    <div class="tech" id="tech-col-3">
-      <h2 id="tech-h3">Back-End</h2>
-      <div class="tech-icons" id="tech-icons-3">
-        <i class="devicon-nodejs-plain colored" title="Node.js"></i>
-        <i class="devicon-express-original-wordmark" title="Express"></i>
-        <i class="devicon-mongodb-plain-wordmark colored" title="MongoDB"></i>
-        <i class="devicon-postgresql-plain-wordmark colored" title="PostgreSQL"></i>
-      </div>
-      <p id="tech-desc-3">My preferred technologies for back-end web programming and database architecture.</p>
-    </div>
-
-    <div class="tech" id="tech-col-4">
-      <h2 id="tech-h4">Tools</h2>
-      <div class="tech-icons" id="tech-icons-4">
-        <i class="devicon-git-plain-wordmark colored" title="Git"></i>
-        <i class="devicon-vscode-plain colored" title="VS Code"></i>
-        <i class="devicon-github-plain-wordmark" title="GitHub"></i>
-        <i class="devicon-docker-plain-wordmark colored" title="Docker"></i>
-      </div>
-      <p id="tech-desc-4">My favorite tools for version control, code editing, and container orchestration.</p>
-    </div>
-
   </div>
 </section>
 
-<!-- ════════════════════════════════════════
-     PROJECTS — Alternating layout
-════════════════════════════════════════ -->
-<section id="projects">
-  <div class="user-details">
-    <h1>Featured Projects</h1>
-  </div>
-
-  <!-- Project rows populated by JS -->
-  <div id="projects-container">
-    <!-- Default placeholder shown before data loads -->
-    <div class="user-projects" id="proj-placeholder">
-      <div class="contents" style="flex:1;text-align:center;color:#aaa;">
-        <p style="font-size:1rem;color:#bbb;">Upload your resume to see your projects here.</p>
+<!-- ③ SKILLS ─────────────────────────────────── -->
+<section class="section section-alt" id="skills">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Skills &amp; Technologies</h2>
+    <!-- 4-column grid populated by JS -->
+    <div class="skills-grid reveal" id="skills-4col">
+      <!-- Default columns, replaced by JS when data is present -->
+      <div>
+        <div class="skill-col-title">Languages</div>
+        <div class="skill-icons" id="skills-col-0"></div>
+        <p class="skill-col-desc" id="skills-desc-0"></p>
+      </div>
+      <div>
+        <div class="skill-col-title">Front-End</div>
+        <div class="skill-icons" id="skills-col-1"></div>
+        <p class="skill-col-desc" id="skills-desc-1"></p>
+      </div>
+      <div>
+        <div class="skill-col-title">Back-End</div>
+        <div class="skill-icons" id="skills-col-2"></div>
+        <p class="skill-col-desc" id="skills-desc-2"></p>
+      </div>
+      <div>
+        <div class="skill-col-title">Tools</div>
+        <div class="skill-icons" id="skills-col-3"></div>
+        <p class="skill-col-desc" id="skills-desc-3"></p>
       </div>
     </div>
+    <!-- Flat fallback used when we have all skills but no categorisation -->
+    <div class="skills-flat" id="skills-flat" style="display:none;"></div>
   </div>
+</section>
 
-  <!-- ══════════════════════════════════════════
-       PROJECTS + ACHIEVEMENTS
-  ══════════════════════════════════════════ -->
-  <div class="section-row" id="row-proj-ach" style="background:#fff;">
-    <div class="container">
-      <div class="two-col">
-
-        <!-- PROJECTS (collapsible) -->
-        <div class="section-card reveal" id="projects">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<!-- ④ FEATURED PROJECTS ─────────────────────── -->
+<section class="section" id="projects">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Featured Projects</h2>
+    <div class="projects-list" id="projects-list">
+      <!-- Populated by JS -->
+      <div class="project-row reveal">
+        <div class="proj-img-wrap">
+          <div class="proj-img-inner">
+            <div class="proj-placeholder-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
-            <span class="card-title">Projects</span>
-          </div>
-
-          <!-- Always visible: first 2 projects -->
-          <div class="projects-grid" id="projects-visible">
-            <div class="project-card" id="project-1">
-              <div class="project-thumb t1">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="project-info">
-                <div class="project-name" id="p1-name">Project Title</div>
-                <div class="project-tech" id="p1-tech">React • Node.js</div>
-              </div>
-            </div>
-            <div class="project-card" id="project-2">
-              <div class="project-thumb t2">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#06b6d4" stroke-width="2"/><path d="M9 9h6M9 12h6M9 15h4" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </div>
-              <div class="project-info">
-                <div class="project-name" id="p2-name">Project Title</div>
-                <div class="project-tech" id="p2-tech">Python • Django</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Collapsed extra projects -->
-          <div class="collapsible-content" id="projects-extra">
-            <div class="projects-grid" style="margin-top:14px;">
-              <div class="project-card" id="project-3">
-                <div class="project-thumb t3">
-                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#a78bfa" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="project-info">
-                  <div class="project-name" id="p3-name">Project Title</div>
-                  <div class="project-tech" id="p3-tech">Vue • Firebase</div>
-                </div>
-              </div>
-              <div class="project-card" id="project-4">
-                <div class="project-thumb t4">
-                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="project-info">
-                  <div class="project-name" id="p4-name">Project Title</div>
-                  <div class="project-tech" id="p4-tech">Flutter • Dart</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="view-more-wrap">
-            <button class="btn-view-more" id="btn-proj-more" aria-expanded="false">
-              View More
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+            <div class="proj-placeholder-label">Sample Project</div>
           </div>
         </div>
-
-        <!-- ACHIEVEMENTS (collapsible) -->
-        <div class="section-card reveal" id="achievements">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="6" stroke="#6366f1" stroke-width="1.8"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <span class="card-title">Achievements</span>
+        <div class="proj-info">
+          <div class="proj-name">Sample Project</div>
+          <div class="proj-tech-row"><span class="proj-tech-badge">React</span><span class="proj-tech-badge">Node.js</span></div>
+          <p class="proj-desc">Upload your resume above and generate your portfolio to see your actual projects here.</p>
+          <div class="proj-links-row">
+            <span class="proj-btn">Coming soon…</span>
           </div>
-
-          <!-- Always visible: first 3 achievements -->
-          <div class="achievements-list" id="achievements-visible">
-            <div class="achievement-item" id="achievement-1">
-              <div class="achievement-icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <div class="achievement-title" id="ach-1-title">Achievement / Certification 1</div>
-                <div class="achievement-sub" id="ach-1-sub">Issuer • Year</div>
-              </div>
-            </div>
-            <div class="achievement-item" id="achievement-2">
-              <div class="achievement-icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <div class="achievement-title" id="ach-2-title">Achievement / Certification 2</div>
-                <div class="achievement-sub" id="ach-2-sub">Issuer • Year</div>
-              </div>
-            </div>
-            <div class="achievement-item" id="achievement-3">
-              <div class="achievement-icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="6" stroke="#f59e0b" stroke-width="1.6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <div class="achievement-title" id="ach-3-title">Achievement / Certification 3</div>
-                <div class="achievement-sub" id="ach-3-sub">Issuer • Year</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Collapsed extra achievements -->
-          <div class="collapsible-content" id="achievements-extra">
-            <div class="achievements-list" style="margin-top:12px;">
-              <div class="achievement-item" id="achievement-4">
-                <div class="achievement-icon">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
-                </div>
-                <div>
-                  <div class="achievement-title" id="ach-4-title">Award / Recognition 4</div>
-                  <div class="achievement-sub" id="ach-4-sub">Organization • Year</div>
-                </div>
-              </div>
-              <div class="achievement-item" id="achievement-5">
-                <div class="achievement-icon">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>
-                </div>
-                <div>
-                  <div class="achievement-title" id="ach-5-title">Award / Recognition 5</div>
-                  <div class="achievement-sub" id="ach-5-sub">Organization • Year</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="view-more-wrap">
-            <button class="btn-view-more" id="btn-ach-more" aria-expanded="false">
-              View More
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  </main>
-
-  <!-- ══════════════════════════════════════════
-       CONTACT FOOTER
-  ══════════════════════════════════════════ -->
-  <footer id="contact">
-    <div class="contact-inner">
-      <div class="contact-top">
-        <p class="contact-eyebrow">Get In Touch</p>
-        <h2 class="contact-heading">Let's Work Together</h2>
-        <p class="contact-sub">Whether you have a project in mind or just want to connect, feel free to reach out.</p>
-      </div>
-
-      <div class="contact-info-row">
-        <a href="mailto:your.email@example.com" class="contact-pill" id="contact-email-link">
-          <div class="contact-pill-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#818cf8" stroke-width="1.8" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </div>
-          <span id="contact-email">your.email@example.com</span>
-        </a>
-        <div class="contact-pill" id="contact-phone-wrap">
-          <div class="contact-pill-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12 19.79 19.79 0 0 1 1.41 3.41 2 2 0 0 1 3.4 1.23h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.76-.76a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2.03z" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span id="contact-phone">+91 12345 67890</span>
-        </div>
-        <div class="contact-pill" id="contact-location-wrap">
-          <div class="contact-pill-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="#818cf8" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="#818cf8" stroke-width="1.8"/></svg>
-          </div>
-          <span id="contact-location">Your Location</span>
-        </div>
-      </div>
-
-      <div class="contact-bottom">
-        <p class="contact-copyright" id="contact-copyright">© 2026 Your Name. All rights reserved.</p>
-        <div class="contact-socials">
-          <a href="#" class="contact-social-btn" id="c-github" aria-label="GitHub">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#" class="contact-social-btn" id="c-linkedin" aria-label="LinkedIn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
-          </a>
-          <a href="#" class="contact-social-btn" id="c-twitter" aria-label="Twitter" style="display:none;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#" class="contact-social-btn" id="c-website" aria-label="Website" style="display:none;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.8"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.8"/></svg>
-          </a>
         </div>
       </div>
     </div>
-    </footer>
+    <div class="view-more-wrap" style="display:none;" id="projects-more-wrap">
+      <button class="btn-view-more" id="projects-more-btn" onclick="toggleMore('projects-extra','projects-more-btn')">
+        View More Projects
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div class="extra-content" id="projects-extra"></div>
+  </div>
+</section>
 
-  <div id="scroll-progress" aria-hidden="true"></div>
+<!-- ⑤ EXPERIENCE ─────────────────────────────── -->
+<section class="section section-alt" id="experience">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Work Experience</h2>
+    <div class="exp-list reveal" id="exp-list">
+      <div class="exp-item">
+        <div class="exp-year">Present</div>
+        <div>
+          <div class="exp-role">Developer</div>
+          <div class="exp-company">Your Company</div>
+          <ul class="exp-bullets"><li>Upload your resume to see real experience data here.</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="view-more-wrap" style="display:none;" id="exp-more-wrap">
+      <button class="btn-view-more" id="exp-more-btn" onclick="toggleMore('exp-extra','exp-more-btn')">
+        View More
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div class="extra-content" id="exp-extra"></div>
+  </div>
+</section>
 
-  <button id="back-to-top" aria-label="Back to top">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
+<!-- ⑥ EDUCATION ──────────────────────────────── -->
+<section class="section" id="education">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Education</h2>
+    <div class="edu-list reveal" id="edu-list">
+      <div class="edu-item">
+        <div class="edu-year">2020 – 2024</div>
+        <div>
+          <div class="edu-degree">Bachelor of Science</div>
+          <div class="edu-school">Your University</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    /* ─── Navbar: hamburger toggle ─────────────────── */
-    const hamburger = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobile-nav');
+<!-- ⑦ ACHIEVEMENTS ───────────────────────────── -->
+<section class="section section-alt" id="achievements">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Achievements</h2>
+    <div class="ach-list reveal" id="ach-list">
+      <div class="ach-item">
+        <div class="ach-star-ico">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z"/></svg>
+        </div>
+        <div>
+          <div class="ach-title">Achievement Title</div>
+          <div class="ach-sub">Upload your resume to see your real achievements here.</div>
+        </div>
+      </div>
+    </div>
+    <div class="view-more-wrap" style="display:none;" id="ach-more-wrap">
+      <button class="btn-view-more" id="ach-more-btn" onclick="toggleMore('ach-extra','ach-more-btn')">
+        View More
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div class="extra-content" id="ach-extra"></div>
+  </div>
+</section>
 
-    hamburger?.addEventListener('click', () => {
-      const open = mobileNav.classList.toggle('open');
-      hamburger.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', open);
-      mobileNav.setAttribute('aria-hidden', !open);
-    });
-    mobileNav?.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileNav.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        mobileNav.setAttribute('aria-hidden', 'true');
-      });
-    });
+<!-- ⑧ CONTACT ────────────────────────────────── -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Get In Touch</h2>
+    <div class="contact-wrap reveal">
+      <a class="contact-card" id="cc-email" href="#">
+        <div class="contact-card-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-lbl">Email</div>
+          <div class="contact-card-val" id="cc-email-val">your@email.com</div>
+        </div>
+      </a>
+      <div class="contact-card" id="cc-phone-card">
+        <div class="contact-card-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-lbl">Phone</div>
+          <div class="contact-card-val" id="cc-phone-val">+1 234 567 890</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-lbl">Location</div>
+          <div class="contact-card-val" id="cc-location-val">City, Country</div>
+        </div>
+      </div>
+      <a class="contact-card" id="cc-github" href="#" target="_blank" rel="noopener">
+        <div class="contact-card-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-lbl">GitHub</div>
+          <div class="contact-card-val">View Profile</div>
+        </div>
+      </a>
+      <a class="contact-card" id="cc-linkedin" href="#" target="_blank" rel="noopener">
+        <div class="contact-card-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-lbl">LinkedIn</div>
+          <div class="contact-card-val">View Profile</div>
+        </div>
+      </a>
+      <a class="contact-card" id="cc-twitter" href="#" target="_blank" rel="noopener" style="display:none;">
+        <div class="contact-card-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-lbl">Twitter</div>
+          <div class="contact-card-val">View Profile</div>
+        </div>
+      </a>
+      <a class="contact-card" id="cc-website" href="#" target="_blank" rel="noopener" style="display:none;">
+        <div class="contact-card-ico">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div>
+          <div class="contact-card-lbl">Website</div>
+          <div class="contact-card-val">Visit Site</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
 
-    /* ─── Navbar: scroll shadow ────────────────────── */
-    window.addEventListener('scroll', () => {
-      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
-    }, { passive: true });
+<!-- FOOTER ──────────────────────────────────── -->
+<footer>
+  <p id="contact-copyright">© 2025 Your Name. All rights reserved.</p>
+</footer>
 
-    /* ─── Scroll Reveal ────────────────────────────── */
-    const revealEls = document.querySelectorAll('.reveal');
-    const ro = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 90);
-          ro.unobserve(e.target);
+<script>
+/* ══════════════════════════════════════════════
+   CONSTELLATION PARTICLES
+══════════════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('constellation-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, pts;
+
+  const CFG = { n: 70, speed: 0.28, dist: 140, color: 'rgba(255,255,255,' };
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = document.getElementById('hero').offsetHeight;
+  }
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  function init() {
+    resize();
+    pts = Array.from({ length: CFG.n }, () => ({
+      x: rand(0, W), y: rand(0, H),
+      vx: rand(-CFG.speed, CFG.speed),
+      vy: rand(-CFG.speed, CFG.speed),
+      r: rand(1, 2.5),
+      o: rand(0.3, 0.85)
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < pts.length; i++) {
+      const p = pts[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+
+      // dot
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = CFG.color + p.o + ')';
+      ctx.fill();
+
+      // connect nearby dots
+      for (let j = i + 1; j < pts.length; j++) {
+        const q  = pts[j];
+        const dx = p.x - q.x, dy = p.y - q.y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < CFG.dist) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = CFG.color + (0.18 * (1 - d / CFG.dist)) + ')';
+          ctx.lineWidth   = 0.8;
+          ctx.stroke();
         }
-      });
-    }, { threshold: 0.08 });
-    revealEls.forEach(el => ro.observe(el));
+      }
+    }
+    requestAnimationFrame(draw);
+  }
 
-    /* ─── Active nav on scroll ─────────────────────── */
-    const navMap = {
-      'hero':         '#hero',
-      'about':        '#about',
-      'skills':       '#skills',
-      'education':    '#education',
-      'experience':   '#experience',
-      'projects':     '#projects',
-      'achievements': '#achievements',
-      'contact':      '#contact',
+  window.addEventListener('resize', init);
+  init();
+  draw();
+})();
+
+/* ══════════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════════ */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ══════════════════════════════════════════════
+   TOGGLE EXTRA SECTIONS
+══════════════════════════════════════════════ */
+function toggleMore(extraId, btnId) {
+  const ex  = document.getElementById(extraId);
+  const btn = document.getElementById(btnId);
+  if (!ex || !btn) return;
+  const open = ex.classList.toggle('open');
+  btn.innerHTML = open
+    ? 'Show Less <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>'
+    : btn.dataset.label + ' <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+}
+
+/* ══════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════ */
+function $(id) { return document.getElementById(id); }
+function setText(id, val) { const e = $(id); if (e && val) e.textContent = val; }
+function setHref(id, h)   { const e = $(id); if (e && h)   e.href = h; }
+function hide(id)         { const e = $(id); if (e) e.style.display = 'none'; }
+function show(id)         { const e = $(id); if (e) e.style.display = ''; }
+
+/* ══════════════════════════════════════════════
+   SKILL-CATEGORY GUESSER
+   Splits the skills array into 4 columns:
+   Languages / Front-End / Back-End / Tools
+══════════════════════════════════════════════ */
+const SKILL_CATS = {
+  languages: ['python','java','c++','c','javascript','js','typescript','ts','ruby','go','rust','swift','kotlin','r','matlab','scala','php','perl','bash','shell'],
+  frontend:  ['react','vue','angular','svelte','html','css','sass','scss','bootstrap','tailwind','jquery','redux','gatsby','next','nuxt','webpack','vite'],
+  backend:   ['node','express','django','flask','fastapi','spring','rails','laravel','asp','graphql','rest','mongodb','postgres','postgresql','mysql','redis','firebase','supabase','prisma','sequelize'],
+  tools:     ['git','github','gitlab','docker','kubernetes','aws','azure','gcp','linux','figma','photoshop','jira','jenkins','ci/cd','terraform','ansible','nginx']
+};
+
+function guessCategory(skill) {
+  const s = skill.toLowerCase().replace(/[^a-z0-9+]/g, '');
+  for (const [cat, list] of Object.entries(SKILL_CATS)) {
+    if (list.some(k => s.includes(k) || k.includes(s))) return cat;
+  }
+  return null;
+}
+
+/* ══════════════════════════════════════════════
+   POPULATE FROM DATA
+══════════════════════════════════════════════ */
+function populateFromData(d) {
+  if (!d) return;
+
+  /* — Hero name & title — */
+  const nameEl = $('hero-name');
+  if (nameEl) nameEl.textContent = (d.name || 'Your Name').toUpperCase();
+  document.title = `${d.name || 'Your Name'} — Portfolio`;
+
+  if (d.title) {
+    const rolesEl = $('hero-roles');
+    if (rolesEl) rolesEl.textContent = d.title;
+  }
+
+  /* — Social links — */
+  if (d.github && d.github !== '#') {
+    setHref('soc-github', d.github);
+    setHref('cc-github', d.github);
+  } else { hide('soc-github'); hide('cc-github'); }
+
+  if (d.linkedin && d.linkedin !== '#') {
+    setHref('soc-linkedin', d.linkedin);
+    setHref('cc-linkedin', d.linkedin);
+  } else { hide('soc-linkedin'); hide('cc-linkedin'); }
+
+  if (d.email) {
+    setHref('soc-email', `mailto:${d.email}`);
+    setHref('cc-email', `mailto:${d.email}`);
+    setText('cc-email-val', d.email);
+  } else { hide('soc-email'); hide('cc-email'); }
+
+  if (d.twitter && d.twitter !== '#') {
+    setHref('soc-twitter', d.twitter); show('soc-twitter');
+    setHref('cc-twitter', d.twitter); show('cc-twitter');
+  }
+  if (d.website && d.website !== '#') {
+    setHref('cc-website', d.website); show('cc-website');
+  }
+
+  /* — Story — */
+  if (d.bio) {
+    const bioEl = $('story-bio');
+    if (bioEl) {
+      bioEl.innerHTML = d.bio
+        .replace(/(software engineer|web developer|programmer|developer|data scientist|engineer|designer)/gi,
+          m => `<span class="hi">${m}</span>`);
+    }
+  }
+  if (d.name) {
+    const initials = d.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    setText('story-initials', initials);
+  }
+
+  /* — Skills — 4-column sort — */
+  if (d.skills && d.skills.length) {
+    const buckets = { languages: [], frontend: [], backend: [], tools: [], other: [] };
+    d.skills.forEach(s => {
+      const cat = guessCategory(s);
+      if (cat) buckets[cat].push(s);
+      else     buckets.other.push(s);
+    });
+
+    const colIds  = ['skills-col-0','skills-col-1','skills-col-2','skills-col-3'];
+    const descIds = ['skills-desc-0','skills-desc-1','skills-desc-2','skills-desc-3'];
+    const cols    = [
+      buckets.languages,
+      buckets.frontend,
+      buckets.backend,
+      [...buckets.tools, ...buckets.other]
+    ];
+    const descs = [
+      'My programming languages of choice.',
+      'Technologies for front-end development.',
+      'Back-end frameworks &amp; databases.',
+      'Favourite tools and utilities.'
+    ];
+
+    const pill = s => `<span class="skill-icon-pill">${s}</span>`;
+    let anyFilled = false;
+    cols.forEach((arr, i) => {
+      const col  = $(colIds[i]);
+      const desc = $(descIds[i]);
+      if (!col) return;
+      if (arr.length) {
+        col.innerHTML = arr.map(pill).join('');
+        anyFilled = true;
+      } else {
+        col.innerHTML = '<span style="font-size:0.78rem;color:#bbb;">—</span>';
+      }
+      if (desc) desc.innerHTML = descs[i];
+    });
+
+    /* fallback: if nothing was categorised, show flat */
+    if (!anyFilled) {
+      hide('skills-4col');
+      show('skills-flat');
+      const flat = $('skills-flat');
+      if (flat) flat.innerHTML = d.skills.map(pill).join('');
+    }
+  }
+
+  /* — Projects — alternating rows — */
+  const hasProj = d.projects && d.projects.length &&
+    !(d.projects.length === 1 && d.projects[0].name === 'Project Title');
+  if (hasProj) {
+    const icons = [
+      '<polyline points="16 18 22 12 16 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+      '<rect x="3" y="3" width="18" height="18" rx="3" stroke="#fff" stroke-width="2"/><path d="M9 9h6M9 12h6M9 15h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>',
+      '<circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+      '<path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>',
+    ];
+
+    const renderRow = (p, i) => {
+      const techBadges = (p.tech || '')
+        .split(/[,·\/]/).map(t => t.trim()).filter(Boolean)
+        .map(t => `<span class="proj-tech-badge">${t}</span>`).join('');
+      const links = [
+        p.github && p.github !== '#' ? `<a href="${p.github}" class="proj-btn" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub</a>` : '',
+        p.demo && p.demo !== '#' ? `<a href="${p.demo}" class="proj-btn" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Check it out!</a>` : ''
+      ].filter(Boolean).join('');
+
+      const bullets = (p.bullets || []).slice(0, 2).join(' ');
+      const desc    = bullets || `A project built with ${p.tech || 'various technologies'}.`;
+      const isEven  = i % 2 === 1;
+
+      return `
+      <div class="project-row reveal${isEven ? ' reverse' : ''}">
+        <div class="proj-img-wrap">
+          <div class="proj-img-inner">
+            <div class="proj-placeholder-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">${icons[i % 4]}</svg>
+            </div>
+            <div class="proj-placeholder-label">${p.name || 'Project'}</div>
+          </div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-name">${p.name || 'Project'}</div>
+          <div class="proj-tech-row">${techBadges}</div>
+          <p class="proj-desc">${desc}</p>
+          <div class="proj-links-row">${links || '<span style="color:#aaa;font-size:.82rem;">No links provided</span>'}</div>
+        </div>
+      </div>`;
     };
-    const allNavLinks = document.querySelectorAll('.nav-links a, .nav-mobile a');
 
-    const no = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const href = navMap[entry.target.id];
-          if (!href) return;
-          allNavLinks.forEach(l => l.classList.remove('active'));
-          document.querySelectorAll(`a[href="${href}"]`).forEach(l => l.classList.add('active'));
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px' });
+    const visible = d.projects.slice(0, 3);
+    const extra   = d.projects.slice(3);
 
-    Object.keys(navMap).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) no.observe(el);
-    });
-
-    /* ─── View More toggles ────────────────────────── */
-    function setupToggle(btnId, contentId, openLabel = 'View Less', closeLabel = 'View More') {
-      const btn     = document.getElementById(btnId);
-      const content = document.getElementById(contentId);
-      if (!btn || !content) return;
-
-      btn.addEventListener('click', () => {
-        const isOpen = content.classList.toggle('expanded');
-        btn.classList.toggle('open', isOpen);
-        btn.setAttribute('aria-expanded', isOpen);
-        // Update label
-        const textNode = btn.childNodes[0];
-        textNode.textContent = isOpen ? openLabel + ' ' : closeLabel + ' ';
-      });
+    const list = $('projects-list');
+    if (list) {
+      list.innerHTML = visible.map((p, i) => renderRow(p, i)).join('');
+      // Re-observe new reveal elements
+      list.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     }
 
-    setupToggle('btn-exp-more',  'experience-extra',  'View Less', 'View More');
-    setupToggle('btn-proj-more', 'projects-extra',    'View Less', 'View More');
-    setupToggle('btn-ach-more',  'achievements-extra','View Less', 'View More');
-
-    /* Download as PDF (print) */
-    const downloadAsPdf = () => window.print();
-    document.getElementById('btn-download-portfolio')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      downloadAsPdf();
-    });
-    document.getElementById('nav-download-btn')?.addEventListener('click', downloadAsPdf);
-
-    /* Scroll progress bar */
-    const progressBar = document.getElementById('scroll-progress');
-    const updateProgress = () => {
-      const doc = document.documentElement;
-      const max = doc.scrollHeight - doc.clientHeight;
-      progressBar.style.width = max > 0 ? `${(doc.scrollTop / max) * 100}%` : '0%';
-    };
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-
-    /* Back to top */
-    const backToTopBtn = document.getElementById('back-to-top');
-    const toggleBackToTop = () => backToTopBtn.classList.toggle('show', window.scrollY > 600);
-    window.addEventListener('scroll', toggleBackToTop, { passive: true });
-    toggleBackToTop();
-    backToTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    /* ─── Populate from Resume Data (localStorage) ── */
-    function set(id, text) {
-      const el = document.getElementById(id);
-      if (el && text) el.textContent = text;
+    if (extra.length) {
+      const ex = $('projects-extra');
+      if (ex) {
+        ex.innerHTML = `<div class="projects-list" style="margin-top:40px;">${extra.map((p, i) => renderRow(p, i + visible.length)).join('')}</div>`;
+        ex.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      }
+      const wrap = $('projects-more-wrap');
+      if (wrap) {
+        wrap.style.display = '';
+        const btn = $('projects-more-btn');
+        if (btn) btn.dataset.label = 'View More Projects';
+      }
     }
-    function setHref(id, url) {
-      const el = document.getElementById(id);
-      if (el && url && url !== '#') el.href = url;
+  }
+
+  /* — Experience — */
+  const hasExp = d.experience && d.experience.length &&
+    !(d.experience.length === 1 && d.experience[0].role === 'Job Title' && d.experience[0].company === 'Company Name');
+  if (hasExp) {
+    const renderExp = arr => arr.map(exp => `
+      <div class="exp-item">
+        <div class="exp-year">${exp.duration || '—'}</div>
+        <div>
+          <div class="exp-role">${exp.role || ''}</div>
+          <div class="exp-company">${exp.company || ''}</div>
+          <ul class="exp-bullets">
+            ${(exp.bullets || []).map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
+      </div>`).join('');
+
+    const visible = d.experience.slice(0, 2);
+    const extra   = d.experience.slice(2);
+    const list    = $('exp-list');
+    if (list) list.innerHTML = renderExp(visible);
+    if (extra.length) {
+      const ex = $('exp-extra');
+      if (ex) ex.innerHTML = `<div class="exp-list" style="margin-top:28px;">${renderExp(extra)}</div>`;
+      const wrap = $('exp-more-wrap');
+      if (wrap) {
+        wrap.style.display = '';
+        const btn = $('exp-more-btn');
+        if (btn) btn.dataset.label = 'View More';
+      }
     }
-    function showEl(id) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = '';
-    }
-    function hideEl(id) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    }
-    function emptyState(cardId, label) {
-      const card = document.getElementById(cardId);
-      if (!card) return;
-      // Clear all content after the card-header and replace with empty state
-      const header = card.querySelector('.card-header');
-      // Remove everything after the header
-      while (card.lastChild !== header) card.removeChild(card.lastChild);
-      card.insertAdjacentHTML('beforeend', `
-        <div class="empty-state">
-          <div class="empty-state-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" stroke="#c4bfd4" stroke-width="1.6"/>
-              <path d="M12 8v4M12 16h.01" stroke="#c4bfd4" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+  }
+
+  /* — Education — */
+  if (d.education && d.education.length) {
+    const list = $('edu-list');
+    if (list) {
+      list.innerHTML = d.education.map(edu => `
+        <div class="edu-item">
+          <div class="edu-year">${edu.year || '—'}</div>
+          <div>
+            <div class="edu-degree">${edu.degree || ''}</div>
+            <div class="edu-school">${edu.school || ''}</div>
           </div>
-          <p>No ${label} listed on this resume.</p>
-        </div>`);
+        </div>`).join('');
     }
+  }
 
-    function populateFromData(d) {
-      if (!d) return;
+  /* — Achievements — */
+  const hasAch = d.achievements && d.achievements.length;
+  if (hasAch) {
+    const starSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z"/></svg>`;
+    const renderAch = arr => arr.map(a => `
+      <div class="ach-item">
+        <div class="ach-star-ico">${starSvg}</div>
+        <div>
+          <div class="ach-title">${a.title || ''}</div>
+          <div class="ach-sub">${a.sub || ''}</div>
+        </div>
+      </div>`).join('');
 
-      /* — Navbar & hero — */
-      set('nav-name',   d.name);
-      document.querySelector('#hero-name span').textContent = d.name || 'Your Name';
-      set('hero-title', d.title);
-      set('hero-desc',  d.bio);
-      document.title = `${d.name || 'Your'} — Portfolio`;
-
-      /* — Social links: only show icons that have real data — */
-      if (d.github && d.github !== '#') {
-        setHref('social-github', d.github);
-        setHref('c-github', d.github);
-      } else {
-        hideEl('social-github');
-        hideEl('c-github');
+    const visible = d.achievements.slice(0, 4);
+    const extra   = d.achievements.slice(4);
+    const list    = $('ach-list');
+    if (list) list.innerHTML = renderAch(visible);
+    if (extra.length) {
+      const ex = $('ach-extra');
+      if (ex) ex.innerHTML = `<div class="ach-list" style="margin-top:14px;">${renderAch(extra)}</div>`;
+      const wrap = $('ach-more-wrap');
+      if (wrap) {
+        wrap.style.display = '';
+        const btn = $('ach-more-btn');
+        if (btn) btn.dataset.label = 'View More';
       }
-      if (d.linkedin && d.linkedin !== '#') {
-        setHref('social-linkedin', d.linkedin);
-        setHref('c-linkedin', d.linkedin);
-      } else {
-        hideEl('social-linkedin');
-        hideEl('c-linkedin');
-      }
-      if (d.email) {
-        setHref('social-email', `mailto:${d.email}`);
-      } else {
-        hideEl('social-email');
-      }
-      if (d.twitter && d.twitter !== '#') {
-        setHref('social-twitter', d.twitter);
-        showEl('social-twitter');
-        setHref('c-twitter', d.twitter);
-        showEl('c-twitter');
-      }
-      // c-twitter and c-website are hidden by default in HTML;
-      // only show if data has them
-      if (d.website && d.website !== '#') {
-        setHref('c-website', d.website);
-        showEl('c-website');
-      }
-
-      /* — About — */
-      set('about-p1', d.bio);
-      const p2 = document.getElementById('about-p2');
-      if (p2 && d.title) p2.textContent = `Specialising in ${d.title}, I bring passion and precision to every project.`;
-
-      /* — Skills — */
-      if (d.skills && d.skills.length) {
-        const half      = Math.ceil(d.skills.length / 2);
-        const primary   = d.skills.slice(0, half);
-        const secondary = d.skills.slice(half);
-        const renderPills = (arr) => arr.map(s =>
-          `<span class="skill-pill"><span class="skill-dot"></span>${s}</span>`).join('');
-        const sp = document.getElementById('skills-primary');
-        const ss = document.getElementById('skills-secondary');
-        if (sp) sp.innerHTML = renderPills(primary);
-        if (ss) ss.innerHTML = renderPills(secondary);
-      }
-
-      /* — Education — */
-      if (d.education && d.education.length) {
-        const list = document.getElementById('education-list');
-        if (list) {
-          list.innerHTML = d.education.map((edu) => `
-            <div class="edu-item">
-              <div class="edu-timeline">
-                <div class="edu-dot"></div>
-                <div class="edu-line"></div>
-              </div>
-              <div>
-                <div class="edu-degree">${edu.degree || ''}</div>
-                <div class="edu-school">${edu.school || ''}</div>
-                <div class="edu-year">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#9ca3af" stroke-width="1.6"/><path d="M16 2v4M8 2v4M3 10h18" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  ${edu.year || ''}
-                </div>
-              </div>
-            </div>`).join('');
-        }
-      }
-
-      /* — Experience — */
-      const hasExperience = d.experience && d.experience.length &&
-        !(d.experience.length === 1 && d.experience[0].role === 'Job Title' && d.experience[0].company === 'Company Name');
-      if (hasExperience) {
-        const visibleEl = document.getElementById('experience-visible');
-        const extraEl   = document.getElementById('experience-extra');
-        const visible   = d.experience.slice(0, 1);
-        const extra     = d.experience.slice(1);
-        const iconSvg   = (color) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="3" stroke="${color}" stroke-width="1.8"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="${color}" stroke-width="1.8" stroke-linecap="round"/></svg>`;
-        const colors    = ['#06b6d4', '#a78bfa', '#f59e0b', '#22c55e'];
-        const renderExp = (expArr) => expArr.map((exp, i) => `
-          <div class="exp-item">
-            <div class="exp-icon">${iconSvg(colors[i % colors.length])}</div>
-            <div>
-              <div class="exp-role">${exp.role || ''}</div>
-              <div class="exp-meta">
-                <span class="exp-company">${exp.company || ''}</span>
-                ${exp.duration ? `<span class="exp-sep">•</span><span class="exp-duration">${exp.duration}</span>` : ''}
-              </div>
-              <ul class="exp-bullets">
-                ${(exp.bullets || []).map(b => `<li>${b}</li>`).join('')}
-              </ul>
-            </div>
-          </div>`).join('');
-        if (visibleEl) visibleEl.innerHTML = renderExp(visible);
-        if (extraEl)   extraEl.innerHTML   = extra.length ? `<div class="exp-list" style="margin-top:18px;">${renderExp(extra)}</div>` : '';
-        const expMoreWrap = document.querySelector('#experience .view-more-wrap');
-        if (expMoreWrap) expMoreWrap.style.display = extra.length ? '' : 'none';
-      } else {
-        // No experience — show empty state inside the card
-        emptyState('experience', 'experience');
-      }
-
-      /* — Projects — */
-      const hasProjects = d.projects && d.projects.length &&
-        !(d.projects.length === 1 && d.projects[0].name === 'Project Title');
-      if (hasProjects) {
-        const thumbClasses = ['t1','t2','t3','t4'];
-        const projSvgs = [
-          `<polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
-          `<rect x="3" y="3" width="18" height="18" rx="3" stroke="#06b6d4" stroke-width="2"/><path d="M9 9h6M9 12h6M9 15h4" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>`,
-          `<circle cx="12" cy="12" r="9" stroke="#a78bfa" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`,
-          `<path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"/>`,
-        ];
-        const renderProj = (arr) => arr.map((p, i) => `
-          <div class="project-card">
-            <div class="project-thumb ${thumbClasses[i % 4]}">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none">${projSvgs[i % 4]}</svg>
-            </div>
-            <div class="project-info">
-              <div class="project-name">${p.name || 'Project'}</div>
-              <div class="project-tech">${p.tech || ''}</div>
-              <div class="project-links">
-                ${p.github && p.github !== '#' ? `<a href="${p.github}" class="project-link" target="_blank"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</a>` : ''}
-                ${p.demo   && p.demo   !== '#' ? `<a href="${p.demo}"   class="project-link" target="_blank"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Live</a>` : ''}
-              </div>
-            </div>
-          </div>`).join('');
-        const pv = document.getElementById('projects-visible');
-        const pe = document.getElementById('projects-extra');
-        if (pv) pv.innerHTML = renderProj(d.projects.slice(0, 2));
-        if (pe) pe.innerHTML = d.projects.length > 2
-          ? `<div class="projects-grid" style="margin-top:14px;">${renderProj(d.projects.slice(2))}</div>` : '';
-        const projMoreWrap = document.querySelector('#projects .view-more-wrap');
-        if (projMoreWrap) projMoreWrap.style.display = d.projects.length > 2 ? '' : 'none';
-      } else {
-        // No projects — show empty state inside the card
-        emptyState('projects', 'projects');
-      }
-
-      /* — Achievements — */
-      const hasAchievements = d.achievements && d.achievements.length > 0;
-      if (hasAchievements) {
-        const starSvg = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
-        const renderAch = (arr) => arr.map(a => `
-          <div class="achievement-item">
-            <div class="achievement-icon">${starSvg}</div>
-            <div>
-              <div class="achievement-title">${a.title || ''}</div>
-              <div class="achievement-sub">${a.sub || ''}</div>
-            </div>
-          </div>`).join('');
-        const av = document.getElementById('achievements-visible');
-        const ae = document.getElementById('achievements-extra');
-        if (av) av.innerHTML = renderAch(d.achievements.slice(0, 3));
-        if (ae) ae.innerHTML = d.achievements.length > 3
-          ? `<div class="achievements-list" style="margin-top:12px;">${renderAch(d.achievements.slice(3))}</div>` : '';
-        const achMoreWrap = document.querySelector('#achievements .view-more-wrap');
-        if (achMoreWrap) achMoreWrap.style.display = d.achievements.length > 3 ? '' : 'none';
-      } else {
-        // No achievements — show empty state inside the card
-        emptyState('achievements', 'achievements');
-      }
-
-      /* — Contact — */
-      const emailLink = document.getElementById('contact-email-link');
-      if (emailLink && d.email) { emailLink.href = `mailto:${d.email}`; }
-      set('contact-email',    d.email);
-      set('contact-phone',    d.phone);
-      set('contact-location', d.location);
-      set('contact-copyright', `© ${new Date().getFullYear()} ${d.name || 'Your Name'}. All rights reserved.`);
     }
+  }
 
-/* ════════════════════════════════════════
+  /* — Contact — */
+  setText('cc-phone-val', d.phone);
+  setText('cc-location-val', d.location);
+  if (!d.phone) hide('cc-phone-card');
+  setText('contact-copyright', `© ${new Date().getFullYear()} ${d.name || 'Your Name'}. All rights reserved.`);
+}
+
+/* ══════════════════════════════════════════════
    LOAD FROM LOCALSTORAGE
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 (function () {
   try {
     const raw = localStorage.getItem('portfolioData');
     if (raw) {
-      const data = JSON.parse(raw);
-      populateFromData(data);
-      console.log('✅ Portfolio populated:', data);
+      populateFromData(JSON.parse(raw));
+      console.log('✅ Portfolio data loaded from localStorage.');
     } else {
-      console.info('ℹ️ No portfolio data — showing defaults.');
+      console.info('ℹ️ No portfolioData in localStorage — showing defaults.');
     }
   } catch (e) {
     console.warn('Failed to load portfolio data:', e);
