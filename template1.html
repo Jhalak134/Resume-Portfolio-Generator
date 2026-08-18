@@ -907,6 +907,33 @@
     }
 
     /* ═══════════════════════════════════════════
+       EMPTY STATE
+    ═══════════════════════════════════════════ */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 28px 16px;
+      color: var(--text-subtle);
+      text-align: center;
+    }
+    .empty-state-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .empty-state p {
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════ */
     @media (max-width: 960px) {
@@ -1117,7 +1144,7 @@
           <a href="#" class="social-icon" id="social-linkedin" aria-label="LinkedIn" title="LinkedIn">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
           </a>
-          <a href="#" class="social-icon" id="social-twitter" aria-label="Twitter" title="Twitter">
+          <a href="#" class="social-icon" id="social-twitter" aria-label="Twitter" title="Twitter" style="display:none;">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="mailto:your@email.com" class="social-icon" id="social-email" aria-label="Email" title="Email">
@@ -1205,7 +1232,7 @@
   <!-- ══════════════════════════════════════════
        EDUCATION + EXPERIENCE
   ══════════════════════════════════════════ -->
-  <div class="section-row" style="background:var(--bg);">
+  <div class="section-row" id="row-edu-exp" style="background:var(--bg);">
     <div class="container">
       <div class="two-col">
 
@@ -1318,7 +1345,7 @@
   <!-- ══════════════════════════════════════════
        PROJECTS + ACHIEVEMENTS
   ══════════════════════════════════════════ -->
-  <div class="section-row" style="background:#fff;">
+  <div class="section-row" id="row-proj-ach" style="background:#fff;">
     <div class="container">
       <div class="two-col">
 
@@ -1340,10 +1367,6 @@
               <div class="project-info">
                 <div class="project-name" id="p1-name">Project Title</div>
                 <div class="project-tech" id="p1-tech">React • Node.js</div>
-                <div class="project-links">
-                  <a href="#" class="project-link" id="p1-github"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</a>
-                  <a href="#" class="project-link" id="p1-demo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Live</a>
-                </div>
               </div>
             </div>
             <div class="project-card" id="project-2">
@@ -1353,10 +1376,6 @@
               <div class="project-info">
                 <div class="project-name" id="p2-name">Project Title</div>
                 <div class="project-tech" id="p2-tech">Python • Django</div>
-                <div class="project-links">
-                  <a href="#" class="project-link" id="p2-github"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</a>
-                  <a href="#" class="project-link" id="p2-demo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Live</a>
-                </div>
               </div>
             </div>
           </div>
@@ -1371,10 +1390,6 @@
                 <div class="project-info">
                   <div class="project-name" id="p3-name">Project Title</div>
                   <div class="project-tech" id="p3-tech">Vue • Firebase</div>
-                  <div class="project-links">
-                    <a href="#" class="project-link" id="p3-github"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</a>
-                    <a href="#" class="project-link" id="p3-demo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Live</a>
-                  </div>
                 </div>
               </div>
               <div class="project-card" id="project-4">
@@ -1384,10 +1399,6 @@
                 <div class="project-info">
                   <div class="project-name" id="p4-name">Project Title</div>
                   <div class="project-tech" id="p4-tech">Flutter • Dart</div>
-                  <div class="project-links">
-                    <a href="#" class="project-link" id="p4-github"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</a>
-                    <a href="#" class="project-link" id="p4-demo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Live</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1520,10 +1531,10 @@
           <a href="#" class="contact-social-btn" id="c-linkedin" aria-label="LinkedIn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
           </a>
-          <a href="#" class="contact-social-btn" id="c-twitter" aria-label="Twitter">
+          <a href="#" class="contact-social-btn" id="c-twitter" aria-label="Twitter" style="display:none;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#" class="contact-social-btn" id="c-website" aria-label="Website">
+          <a href="#" class="contact-social-btn" id="c-website" aria-label="Website" style="display:none;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.8"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.8"/></svg>
           </a>
         </div>
@@ -1659,9 +1670,31 @@
       const el = document.getElementById(id);
       if (el && url && url !== '#') el.href = url;
     }
-    function setHidden(id, hide) {
+    function showEl(id) {
       const el = document.getElementById(id);
-      if (el) el.closest('.section-card') && (el.closest('.section-card').style.display = hide ? 'none' : '');
+      if (el) el.style.display = '';
+    }
+    function hideEl(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    }
+    function emptyState(cardId, label) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+      // Clear all content after the card-header and replace with empty state
+      const header = card.querySelector('.card-header');
+      // Remove everything after the header
+      while (card.lastChild !== header) card.removeChild(card.lastChild);
+      card.insertAdjacentHTML('beforeend', `
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="#c4bfd4" stroke-width="1.6"/>
+              <path d="M12 8v4M12 16h.01" stroke="#c4bfd4" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p>No ${label} listed on this resume.</p>
+        </div>`);
     }
 
     function populateFromData(d) {
@@ -1674,12 +1707,38 @@
       set('hero-desc',  d.bio);
       document.title = `${d.name || 'Your'} — Portfolio`;
 
-      /* — Social links — */
-      setHref('social-github',   d.github);
-      setHref('social-linkedin', d.linkedin);
-      setHref('social-email',    d.email ? `mailto:${d.email}` : null);
-      setHref('c-github',        d.github);
-      setHref('c-linkedin',      d.linkedin);
+      /* — Social links: only show icons that have real data — */
+      if (d.github && d.github !== '#') {
+        setHref('social-github', d.github);
+        setHref('c-github', d.github);
+      } else {
+        hideEl('social-github');
+        hideEl('c-github');
+      }
+      if (d.linkedin && d.linkedin !== '#') {
+        setHref('social-linkedin', d.linkedin);
+        setHref('c-linkedin', d.linkedin);
+      } else {
+        hideEl('social-linkedin');
+        hideEl('c-linkedin');
+      }
+      if (d.email) {
+        setHref('social-email', `mailto:${d.email}`);
+      } else {
+        hideEl('social-email');
+      }
+      if (d.twitter && d.twitter !== '#') {
+        setHref('social-twitter', d.twitter);
+        showEl('social-twitter');
+        setHref('c-twitter', d.twitter);
+        showEl('c-twitter');
+      }
+      // c-twitter and c-website are hidden by default in HTML;
+      // only show if data has them
+      if (d.website && d.website !== '#') {
+        setHref('c-website', d.website);
+        showEl('c-website');
+      }
 
       /* — About — */
       set('about-p1', d.bio);
@@ -1688,8 +1747,8 @@
 
       /* — Skills — */
       if (d.skills && d.skills.length) {
-        const half     = Math.ceil(d.skills.length / 2);
-        const primary  = d.skills.slice(0, half);
+        const half      = Math.ceil(d.skills.length / 2);
+        const primary   = d.skills.slice(0, half);
         const secondary = d.skills.slice(half);
         const renderPills = (arr) => arr.map(s =>
           `<span class="skill-pill"><span class="skill-dot"></span>${s}</span>`).join('');
@@ -1703,7 +1762,7 @@
       if (d.education && d.education.length) {
         const list = document.getElementById('education-list');
         if (list) {
-          list.innerHTML = d.education.map((edu, i) => `
+          list.innerHTML = d.education.map((edu) => `
             <div class="edu-item">
               <div class="edu-timeline">
                 <div class="edu-dot"></div>
@@ -1722,7 +1781,9 @@
       }
 
       /* — Experience — */
-      if (d.experience && d.experience.length) {
+      const hasExperience = d.experience && d.experience.length &&
+        !(d.experience.length === 1 && d.experience[0].role === 'Job Title' && d.experience[0].company === 'Company Name');
+      if (hasExperience) {
         const visibleEl = document.getElementById('experience-visible');
         const extraEl   = document.getElementById('experience-extra');
         const visible   = d.experience.slice(0, 1);
@@ -1745,13 +1806,17 @@
           </div>`).join('');
         if (visibleEl) visibleEl.innerHTML = renderExp(visible);
         if (extraEl)   extraEl.innerHTML   = extra.length ? `<div class="exp-list" style="margin-top:18px;">${renderExp(extra)}</div>` : '';
-        // Hide view-more if no extras
         const expMoreWrap = document.querySelector('#experience .view-more-wrap');
         if (expMoreWrap) expMoreWrap.style.display = extra.length ? '' : 'none';
+      } else {
+        // No experience — show empty state inside the card
+        emptyState('experience', 'experience');
       }
 
       /* — Projects — */
-      if (d.projects && d.projects.length) {
+      const hasProjects = d.projects && d.projects.length &&
+        !(d.projects.length === 1 && d.projects[0].name === 'Project Title');
+      if (hasProjects) {
         const thumbClasses = ['t1','t2','t3','t4'];
         const projSvgs = [
           `<polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
@@ -1768,22 +1833,26 @@
               <div class="project-name">${p.name || 'Project'}</div>
               <div class="project-tech">${p.tech || ''}</div>
               <div class="project-links">
-                ${p.github && p.github !== '#' ? `<a href="${p.github}" class="project-link" target="_blank">Code</a>` : ''}
-                ${p.demo   && p.demo   !== '#' ? `<a href="${p.demo}"   class="project-link" target="_blank">Live</a>` : ''}
+                ${p.github && p.github !== '#' ? `<a href="${p.github}" class="project-link" target="_blank"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Code</a>` : ''}
+                ${p.demo   && p.demo   !== '#' ? `<a href="${p.demo}"   class="project-link" target="_blank"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Live</a>` : ''}
               </div>
             </div>
           </div>`).join('');
         const pv = document.getElementById('projects-visible');
         const pe = document.getElementById('projects-extra');
-        if (pv) pv.innerHTML  = renderProj(d.projects.slice(0, 2));
-        if (pe) pe.innerHTML  = d.projects.length > 2
+        if (pv) pv.innerHTML = renderProj(d.projects.slice(0, 2));
+        if (pe) pe.innerHTML = d.projects.length > 2
           ? `<div class="projects-grid" style="margin-top:14px;">${renderProj(d.projects.slice(2))}</div>` : '';
         const projMoreWrap = document.querySelector('#projects .view-more-wrap');
         if (projMoreWrap) projMoreWrap.style.display = d.projects.length > 2 ? '' : 'none';
+      } else {
+        // No projects — show empty state inside the card
+        emptyState('projects', 'projects');
       }
 
       /* — Achievements — */
-      if (d.achievements && d.achievements.length) {
+      const hasAchievements = d.achievements && d.achievements.length > 0;
+      if (hasAchievements) {
         const starSvg = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
         const renderAch = (arr) => arr.map(a => `
           <div class="achievement-item">
@@ -1798,11 +1867,11 @@
         if (av) av.innerHTML = renderAch(d.achievements.slice(0, 3));
         if (ae) ae.innerHTML = d.achievements.length > 3
           ? `<div class="achievements-list" style="margin-top:12px;">${renderAch(d.achievements.slice(3))}</div>` : '';
-        // Hide section if none
-        const achCard = document.getElementById('achievements');
-        if (achCard && d.achievements.length === 0) achCard.closest('.section-card').style.display = 'none';
         const achMoreWrap = document.querySelector('#achievements .view-more-wrap');
         if (achMoreWrap) achMoreWrap.style.display = d.achievements.length > 3 ? '' : 'none';
+      } else {
+        // No achievements — show empty state inside the card
+        emptyState('achievements', 'achievements');
       }
 
       /* — Contact — */
