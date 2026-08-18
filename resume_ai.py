@@ -1,4 +1,3 @@
-import base64
 import io
 import json
 import os
@@ -7,6 +6,7 @@ import re
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from pydantic import BaseModel
 
 load_dotenv()
 
@@ -18,357 +18,236 @@ if not API_KEY:
     )
 
 client = genai.Client(api_key=API_KEY)
-MODEL_NAME = "gemini-3.6-flash"
+
+MODEL_NAME = "gemini-3.5-flash"
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Main entry point — called by server.py
-# ─────────────────────────────────────────────────────────────────────
+# ---------------------------------------------------------------------
+# Text extraction (txt / pdf / docx)
+# ---------------------------------------------------------------------
 
-def parse_resume_bytes(filename: str, data: bytes) -> dict:
-    """Parse a resume file (PDF / DOCX / TXT) and return structured JSON.
+def read_resume(filepath: str) -> str:
+    """Read + validate a local resume.txt (used by the CLI)."""
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            content = f.read()
+    except FileNotFoundError:
+        raise ValueError(f"Error: '{filepath}' not found. Please check the file path.")
 
-    Strategy:
-    - PDF:  Send raw bytes directly to Gemini (vision-aware, handles columns).
-    - DOCX: Extract text with python-docx, then send text to Gemini.
-    - TXT:  Send text directly to Gemini.
+    return _validate(content)
+
+
+def extract_text_from_bytes(filename: str, data: bytes) -> str:
+    """Extract plain text from an uploaded file's raw bytes.
+
+    Supports .txt, .pdf, and .docx — this is what backs the
+    /api/parse-resume endpoint so PDF/DOCX uploads actually work
+    instead of silently failing in the browser.
     """
     ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
 
-    if not data or len(data.strip() if ext == "txt" else data) == 0:
-        raise ValueError("File appears to be empty.")
+    if ext == "txt":
+        text = data.decode("utf-8", errors="ignore")
 
-    if ext == "pdf":
-        return _gemini_pdf(data)
+    elif ext == "pdf":
+        from pypdf import PdfReader
+        reader = PdfReader(io.BytesIO(data))
+        text = "\n".join(page.extract_text() or "" for page in reader.pages)
 
     elif ext == "docx":
-        text = _extract_docx_text(data)
-        return _gemini_text(text)
-
-    elif ext == "txt":
-        text = data.decode("utf-8", errors="ignore").strip()
-        if len(text) < 50:
-            raise ValueError("Resume text is too short to parse meaningfully.")
-        return _gemini_text(text)
+        import docx
+        document = docx.Document(io.BytesIO(data))
+        text = "\n".join(p.text for p in document.paragraphs)
 
     else:
         raise ValueError(f"Unsupported file type: .{ext}. Please upload a PDF, DOCX, or TXT file.")
 
+    return _validate(text)
 
-# ─────────────────────────────────────────────────────────────────────
-# Gemini PDF (native — no text extraction, reads visually)
-# ─────────────────────────────────────────────────────────────────────
 
-def _gemini_pdf(pdf_bytes: bytes) -> dict:
-    """Send PDF bytes directly to Gemini using inline file data.
-    Gemini reads the PDF visually — handles columns, tables, any layout.
-    """
-    pdf_b64 = base64.standard_b64encode(pdf_bytes).decode("utf-8")
+def _validate(content: str) -> str:
+    cleaned = content.strip()
 
-    contents = [
-        types.Content(
-            role="user",
-            parts=[
-                types.Part(
-                    inline_data=types.Blob(
-                        mime_type="application/pdf",
-                        data=pdf_b64,
-                    )
-                ),
-                types.Part(text=_build_prompt("[See the attached PDF resume above]")),
-            ],
+    if not cleaned:
+        raise ValueError("Error: resume is empty. Please add your resume content.")
+
+    MIN_LENGTH = 50
+    if len(cleaned) < MIN_LENGTH:
+        raise ValueError(
+            f"Error: resume seems too short ({len(cleaned)} chars). "
+            f"Please provide a complete resume with at least {MIN_LENGTH} characters."
         )
-    ]
 
-    return _call_gemini(contents)
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Gemini Text (for DOCX / TXT after text extraction)
-# ─────────────────────────────────────────────────────────────────────
-
-def _gemini_text(resume_text: str) -> dict:
-    """Send plain resume text to Gemini for structured extraction."""
-    contents = [
-        types.Content(
-            role="user",
-            parts=[types.Part(text=_build_prompt(resume_text))],
-        )
-    ]
-    return _call_gemini(contents)
+    return cleaned
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Shared Gemini caller with retry
-# ─────────────────────────────────────────────────────────────────────
+# ---------------------------------------------------------------------
+# Gemini extraction
+# ---------------------------------------------------------------------
 
-def _call_gemini(contents) -> dict:
-    import time
+# NOTE: this schema is intentionally flat and matches the field names
+# template1.html's populateFromData() actually reads (title/bio/email
+# at top level, education[].school, experience[].bullets,
+# projects[].name/tech/description, achievements[].title/sub).
 
-    last_error = None
-    for attempt in range(3):
-        try:
-            response = client.models.generate_content(
-                model=MODEL_NAME,
-                contents=contents,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    temperature=0.1,
-                ),
-            )
-            raw = _strip_fences(response.text)
-            data = json.loads(raw)
-            data = _sanitise(data)
-            data = _post_validate(data)
-            return data
-
-        except json.JSONDecodeError as e:
-            last_error = ValueError(
-                f"Gemini returned invalid JSON: {e}\nRaw:\n{getattr(response, 'text', '')[:400]}"
-            )
-            break  # won't fix with retry
-
-        except Exception as e:
-            last_error = e
-            if attempt < 2:
-                time.sleep(1.5 * (attempt + 1))
-
-    raise last_error
+class EducationItem(BaseModel):
+    degree: str = ""
+    school: str = ""
+    year: str = ""
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Prompt
-# ─────────────────────────────────────────────────────────────────────
+class ExperienceItem(BaseModel):
+    role: str = ""
+    company: str = ""
+    duration: str = ""
+    bullets: list[str] = []
 
-def _build_prompt(resume_text: str) -> str:
-    return f"""\
-You are an expert resume parser. Extract structured data from the resume and return ONLY a JSON object.
 
-=== FIELD RULES ===
+class ProjectItem(BaseModel):
+    name: str = ""
+    description: str = ""
+    tech: str = ""
+    github: str = ""
+    demo: str = ""
 
-- name       : Full name of the person. Just the name, nothing else.
-- title      : Job title / role (e.g. "Software Engineer"). Short phrase, not a sentence.
-- bio        : Summary/Objective paragraph only. Clean 1–3 sentence description. Do NOT append section headings.
-- email      : Email address only.
-- phone      : Phone number only.
-- location   : City and country/state only.
-- linkedin   : Full URL (https://linkedin.com/in/...) or "".
-- github     : Full URL (https://github.com/...) or "".
-- twitter    : Full URL or "".
-- website    : Personal site URL or "".
-- skills     : List of individual skill/technology names. NOT sentences.
-- education  : List of education entries:
-    degree   → degree or course name ONLY (e.g. "B.Tech CSE", "Class XII"). NEVER a URL, email, or bio text.
-    school   → institution name ONLY. NEVER a URL.
-    year     → year or year range (e.g. "2021–2025").
-- experience : List of work/internship entries:
-    role     → job title ONLY (e.g. "Software Intern"). Max 60 characters.
-    company  → employer name ONLY.
-    duration → time period (e.g. "Jun 2024 – Aug 2024").
-    bullets  → list of 2–4 short achievement phrases.
-- projects   : List of projects:
-    name     → SHORT project name only (1–6 words, e.g. "ClimateIQ Dashboard"). NOT a description.
-    tech     → comma-separated stack (e.g. "React, Python, Firebase").
-    github   → GitHub link if present, else "".
-    demo     → live link if present, else "".
-- achievements: Certifications, awards, hackathon wins:
-    title    → short achievement title.
-    sub      → issuer or year.
 
-=== DO NOT ===
-- Put URLs or emails in degree/school/role fields.
-- Put bio sentences in role or degree fields.
-- Put project descriptions in the project name field.
-- Include section headings ("Education", "Skills", etc.) as content values.
-- Hallucinate or invent information not present in the resume.
+class AchievementItem(BaseModel):
+    title: str = ""
+    sub: str = ""
 
-=== RESUME ===
+
+class ResumeData(BaseModel):
+    name: str = ""
+    title: str = ""
+    bio: str = ""
+    email: str = ""
+    phone: str = ""
+    location: str = ""
+    linkedin: str = ""
+    github: str = ""
+    skills: list[str] = []
+    education: list[EducationItem] = []
+    experience: list[ExperienceItem] = []
+    projects: list[ProjectItem] = []
+    achievements: list[AchievementItem] = []
+
+
+# A single worked example is included directly in the prompt because the
+# model was previously chopping numbered/comma-separated resume lines
+# (e.g. "1. Student Management System: manage records, attendance and
+# grades. 2. Personal Portfolio Website") into the wrong fields —
+# splitting mid-sentence at commas/periods and scattering fragments
+# across separate project or education entries. The example below shows
+# exactly how a numbered list and a multi-line education block should
+# collapse into clean, complete entries.
+PROMPT_TEMPLATE = """You are a resume parser. Convert the resume text below into a JSON object matching the given schema. Do not invent, assume, or add any information that is not explicitly present in the resume text. If a field has no information, use an empty string "" or empty list [].
+
+CRITICAL RULES — read carefully, these have caused mistakes before:
+1. Each numbered or bulleted item (e.g. "1.", "2)", "-") in a "Projects" or "Education" section is exactly ONE entry. Never split a single numbered item into multiple entries, and never let text from one numbered item leak into the previous or next entry.
+2. Never split an entry's text at a comma or period unless the resume itself starts a genuinely new item there (e.g. a new number, a new bullet, or a blank line). "Developed a tool to manage records, attendance and grades." is ONE description, not three.
+3. Put the one-line project summary in "description", not in "tech" or "name". "tech" is ONLY a short comma-separated list of technology/tool names (e.g. "Python, Flask, SQL") — if no technologies are explicitly named for a project, leave "tech" as "".
+4. "name" for a project or "degree"/"school" for education must be a real, complete label copied from the resume — never a lone number, a lone letter, or a sentence fragment like "and grades." or "ment".
+5. If a paragraph in the resume runs across multiple lines but is clearly about ONE item (no new number/bullet/heading), treat it as ONE entry and merge the lines together.
+6. "linkedin" and "github" should be full URLs if present (e.g. "https://linkedin.com/in/...").
+7. "bullets" (experience) should be short responsibility/achievement phrases, not full paragraphs.
+8. If a field genuinely isn't present anywhere in the resume, use "" or [] — do not guess or fabricate.
+
+Worked example — given this resume fragment:
+\"\"\"
+Education:
+B.Tech in Computer Science, ABC University, 2022-2026
+
+Projects:
+1. Student Management System - Built a tool to manage student records, attendance and grades. Tech: Python, Flask.
+2. Personal Portfolio Website - A personal site to showcase work.
+\"\"\"
+The correct output for those two sections is:
+"education": [{{"degree": "B.Tech in Computer Science", "school": "ABC University", "year": "2022-2026"}}]
+"projects": [
+  {{"name": "Student Management System", "description": "Built a tool to manage student records, attendance and grades.", "tech": "Python, Flask", "github": "", "demo": ""}},
+  {{"name": "Personal Portfolio Website", "description": "A personal site to showcase work.", "tech": "", "github": "", "demo": ""}}
+]
+Notice each numbered item stayed intact as ONE entry, and the description was NOT split at its internal commas.
+
+Return ONLY valid JSON matching the schema. No markdown code fences, no explanations, no extra text before or after the JSON.
+
+Resume text:
 \"\"\"
 {resume_text}
 \"\"\"
-
-Return ONLY this JSON (no markdown, no explanation):
-
-{{
-  "name": "",
-  "title": "",
-  "bio": "",
-  "email": "",
-  "phone": "",
-  "location": "",
-  "linkedin": "",
-  "github": "",
-  "twitter": "",
-  "website": "",
-  "skills": [],
-  "education": [{{"degree": "", "school": "", "year": ""}}],
-  "experience": [{{"role": "", "company": "", "duration": "", "bullets": []}}],
-  "projects": [{{"name": "", "tech": "", "github": "", "demo": ""}}],
-  "achievements": [{{"title": "", "sub": ""}}]
-}}"""
+"""
 
 
-# ─────────────────────────────────────────────────────────────────────
-# DOCX text extraction
-# ─────────────────────────────────────────────────────────────────────
-
-def _extract_docx_text(data: bytes) -> str:
-    import docx
-    doc = docx.Document(io.BytesIO(data))
-    lines = [p.text.strip() for p in doc.paragraphs if p.text.strip()]
-    text = "\n".join(lines)
-    if len(text) < 50:
-        raise ValueError("DOCX appears to have no readable text content.")
-    return text
-
-
-# ─────────────────────────────────────────────────────────────────────
-# Post-processing & validation
-# ─────────────────────────────────────────────────────────────────────
-
-_JUNK = {
-    "not found", "n/a", "none", "null", "na", "not provided",
-    "not available", "not mentioned", "not specified", "unknown",
-    "not applicable", "no information", "not stated", "-", "--",
-}
-
-_URL_RE    = re.compile(r"https?://|linkedin\.com|github\.com|twitter\.com", re.I)
-_EMAIL_RE  = re.compile(r"[\w.+-]+@[\w-]+\.[a-zA-Z]{2,}")
-_HEADERS   = re.compile(
-    r"^(education|experience|skills|projects|achievements|certifications|"
-    r"summary|objective|profile|about|contact|references|work history|"
-    r"internships?|publications?|awards?|honours?)$",
-    re.I,
-)
-
-
-def _strip_fences(text: str) -> str:
+def _strip_code_fences(text: str) -> str:
+    """Gemini sometimes wraps JSON in ```json ... ``` even when told not to."""
     text = text.strip()
     text = re.sub(r"^```(?:json)?\s*", "", text)
     text = re.sub(r"\s*```$", "", text)
     return text.strip()
 
 
-def _sanitise(obj):
-    if isinstance(obj, dict):
-        return {k: _sanitise(v) for k, v in obj.items()}
-    if isinstance(obj, list):
-        cleaned = [_sanitise(i) for i in obj]
-        return [i for i in cleaned if i not in ({}, "", [], None)]
-    if isinstance(obj, str):
-        s = obj.strip()
-        return "" if s.lower() in _JUNK else s
-    return obj
+_LEADING_ENUM_RE = re.compile(r"^\s*(?:\d+[.)]|[-•*])\s+")
 
 
-def _post_validate(data: dict) -> dict:
-    # ── Education ──
-    clean_edu = []
-    for edu in data.get("education", []):
-        deg    = edu.get("degree", "")
-        school = edu.get("school", "")
-        if _URL_RE.search(deg) or _EMAIL_RE.search(deg):
-            continue
-        if len(deg) > 80:
-            edu["degree"] = deg[:80].rsplit(" ", 1)[0]
-        if _HEADERS.match(deg.strip()) or _HEADERS.match(school.strip()):
-            continue
-        if _URL_RE.search(school) or _EMAIL_RE.search(school):
-            edu["school"] = ""
-        if edu.get("degree") or edu.get("school"):
-            clean_edu.append(edu)
-    data["education"] = clean_edu
+def _clean_label(value: str) -> str:
+    """Strip stray leading numbering ("1. ", "2) ", "- ") that sometimes
+    survives into a name/degree/title field, and collapse whitespace."""
+    if not isinstance(value, str):
+        return value
+    value = _LEADING_ENUM_RE.sub("", value.strip())
+    return re.sub(r"\s+", " ", value).strip()
 
-    # ── Experience ──
-    clean_exp = []
-    for exp in data.get("experience", []):
-        role = exp.get("role", "")
-        if _URL_RE.search(role) or _EMAIL_RE.search(role):
-            continue
-        if len(role) > 60:
-            exp["role"] = role[:60].rsplit(" ", 1)[0]
-        if _HEADERS.match(role.strip()):
-            continue
-        if exp.get("role") or exp.get("company"):
-            clean_exp.append(exp)
-    data["experience"] = clean_exp
 
-    # ── Projects ──
-    clean_proj = []
-    for proj in data.get("projects", []):
-        name = proj.get("name", "").strip(" ,.-–:")
-        if len(name) > 60:
-            for sep in [",", " –", " -", ":", " |"]:
-                if sep in name:
-                    name = name.split(sep)[0].strip()
-                    break
-            name = name[:60]
-        proj["name"] = name
-        if proj.get("name"):
-            clean_proj.append(proj)
-    data["projects"] = clean_proj
+def _is_degenerate(value: str) -> bool:
+    """Flag obviously-broken fragments: empty, or a lone character/number."""
+    if not value:
+        return False
+    stripped = value.strip()
+    if len(stripped) <= 2:
+        return True
+    return False
 
-    # ── Bio cleanup ──
-    bio = data.get("bio", "")
-    bio = re.sub(
-        r"\s*(Education|Skills|Experience|Projects|Achievements|Contact|"
-        r"References|Internship|Certifications)\s*$",
-        "", bio, flags=re.I
-    ).strip()
-    if _URL_RE.search(bio):
-        bio = re.sub(r"https?://\S+", "", bio).strip()
-    data["bio"] = bio
 
-    # ── Links ──
-    for field in ("linkedin", "github", "twitter", "website"):
-        val = data.get(field, "")
-        if val and not val.startswith("http"):
-            val = "https://" + val
-        if val and not re.match(r"https?://\S+\.\S+", val):
-            val = ""
-        data[field] = val
+def _clean_resume_data(data: dict) -> dict:
+    """Post-process the parsed JSON: trim stray numbering off labels and
+    drop entries that are clearly fragments rather than real items, so a
+    single bad split doesn't render as a garbled card on the portfolio."""
+    for proj in data.get("projects", []) or []:
+        proj["name"] = _clean_label(proj.get("name", ""))
+    data["projects"] = [
+        p for p in (data.get("projects") or [])
+        if not _is_degenerate(p.get("name", ""))
+    ]
+
+    for edu in data.get("education", []) or []:
+        edu["degree"] = _clean_label(edu.get("degree", ""))
+        edu["school"] = _clean_label(edu.get("school", ""))
+    data["education"] = [
+        e for e in (data.get("education") or [])
+        if not _is_degenerate(e.get("degree", "")) or not _is_degenerate(e.get("school", ""))
+    ]
 
     return data
 
 
-# ─────────────────────────────────────────────────────────────────────
-# Legacy helpers (kept for CLI / backward compat)
-# ─────────────────────────────────────────────────────────────────────
-
-def extract_text_from_bytes(filename: str, data: bytes) -> str:
-    """Legacy: extract raw text (used by /api/parse-resume endpoint)."""
-    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
-    if ext == "txt":
-        text = data.decode("utf-8", errors="ignore").strip()
-    elif ext == "pdf":
-        from pypdf import PdfReader
-        reader = PdfReader(io.BytesIO(data))
-        pages = []
-        for page in reader.pages:
-            try:
-                t = page.extract_text(extraction_mode="layout") or ""
-            except Exception:
-                t = page.extract_text() or ""
-            pages.append(t)
-        text = "\n".join(pages).strip()
-    elif ext == "docx":
-        text = _extract_docx_text(data)
-    else:
-        raise ValueError(f"Unsupported file type: .{ext}")
-    if not text or len(text) < 50:
-        raise ValueError("Resume is empty or too short.")
-    return text
-
-
 def get_resume_json(resume_text: str) -> dict:
-    """Legacy: parse from text string (used by /api/extract-portfolio)."""
-    return _gemini_text(resume_text)
+    """Call Gemini and return a parsed dict matching the schema above."""
+    prompt = PROMPT_TEMPLATE.format(resume_text=resume_text)
+    response = client.models.generate_content(
+        model=MODEL_NAME,
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=ResumeData,
+            temperature=0.1,
+        ),
+    )
 
+    raw = _strip_code_fences(response.text)
 
-def read_resume(filepath: str) -> str:
-    """Legacy: read a local text file."""
     try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            return f.read().strip()
-    except FileNotFoundError:
-        raise ValueError(f"File not found: {filepath}")
+        data = json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Gemini did not return valid JSON: {e}\nRaw response:\n{raw}")
+
+    return _clean_resume_data(data)
