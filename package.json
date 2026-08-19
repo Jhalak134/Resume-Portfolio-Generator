@@ -7,7 +7,7 @@
     "dev": "python3 server.py",
     "preview": "python3 server.py",
     "start": "python3 server.py",
-    "build": "mkdir -p dist && cp index.html style.css app.js template1.html server.py resume_ai.py requirements.txt package.json dist/",
+    "build": "mkdir -p dist && cp index.html style.css app.js template1.html template2.html server.py resume_ai.py requirements.txt package.json dist/",
     "setup": "pip install -r requirements.txt"
   }
 }
