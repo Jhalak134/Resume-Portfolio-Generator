@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 
-from resume_ai import extract_text_from_bytes, get_resume_json
+from resume_ai import extract_text_from_bytes, extract_photo_from_bytes, get_resume_json
 
 app = Flask(__name__, static_folder=".", static_url_path="")
 
@@ -17,14 +17,18 @@ def parse_resume():
     if not file.filename:
         return jsonify({"error": "Empty filename."}), 400
 
+    raw_bytes = file.read()
+
     try:
-        text = extract_text_from_bytes(file.filename, file.read())
+        text = extract_text_from_bytes(file.filename, raw_bytes)
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         return jsonify({"error": f"Failed to read file: {e}"}), 500
 
-    return jsonify({"text": text})
+    photo = extract_photo_from_bytes(file.filename, raw_bytes)
+    return jsonify({"text": text, "photo": photo}) 
+    
 
 @app.route("/api/extract-portfolio", methods=["POST"])
 def extract_portfolio():
@@ -39,8 +43,14 @@ def extract_portfolio():
     try:
         data = get_resume_json(resume_text)
     except ValueError as e:
+        print("\n========== RESUME PARSING ERROR ==========")
+        print(e)
+        print("==========================================\n")
         return jsonify({"error": str(e)}), 502
     except Exception as e:
+        print("\n========== GEMINI REQUEST ERROR ==========")
+        print(repr(e))
+        print("==========================================\n")
         return jsonify({"error": f"Gemini request failed: {e}"}), 502
 
     return jsonify(data)

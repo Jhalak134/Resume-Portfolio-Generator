@@ -966,8 +966,6 @@
     @media (max-width: 960px) { .nav-download { display: none; } }
 
     /* Hero primary CTA — ink, to echo the brand */
-    #btn-download-portfolio { background: linear-gradient(135deg, #17171f, #2c2c38); }
-    #btn-download-portfolio:hover { box-shadow: 0 12px 32px rgba(23,23,31,.35); }
 
     /* Scroll progress bar */
     #scroll-progress {
@@ -1095,12 +1093,6 @@
         </p>
 
         <div class="hero-cta">
-          <a href="#" class="btn-primary" id="btn-download-portfolio">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Download Portfolio
-          </a>
           <a href="#contact" class="btn-outline" id="btn-contact-me">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
@@ -1627,10 +1619,6 @@
 
     /* Download as PDF (print) */
     const downloadAsPdf = () => window.print();
-    document.getElementById('btn-download-portfolio')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      downloadAsPdf();
-    });
     document.getElementById('nav-download-btn')?.addEventListener('click', downloadAsPdf);
 
     /* Scroll progress bar */
@@ -1655,10 +1643,16 @@
       const el = document.getElementById(id);
       if (el && text) el.textContent = text;
     }
-    function setHref(id, url) {
-      const el = document.getElementById(id);
-      if (el && url && url !== '#') el.href = url;
-    }
+        function setHref(id, url) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (url && url !== '#') {
+              el.href = url;
+              el.style.display = '';
+            } else {
+              el.style.display = 'none';
+            }
+          }
     function setHidden(id, hide) {
       const el = document.getElementById(id);
       if (el) el.closest('.section-card') && (el.closest('.section-card').style.display = hide ? 'none' : '');
@@ -1716,12 +1710,22 @@
       set('hero-desc',  d.bio);
       document.title = `${d.name || 'Your'} — Portfolio`;
 
+            /* — Profile photo — */
+      if (d.photo) {
+        const heroWrap = document.getElementById('hero-photo-wrap');
+        if (heroWrap) heroWrap.innerHTML = `<img src="${d.photo}" alt="${escapeHtml(d.name || 'Profile photo')}">`;
+        const aboutAvatar = document.getElementById('about-avatar');
+        if (aboutAvatar) aboutAvatar.innerHTML = `<img src="${d.photo}" alt="${escapeHtml(d.name || 'Profile photo')}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      }
+
       /* — Social links — */
-      setHref('social-github',   d.github);
+      setHref('social-github', d.github);
       setHref('social-linkedin', d.linkedin);
-      setHref('social-email',    d.email ? `mailto:${d.email}` : null);
-      setHref('c-github',        d.github);
-      setHref('c-linkedin',      d.linkedin);
+      setHref('social-email', d.email ? `mailto:${d.email}` : null);
+      setHref('social-twitter', null); // no twitter field in the resume schema — always hide
+      setHref('c-github', d.github);
+      setHref('c-linkedin', d.linkedin);
+      setHref('c-twitter', null); // same as above
 
       /* — About — */
       set('about-p1', d.bio);
@@ -1878,7 +1882,13 @@
       if (emailLink && d.email) { emailLink.href = `mailto:${d.email}`; }
       set('contact-email',    d.email);
       set('contact-phone',    d.phone);
-      set('contact-location', d.location);
+      const locationWrap = document.getElementById('contact-location-wrap');
+      if (d.location) {
+        set('contact-location', d.location);
+        if (locationWrap) locationWrap.style.display = '';
+      } else if (locationWrap) {
+        locationWrap.style.display = 'none';
+      }
       set('contact-copyright', `© ${new Date().getFullYear()} ${d.name || 'Your Name'}. All rights reserved.`);
     }
 
