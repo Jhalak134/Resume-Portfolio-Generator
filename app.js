@@ -49,11 +49,10 @@ tipToggles.forEach(toggle => {
 });
 
 // ─── File Upload Logic ────────────────────────────────────
+const uploadCard      = document.getElementById('upload-card');
 const uploadZone      = document.getElementById('upload-zone');
 const fileInput       = document.getElementById('resume-file-input');
 const chooseBtn       = document.getElementById('choose-file-btn');
-const fileChosen      = document.getElementById('file-chosen');
-const fileNameDisp    = document.getElementById('file-name-display');
 const removeBtn       = document.getElementById('remove-file-btn');
 const postUploadPanel = document.getElementById('post-upload-panel');
 const pupFilename     = document.getElementById('pup-filename');
@@ -80,9 +79,8 @@ function handleFile(file) {
   resumeFile = file;
   extractedPhoto = '';
 
-  // Update file-chosen strip (legacy)
-  fileNameDisp.textContent = file.name;
-  fileChosen.removeAttribute('hidden');
+  // Hide the upload dropzone — the post-upload panel takes its place.
+  uploadCard.setAttribute('hidden', '');
   uploadZone.classList.remove('dragging');
 
   // Show the post-upload panel
@@ -96,8 +94,8 @@ removeBtn?.addEventListener('click', resetUpload);
 
 function resetUpload() {
   fileInput.value = '';
-  fileChosen.setAttribute('hidden', '');
   postUploadPanel.setAttribute('hidden', '');
+  uploadCard.removeAttribute('hidden');
   resumeFile = null;
   extractedPhoto = '';
 }
