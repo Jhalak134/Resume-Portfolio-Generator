@@ -1132,7 +1132,9 @@ function populateFromData(d) {
   /* — Projects — alternating rows — */
   const hasProj = d.projects && d.projects.length &&
     !(d.projects.length === 1 && d.projects[0].name === 'Project Title');
+  document.querySelectorAll('a[href="#projects"]').forEach(a => a.style.display = hasProj ? '' : 'none');
   if (hasProj) {
+    show('projects');
     const icons = [
       '<polyline points="16 18 22 12 16 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
       '<rect x="3" y="3" width="18" height="18" rx="3" stroke="#fff" stroke-width="2"/><path d="M9 9h6M9 12h6M9 15h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>',
@@ -1199,12 +1201,16 @@ function populateFromData(d) {
         if (btn) btn.dataset.label = 'View More Projects';
       }
     }
+  } else {
+    hide('projects');
   }
 
   /* — Experience — */
   const hasExp = d.experience && d.experience.length &&
     !(d.experience.length === 1 && d.experience[0].role === 'Job Title' && d.experience[0].company === 'Company Name');
+  document.querySelectorAll('a[href="#experience"]').forEach(a => a.style.display = hasExp ? '' : 'none');
   if (hasExp) {
+    show('experience');
     const renderExp = arr => arr.map(exp => `
       <div class="exp-item">
         <div class="exp-year">${exp.duration || '—'}</div>
@@ -1231,10 +1237,16 @@ function populateFromData(d) {
         if (btn) btn.dataset.label = 'View More';
       }
     }
+  } else {
+    hide('experience');
   }
 
   /* — Education — */
-  if (d.education && d.education.length) {
+  const hasEdu = d.education && d.education.length &&
+    !(d.education.length === 1 && d.education[0].degree === 'Degree / Course Name' && d.education[0].school === 'Institution Name');
+  document.querySelectorAll('a[href="#education"]').forEach(a => a.style.display = hasEdu ? '' : 'none');
+  if (hasEdu) {
+    show('education');
     const list = $('edu-list');
     if (list) {
       list.innerHTML = d.education.map(edu => `
@@ -1246,11 +1258,15 @@ function populateFromData(d) {
           </div>
         </div>`).join('');
     }
+  } else {
+    hide('education');
   }
 
   /* — Achievements — */
-  const hasAch = d.achievements && d.achievements.length;
+  const hasAch = d.achievements && d.achievements.length > 0;
+  document.querySelectorAll('a[href="#achievements"]').forEach(a => a.style.display = hasAch ? '' : 'none');
   if (hasAch) {
+    show('achievements');
     const starSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z"/></svg>`;
     const renderAch = arr => arr.map(a => `
       <div class="ach-item">
@@ -1275,6 +1291,8 @@ function populateFromData(d) {
         if (btn) btn.dataset.label = 'View More';
       }
     }
+  } else {
+    hide('achievements');
   }
 
   /* — Contact — */

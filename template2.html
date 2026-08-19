@@ -1739,7 +1739,12 @@
       }
 
       /* — Experience — */
-      if (d.experience && d.experience.length) {
+      const hasExp = d.experience && d.experience.length &&
+        !(d.experience.length === 1 && d.experience[0].role === 'Job Title' && d.experience[0].company === 'Company Name');
+      document.querySelectorAll('a[href="#experience"]').forEach(a => a.style.display = hasExp ? '' : 'none');
+      const expSec = document.getElementById('experience');
+      if (hasExp) {
+        if (expSec) expSec.style.display = '';
         const visibleEl = document.getElementById('experience-visible');
         const extraEl   = document.getElementById('experience-extra');
         const visible   = d.experience.slice(0, 1);
@@ -1765,10 +1770,17 @@
         // Hide view-more if no extras
         const expMoreWrap = document.querySelector('#experience .view-more-wrap');
         if (expMoreWrap) expMoreWrap.style.display = extra.length ? '' : 'none';
+      } else {
+        if (expSec) expSec.style.display = 'none';
       }
 
       /* — Projects — */
-      if (d.projects && d.projects.length) {
+      const hasProj = d.projects && d.projects.length &&
+        !(d.projects.length === 1 && d.projects[0].name === 'Project Title');
+      document.querySelectorAll('a[href="#projects"]').forEach(a => a.style.display = hasProj ? '' : 'none');
+      const projSec = document.getElementById('projects');
+      if (hasProj) {
+        if (projSec) projSec.style.display = '';
         const thumbClasses = ['t1','t2','t3','t4'];
         const projSvgs = [
           `<polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
@@ -1797,10 +1809,16 @@
           ? `<div class="projects-grid" style="margin-top:14px;">${renderProj(d.projects.slice(2))}</div>` : '';
         const projMoreWrap = document.querySelector('#projects .view-more-wrap');
         if (projMoreWrap) projMoreWrap.style.display = d.projects.length > 2 ? '' : 'none';
+      } else {
+        if (projSec) projSec.style.display = 'none';
       }
 
       /* — Achievements — */
-      if (d.achievements && d.achievements.length) {
+      const hasAch = d.achievements && d.achievements.length > 0;
+      document.querySelectorAll('a[href="#achievements"]').forEach(a => a.style.display = hasAch ? '' : 'none');
+      const achCard = document.getElementById('achievements');
+      if (hasAch) {
+        if (achCard) (achCard.closest('.section-card') || achCard).style.display = '';
         const starSvg = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
         const renderAch = (arr) => arr.map(a => `
           <div class="achievement-item">
@@ -1815,11 +1833,10 @@
         if (av) av.innerHTML = renderAch(d.achievements.slice(0, 3));
         if (ae) ae.innerHTML = d.achievements.length > 3
           ? `<div class="achievements-list" style="margin-top:12px;">${renderAch(d.achievements.slice(3))}</div>` : '';
-        // Hide section if none
-        const achCard = document.getElementById('achievements');
-        if (achCard && d.achievements.length === 0) achCard.closest('.section-card').style.display = 'none';
         const achMoreWrap = document.querySelector('#achievements .view-more-wrap');
         if (achMoreWrap) achMoreWrap.style.display = d.achievements.length > 3 ? '' : 'none';
+      } else {
+        if (achCard) (achCard.closest('.section-card') || achCard).style.display = 'none';
       }
 
       /* — Contact — */
