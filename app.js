@@ -3,6 +3,7 @@
 // ─── State ────────────────────────────────────────────────
 let resumeFile       = null;          // the actual File object
 let selectedTemplate = 'template1.html';
+let extractedPhoto = '';
 
 // ─── Hamburger / Mobile Menu ──────────────────────────────
 const hamburger  = document.getElementById('hamburger-btn');
@@ -76,6 +77,7 @@ function handleFile(file) {
   if (file.size > 10 * 1024 * 1024) { showNotification('❌ File exceeds 10MB limit.', 'error'); return; }
 
   resumeFile = file;
+  extractedPhoto = '';
 
   // Hide the upload dropzone — the post-upload panel takes its place.
   uploadCard.setAttribute('hidden', '');
@@ -95,6 +97,7 @@ function resetUpload() {
   postUploadPanel.setAttribute('hidden', '');
   uploadCard.removeAttribute('hidden');
   resumeFile = null;
+  extractedPhoto = '';
 }
 
 // ─── Drag & Drop ──────────────────────────────────────────
@@ -160,6 +163,7 @@ generateMainBtn?.addEventListener('click', async () => {
 
     // STEP 2: Extract structured JSON via backend or client-side
     const portfolioData = await extractPortfolioData(resumeText);
+    if (extractedPhoto) portfolioData.photo = extractedPhoto;
 
     // STEP 3: Store in localStorage so template can read it
     localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
@@ -252,6 +256,7 @@ async function sendToBackend(file) {
   });
   if (!res.ok) throw new Error(`Backend error: ${res.status}`);
   const data = await res.json();
+  extractedPhoto = data.photo || '';
   return data.text || '';
 }
 

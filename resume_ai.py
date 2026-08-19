@@ -1,3 +1,4 @@
+import base64
 import io
 import json
 import os
@@ -64,6 +65,33 @@ def extract_text_from_bytes(filename: str, data: bytes) -> str:
 
     return _validate(text)
 
+
+def extract_photo_from_bytes(filename: str, data: bytes) -> str:
+    """Best-effort extraction of an embedded photo from a PDF/DOCX resume.
+    Returns a base64 data URI or "" if none found / .txt file."""
+    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+    try:
+        if ext == "docx":
+            import docx
+            document = docx.Document(io.BytesIO(data))
+            for rel in document.part.rels.values():
+                if "image" in rel.reltype:
+                    image_part = rel.target_part
+                    mime = image_part.content_type or "image/png"
+                    b64 = base64.b64encode(image_part.blob).decode("ascii")
+                    return f"data:{mime};base64,{b64}"
+        elif ext == "pdf":
+            from pypdf import PdfReader
+            reader = PdfReader(io.BytesIO(data))
+            for page in reader.pages:
+                for image in page.images:
+                    img_ext = (image.name.rsplit(".", 1)[-1] if "." in image.name else "png").lower()
+                    mime = "image/jpeg" if img_ext in ("jpg", "jpeg") else f"image/{img_ext}"
+                    b64 = base64.b64encode(image.data).decode("ascii")
+                    return f"data:{mime};base64,{b64}"
+    except Exception:
+        pass
+    return ""
 
 def _validate(content: str) -> str:
     cleaned = content.strip()
@@ -140,7 +168,70 @@ class ResumeData(BaseModel):
 # across separate project or education entries. The example below shows
 # exactly how a numbered list and a multi-line education block should
 # collapse into clean, complete entries.
-PROMPT_TEMPLATE = """You are a resume parser. Convert the resume text below into a JSON object matching the given schema. Do not invent, assume, or add any information that is not explicitly present in the resume text. If a field has no information, use an empty string "" or empty list [].
+PROMPT_TEMPLATE = """You are a resume parser and professional profile generator.
+
+Convert the resume text below into a JSON object matching the given schema.
+
+GENERAL RULE:
+Extract factual information from the resume accurately. Do not fabricate or assume information that is not supported by the resume.
+
+There are TWO special fields that may be generated when missing:
+
+1. TITLE GENERATION
+If the resume explicitly contains a professional title, job title, role, headline, or designation, extract it accurately.
+
+If no professional title is explicitly present, generate a concise professional title based ONLY on information supported by the resume, including education, skills, experience, and projects.
+
+The generated title should:
+- Be concise, preferably 3-7 words.
+- Represent the candidate's actual profile.
+- Reflect their strongest relevant skills or field.
+- Avoid exaggerating seniority or experience.
+- Never introduce a technology, role, qualification, or specialization that is not supported by the resume.
+
+For example, if the resume contains:
+B.Tech in Computer Science + Python + Machine Learning + ML projects
+
+A suitable generated title could be:
+"Computer Science & ML Enthusiast"
+
+Do NOT generate:
+"Senior Machine Learning Engineer"
+unless the resume clearly supports that level of professional experience.
+
+2. BIO GENERATION
+If the resume explicitly contains a summary, objective, profile, about section, or professional description, extract it accurately.
+
+If no such summary exists, generate a short professional bio based ONLY on factual information supported by the resume.
+
+The generated bio should:
+- Be 1-2 concise sentences.
+- Mention the candidate's field, relevant skills, experience, education, or projects when appropriate.
+- Be professional and suitable for a portfolio website.
+- Never invent years of experience, companies, achievements, certifications, responsibilities, or technologies.
+- Never exaggerate the candidate's expertise or seniority.
+
+IMPORTANT:
+Generated title and bio are the ONLY fields where synthesis is allowed.
+
+For all other fields, extract information only when explicitly supported by the resume. If information is genuinely missing, return "" or [].
+
+Never fabricate:
+- email
+- phone
+- location
+- LinkedIn
+- GitHub
+- skills
+- education
+- experience
+- projects
+- achievements
+- dates
+- companies
+- certifications
+- qualifications
+- technologies
 
 CRITICAL RULES — read carefully, these have caused mistakes before:
 1. Each numbered or bulleted item (e.g. "1.", "2)", "-") in a "Projects" or "Education" section is exactly ONE entry. Never split a single numbered item into multiple entries, and never let text from one numbered item leak into the previous or next entry.
@@ -151,6 +242,17 @@ CRITICAL RULES — read carefully, these have caused mistakes before:
 6. "linkedin" and "github" should be full URLs if present (e.g. "https://linkedin.com/in/...").
 7. "bullets" (experience) should be short responsibility/achievement phrases, not full paragraphs.
 8. If a field genuinely isn't present anywhere in the resume, use "" or [] — do not guess or fabricate.
+9. If title is missing from the resume, generate it using only evidence from the resume. If an explicit title exists, prefer the explicit title.
+
+10. If bio/summary is missing from the resume, generate a concise 1-2 sentence portfolio bio using only evidence from the resume. If an explicit summary exists, preserve its meaning while cleaning minor formatting issues if necessary.
+
+11. When generating title or bio, consider multiple relevant pieces of evidence when available, such as education, skills, projects, and experience.
+
+12. Never infer a level of seniority that is not supported by the resume. Prefer terms such as "Student", "Aspiring", "Enthusiast", or "Developer" when appropriate rather than claiming senior-level expertise.
+
+13. Generated title and bio must remain consistent with the actual resume and must not introduce unsupported facts.
+
+14. Location must never be generated. If location is not present in the resume, return "".
 
 Worked example — given this resume fragment:
 \"\"\"
@@ -249,5 +351,10 @@ def get_resume_json(resume_text: str) -> dict:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
         raise ValueError(f"Gemini did not return valid JSON: {e}\nRaw response:\n{raw}")
+
+    # TEMPORARY DEBUG: inspect AI-generated profile fields
+    print("\n========== AI RESUME OUTPUT ==========")
+    print(json.dumps(data, indent=2, ensure_ascii=False))
+    print("======================================\n")
 
     return _clean_resume_data(data)
