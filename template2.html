@@ -607,9 +607,47 @@
     @media (max-width: 420px) {
       .skills-grid { grid-template-columns: 1fr; }
     }
+
+    /* Floating "Download Page" button — generates a standalone,
+       shareable copy of this portfolio as a single .html file. */
+    #download-page-btn {
+      position: fixed;
+      top: 22px;
+      right: 22px;
+      z-index: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: #fff;
+      background: linear-gradient(90deg, #1a56db, #00b4d8);
+      border: none;
+      border-radius: 100px;
+      padding: 10px 20px;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    }
+    #download-page-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,0.34); }
+    #download-page-btn:active { transform: translateY(0); opacity: 0.92; }
+    @media (max-width: 640px) {
+      #download-page-btn { top: 14px; right: 14px; padding: 10px 14px; }
+      #download-page-btn .dl-label { display: none; }
+    }
   </style>
 </head>
 <body>
+
+<button id="download-page-btn" type="button" title="Download a standalone copy of this page you can send to anyone">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 3v12M12 3l-4 4M12 3l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="dl-label">Download Page</span>
+</button>
 
 <!-- ① HERO ─────────────────────────────────── -->
 <section id="hero">
@@ -878,6 +916,36 @@
 </footer>
 
 <script>
+/* ══════════════════════════════════════════════
+   DOWNLOAD A STANDALONE, SHAREABLE COPY
+   Saves the CURRENT rendered page (with this person's data
+   already baked in) as a single self-contained .html file.
+   Anyone can open it directly in a browser — no upload,
+   account, or connection to this site required.
+══════════════════════════════════════════════ */
+document.getElementById('download-page-btn')?.addEventListener('click', function () {
+  try {
+    const rawName = document.getElementById('hero-name')?.textContent
+      || document.title.replace(/—\s*Portfolio/i, '')
+      || 'portfolio';
+    const slug = rawName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'portfolio';
+
+    const htmlOut = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const blob = new Blob([htmlOut], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${slug}-portfolio.html`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (err) {
+    console.error('Could not generate downloadable file:', err);
+    alert('Sorry, something went wrong generating the file. Please try again.');
+  }
+});
+
 /* ══════════════════════════════════════════════
    CONSTELLATION PARTICLES
 ══════════════════════════════════════════════ */
