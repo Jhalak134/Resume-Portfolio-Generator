@@ -1,0 +1,38 @@
+John Malik
+Software Engineer
+Email: john.doe@example.com | Phone: (555) 123-4567
+Location: San Francisco, CA
+LinkedIn: linkedin.com/in/johndoe | GitHub: github.com/johndoe
+
+PROFESSIONAL SUMMARY
+Software Engineer with 4 years of experience building scalable web
+applications. Strong background in Python, JavaScript, and cloud
+deployments.
+
+EXPERIENCE
+Software Engineer - Tech Solutions Inc.
+Jan 2021 - Present
+- Developed and maintained a microservices-based backend using Python and Flask.
+- Reduced API response times by 30% by optimizing database queries and adding caching.
+- Collaborated with frontend engineers to integrate RESTful APIs into a React app.
+
+Junior Web Developer - Creative Web Agency
+Jun 2019 - Dec 2020
+- Built responsive websites for small businesses using HTML, CSS, and JavaScript.
+- Automated client onboarding workflows using Node.js.
+
+EDUCATION
+Bachelor of Science in Computer Science
+University of Technology
+Graduated: May 2019
+
+SKILLS
+Python, JavaScript, SQL, HTML, CSS, Flask, React, Git, Docker, AWS
+
+PROJECTS
+1. Resume Portfolio Generator - Built a web app that takes a resume file
+and generates a stylized portfolio website using AI for content extraction.
+Tech: Python, Flask, Gemini API.
+2. Weather Dashboard - A front-end app that lets users search for cities
+and see real-time weather forecasts with interactive charts.
+Tech: React, OpenWeather API.
