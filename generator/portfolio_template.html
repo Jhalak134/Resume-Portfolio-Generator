@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ name or "Portfolio" }}{% if title %} — {{ title }}{% endif %}</title>
+  <link rel="stylesheet" href="portfolio_style.css" />
+</head>
+<body>
+
+  <header class="hero">
+    {% if photo %}
+    <img class="hero-photo" src="{{ photo }}" alt="{{ name }}" />
+    {% endif %}
+    <h1>{{ name or "Your Name" }}</h1>
+    {% if title %}<p class="headline">{{ title }}</p>{% endif %}
+    {% if bio %}<p class="bio">{{ bio }}</p>{% endif %}
+
+    {% if email or phone or location or linkedin or github %}
+    <div class="contact-links">
+      {% if email %}<a href="mailto:{{ email }}">{{ email }}</a>{% endif %}
+      {% if phone %}<span>{{ phone }}</span>{% endif %}
+      {% if location %}<span>{{ location }}</span>{% endif %}
+      {% if linkedin %}<a href="{{ linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+      {% if github %}<a href="{{ github }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+    </div>
+    {% endif %}
+  </header>
+
+  {% if skills %}
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul class="skill-list">
+      {% for skill in skills %}
+      <li>{{ skill }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if experience %}
+  <section id="experience">
+    <h2>Experience</h2>
+    {% for exp in experience %}
+    <article class="entry">
+      <h3>{{ exp.role }}{% if exp.company %} — {{ exp.company }}{% endif %}</h3>
+      {% if exp.duration %}<p class="meta">{{ exp.duration }}</p>{% endif %}
+      {% if exp.bullets %}
+      <ul>
+        {% for bullet in exp.bullets %}
+        <li>{{ bullet }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if education %}
+  <section id="education">
+    <h2>Education</h2>
+    {% for edu in education %}
+    <article class="entry">
+      <h3>{{ edu.degree }}</h3>
+      <p class="meta">{{ edu.school }}{% if edu.year %} · {{ edu.year }}{% endif %}</p>
+    </article>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if projects %}
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-grid">
+      {% for project in projects %}
+      <article class="project-card">
+        <h3>{{ project.name }}</h3>
+        {% if project.description %}<p>{{ project.description }}</p>{% endif %}
+        {% if project.tech %}<p class="meta">{{ project.tech }}</p>{% endif %}
+        <div class="project-links">
+          {% if project.github %}<a href="{{ project.github }}" target="_blank" rel="noopener">Code</a>{% endif %}
+          {% if project.demo %}<a href="{{ project.demo }}" target="_blank" rel="noopener">Live</a>{% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if achievements %}
+  <section id="achievements">
+    <h2>Achievements</h2>
+    <ul class="achievement-list">
+      {% for a in achievements %}
+      <li>
+        <strong>{{ a.title }}</strong>
+        {% if a.sub %}<span> — {{ a.sub }}</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <footer>
+    <p>Generated from resume.txt using Gemini.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,20 +1,29 @@
-"""
-main.py
--------
-CLI entry point: reads resume.txt from the current directory,
-sends it to Gemini, and prints the structured JSON.
-
-For the actual web app (templates/index.html + static/js/app.js +
-templates/template1.html), run app.py instead — that's what serves
-the /api endpoints the frontend calls.
-"""
-
 import json
+import os
+import sys
 
 from ai import get_resume_json
+from generator import generate_portfolio_html
 from parsing import read_resume
 
 if __name__ == "__main__":
-    resume_text = read_resume("resume.txt")
-    data = get_resume_json(resume_text)
+    default_path = "resume.txt" if os.path.exists("resume.txt") else "sample_resume.txt"
+    filepath = sys.argv[1] if len(sys.argv) > 1 else default_path
+
+    try:
+        resume_text = read_resume(filepath)
+    except ValueError as e:
+        sys.exit(f"Input error: {e}")
+
+    try:
+        data = get_resume_json(resume_text)
+    except ValueError as e:
+        sys.exit(f"Gemini returned unusable data: {e}")
+    except Exception as e:
+        sys.exit(f"Gemini request failed: {e}")
+
     print(json.dumps(data, indent=2))
+
+    output_path = generate_portfolio_html(data, output_dir=".")
+    print(f"\nPortfolio written to {output_path}")
+    print("Open it in a browser to view it.")
