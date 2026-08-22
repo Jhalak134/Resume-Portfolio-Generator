@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-from ai import get_resume_json
+from ai import ConfigError, get_resume_json
 from generator import generate_portfolio_html
 from parsing import read_resume
 
@@ -17,6 +17,8 @@ if __name__ == "__main__":
 
     try:
         data = get_resume_json(resume_text)
+    except ConfigError as e:
+        sys.exit(f"Configuration error: {e}")
     except ValueError as e:
         sys.exit(f"Gemini returned unusable data: {e}")
     except Exception as e:

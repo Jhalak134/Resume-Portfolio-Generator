@@ -1,17 +1,30 @@
-"""Format-agnostic entry points used by the Flask routes and the CLI.
-
-Dispatches to txt_parser / pdf_parser / docx_parser based on file
-extension, and validates the resulting text is non-empty and long
-enough to be worth sending to Gemini.
-"""
+import re
 
 from . import docx_parser, pdf_parser, txt_parser
 
 MIN_LENGTH = 50
 
 
+def _clean_text(content: str) -> str:
+    """Collapse repeated blank lines and trailing/leading whitespace on each
+    line before the resume is sent to Gemini, per the brief's requirement
+    to 'remove unnecessary spaces and blank lines'."""
+    lines = [line.strip() for line in content.splitlines()]
+    cleaned_lines = []
+    prev_blank = False
+    for line in lines:
+        if line == "":
+            if prev_blank:
+                continue
+            prev_blank = True
+        else:
+            prev_blank = False
+        cleaned_lines.append(line)
+    return "\n".join(cleaned_lines).strip()
+
+
 def _validate(content: str) -> str:
-    cleaned = content.strip()
+    cleaned = _clean_text(content)
 
     if not cleaned:
         raise ValueError("Error: resume is empty. Please add your resume content.")

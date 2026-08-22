@@ -12,15 +12,24 @@ from pydantic import BaseModel
 load_dotenv()
 
 API_KEY = os.getenv("google_api")
-if not API_KEY:
-    raise ValueError(
-        "google_api not found. Add it to your .env file, e.g.\n"
-        "  google_api=YOUR_GEMINI_API_KEY"
-    )
-
-client = genai.Client(api_key=API_KEY)
 
 MODEL_NAME = "gemini-3.5-flash"
+
+
+class ConfigError(Exception):
+    """Raised when required configuration (e.g. the API key) is missing."""
+
+
+def _get_client() -> genai.Client:
+    """Build the Gemini client lazily so a missing key surfaces as a clean,
+    catchable ConfigError instead of crashing at import time with a raw
+    traceback."""
+    if not API_KEY:
+        raise ConfigError(
+            "google_api not found. Add it to your .env file, e.g.\n"
+            "  google_api=YOUR_GEMINI_API_KEY"
+        )
+    return genai.Client(api_key=API_KEY)
 
 
 class EducationItem(BaseModel):
@@ -251,6 +260,7 @@ def _clean_resume_data(data: dict) -> dict:
 
 def get_resume_json(resume_text: str) -> dict:
     """Call Gemini and return a parsed dict matching the schema above."""
+    client = _get_client()
     prompt = PROMPT_TEMPLATE.format(resume_text=resume_text)
     response = client.models.generate_content(
         model=MODEL_NAME,
