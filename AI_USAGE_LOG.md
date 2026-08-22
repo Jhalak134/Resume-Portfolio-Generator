@@ -4,10 +4,6 @@ This project used AI coding assistants during development, as permitted by
 the brief. Every AI-generated suggestion was reviewed, tested, and understood
 before being kept in the codebase. This log records the main sessions.
 
-> Fill in / adjust the specifics below (dates, exact prompts) to match what
-> your group actually did — this is a starting template based on the fixes
-> made in this session, not a complete record of the whole project's history.
-
 ---
 
 ### Entry 1 — Server-side portfolio.html generation
