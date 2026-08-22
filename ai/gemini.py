@@ -1,5 +1,5 @@
-import base64
-import io
+"""Gemini client: turns validated resume text into structured portfolio JSON."""
+
 import json
 import os
 import re
@@ -21,87 +21,6 @@ if not API_KEY:
 client = genai.Client(api_key=API_KEY)
 
 MODEL_NAME = "gemini-3.5-flash"
-
-def read_resume(filepath: str) -> str:
-    """Read + validate a local resume.txt (used by the CLI)."""
-    try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            content = f.read()
-    except FileNotFoundError:
-        raise ValueError(f"Error: '{filepath}' not found. Please check the file path.")
-
-    return _validate(content)
-
-
-def extract_text_from_bytes(filename: str, data: bytes) -> str:
-    """Extract plain text from an uploaded file's raw bytes.
-
-    Supports .txt, .pdf, and .docx — this is what backs the
-    /api/parse-resume endpoint so PDF/DOCX uploads actually work
-    instead of silently failing in the browser.
-    """
-    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
-
-    if ext == "txt":
-        text = data.decode("utf-8", errors="ignore")
-
-    elif ext == "pdf":
-        from pypdf import PdfReader
-        reader = PdfReader(io.BytesIO(data))
-        text = "\n".join(page.extract_text() or "" for page in reader.pages)
-
-    elif ext == "docx":
-        import docx
-        document = docx.Document(io.BytesIO(data))
-        text = "\n".join(p.text for p in document.paragraphs)
-
-    else:
-        raise ValueError(f"Unsupported file type: .{ext}. Please upload a PDF, DOCX, or TXT file.")
-
-    return _validate(text)
-
-
-def extract_photo_from_bytes(filename: str, data: bytes) -> str:
-    """Best-effort extraction of an embedded photo from a PDF/DOCX resume.
-    Returns a base64 data URI or "" if none found / .txt file."""
-    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
-    try:
-        if ext == "docx":
-            import docx
-            document = docx.Document(io.BytesIO(data))
-            for rel in document.part.rels.values():
-                if "image" in rel.reltype:
-                    image_part = rel.target_part
-                    mime = image_part.content_type or "image/png"
-                    b64 = base64.b64encode(image_part.blob).decode("ascii")
-                    return f"data:{mime};base64,{b64}"
-        elif ext == "pdf":
-            from pypdf import PdfReader
-            reader = PdfReader(io.BytesIO(data))
-            for page in reader.pages:
-                for image in page.images:
-                    img_ext = (image.name.rsplit(".", 1)[-1] if "." in image.name else "png").lower()
-                    mime = "image/jpeg" if img_ext in ("jpg", "jpeg") else f"image/{img_ext}"
-                    b64 = base64.b64encode(image.data).decode("ascii")
-                    return f"data:{mime};base64,{b64}"
-    except Exception:
-        pass
-    return ""
-
-def _validate(content: str) -> str:
-    cleaned = content.strip()
-
-    if not cleaned:
-        raise ValueError("Error: resume is empty. Please add your resume content.")
-
-    MIN_LENGTH = 50
-    if len(cleaned) < MIN_LENGTH:
-        raise ValueError(
-            f"Error: resume seems too short ({len(cleaned)} chars). "
-            f"Please provide a complete resume with at least {MIN_LENGTH} characters."
-        )
-
-    return cleaned
 
 
 class EducationItem(BaseModel):
@@ -144,6 +63,7 @@ class ResumeData(BaseModel):
     experience: list[ExperienceItem] = []
     projects: list[ProjectItem] = []
     achievements: list[AchievementItem] = []
+
 
 PROMPT_TEMPLATE = """You are a resume parser and professional profile generator.
 

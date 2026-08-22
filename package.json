@@ -2,12 +2,11 @@
   "name": "resume-portfolio-generator",
   "version": "1.0.0",
   "private": true,
-  "description": "PortfolioBuilder - Turn your resume into a stunning portfolio website with AI (Gemini). Static frontend with optional Python/Gemini resume parsing.",
+  "description": "PortfolioBuilder - Turn your resume into a stunning portfolio website with AI (Gemini). Flask backend with a static frontend.",
   "scripts": {
-    "dev": "python3 server.py",
-    "preview": "python3 server.py",
-    "start": "python3 server.py",
-    "build": "mkdir -p dist && cp index.html style.css app.js template1.html template2.html server.py resume_ai.py requirements.txt package.json dist/",
+    "dev": "python3 app.py",
+    "preview": "python3 app.py",
+    "start": "python3 app.py",
     "setup": "pip install -r requirements.txt"
   }
 }

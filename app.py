@@ -1,12 +1,33 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, jsonify, render_template, request
 
-from resume_ai import extract_text_from_bytes, extract_photo_from_bytes, get_resume_json
+from ai import get_resume_json
+from config import Config
+from parsing import extract_photo_from_bytes, extract_text_from_bytes
 
-app = Flask(__name__, static_folder=".", static_url_path="")
+app = Flask(__name__)
+app.config.from_object(Config)
+
 
 @app.route("/")
+@app.route("/index.html")
 def index():
-    return send_from_directory(".", "index.html")
+    return render_template("index.html")
+
+
+@app.route("/template1.html")
+def template1():
+    return render_template("template1.html")
+
+
+@app.route("/template2.html")
+def template2():
+    return render_template("template2.html")
+
+
+@app.route("/sitepages/<page>.html")
+def sitepage(page):
+    return render_template(f"sitepages/{page}.html")
+
 
 @app.route("/api/parse-resume", methods=["POST"])
 def parse_resume():
@@ -27,8 +48,8 @@ def parse_resume():
         return jsonify({"error": f"Failed to read file: {e}"}), 500
 
     photo = extract_photo_from_bytes(file.filename, raw_bytes)
-    return jsonify({"text": text, "photo": photo}) 
-    
+    return jsonify({"text": text, "photo": photo})
+
 
 @app.route("/api/extract-portfolio", methods=["POST"])
 def extract_portfolio():
@@ -57,8 +78,4 @@ def extract_portfolio():
 
 
 if __name__ == "__main__":
-    import os
-
-    port = int(os.getenv("PORT", "5000"))
-    debug = os.getenv("FLASK_DEBUG", "0") == "1"
-    app.run(host="0.0.0.0", port=port, debug=debug)
+    app.run(host="0.0.0.0", port=Config.PORT, debug=Config.DEBUG)
