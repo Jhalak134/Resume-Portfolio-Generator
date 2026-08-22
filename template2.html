@@ -265,13 +265,6 @@
       border-color: #818cf8;
       transform: translateY(-2px);
     }
-    .skill-col-desc {
-      font-size: 0.8rem;
-      color: #666;
-      line-height: 1.6;
-    }
-    .skill-col-desc .hl { color: #1a56db; font-weight: 600; }
-
     /* Fallback flat list (all skills in one row) */
     .skills-flat {
       display: flex;
@@ -593,20 +586,6 @@
     }
     #contact-copyright { color: rgba(255,255,255,0.6); }
 
-<<<<<<<< HEAD:template2.html
-    /* Hero primary CTA — ink, to echo the brand */
-
-    /* Scroll progress bar */
-    #scroll-progress {
-      position: fixed;
-      top: 0; left: 0;
-      height: 3px;
-      width: 0%;
-      background: linear-gradient(90deg, var(--primary), var(--accent2), var(--accent));
-      z-index: 1001;
-      border-radius: 0 3px 3px 0;
-      transition: width .12s linear;
-========
     /* ─────────────────────────────────────────────
        EMPTY STATE
     ───────────────────────────────────────────── */
@@ -616,7 +595,6 @@
       font-size: 0.9rem;
       padding: 32px;
       font-style: italic;
->>>>>>>> origin/main:template1.html
     }
 
     /* ─────────────────────────────────────────────
@@ -688,136 +666,7 @@
       <a href="#projects">Projects</a>
       <a href="#education">Education</a>
       <a href="#contact">Contact</a>
-<<<<<<<< HEAD:template2.html
-    </div>
-  </header>
-
-  <main>
-
-  <!-- ══════════════════════════════════════════
-       HERO
-  ══════════════════════════════════════════ -->
-  <section id="hero">
-    <div class="hero-dots" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-tag">
-          <span class="hero-tag-dot"></span>
-          Open to Opportunities
-        </div>
-
-        <h1 class="hero-name" id="hero-name">
-          <span>Your Name</span>
-        </h1>
-        <p class="hero-title" id="hero-title">Your Professional Title</p>
-        <p class="hero-desc" id="hero-desc">
-          A short and impactful tagline or summary about you and what you do.
-          Passionate about building great products and solving complex problems.
-        </p>
-
-        <div class="hero-cta">
-          <a href="#contact" class="btn-outline" id="btn-contact-me">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            Contact Me
-          </a>
-        </div>
-
-        <div class="hero-socials">
-          <a href="#" class="social-icon" id="social-github" aria-label="GitHub" title="GitHub">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#" class="social-icon" id="social-linkedin" aria-label="LinkedIn" title="LinkedIn">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.8"/></svg>
-          </a>
-          <a href="#" class="social-icon" id="social-twitter" aria-label="Twitter" title="Twitter">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="mailto:your@email.com" class="social-icon" id="social-email" aria-label="Email" title="Email">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Profile Photo -->
-      <div class="hero-photo">
-        <div class="hero-photo-ring">
-          <div class="hero-photo-inner" id="hero-photo-wrap">
-            <!-- Replace with: <img src="photo.jpg" alt="Your Name"> -->
-            <svg width="110" height="110" viewBox="0 0 24 24" fill="none" id="profile-placeholder">
-              <circle cx="12" cy="8" r="4" stroke="rgba(99,102,241,0.45)" stroke-width="1.5" fill="rgba(99,102,241,0.08)"/>
-              <path d="M20 21a8 8 0 1 0-16 0" stroke="rgba(99,102,241,0.45)" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-        <div class="hero-photo-badge">
-          <div class="badge-dot"></div>
-          <div>
-            <div class="badge-text">Available</div>
-            <div class="badge-sub">For Work</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       ABOUT + SKILLS
-  ══════════════════════════════════════════ -->
-  <div class="section-row" style="background:#fff;">
-    <div class="container">
-      <div class="two-col">
-
-        <!-- ABOUT ME -->
-        <div class="section-card reveal" id="about">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#6366f1" stroke-width="1.8"/><path d="M20 21a8 8 0 1 0-16 0" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round"/></svg>
-            </div>
-            <span class="card-title">About Me</span>
-          </div>
-          <div class="about-layout">
-            <div class="about-avatar" id="about-avatar">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="white" stroke-width="1.5" fill="rgba(255,255,255,.2)"/><path d="M20 21a8 8 0 1 0-16 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <div class="about-body">
-              <p id="about-p1">I am a passionate professional with expertise in building elegant and functional solutions. I thrive at the intersection of creativity and technology.</p>
-              <p id="about-p2">With a strong foundation in my field, I bring a blend of technical expertise and creative thinking to every project I work on.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- SKILLS -->
-        <div class="section-card reveal" id="skills">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#6366f1" stroke-width="1.8" stroke-linejoin="round"/></svg>
-            </div>
-            <span class="card-title">Skills</span>
-          </div>
-          <div class="skill-category-label">Languages &amp; Frameworks</div>
-          <div class="skills-wrap" id="skills-primary">
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 1</span>
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 2</span>
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 3</span>
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 4</span>
-          </div>
-          <div class="skill-category-label">Tools &amp; Technologies</div>
-          <div class="skills-wrap" id="skills-secondary">
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 5</span>
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 6</span>
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 7</span>
-            <span class="skill-pill"><span class="skill-dot"></span>Skill 8</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-========
     </nav>
->>>>>>>> origin/main:template1.html
   </div>
 
   <!-- Scroll chevron -->
@@ -838,8 +687,8 @@
       </div>
     </div>
     <p class="story-body reveal" id="story-bio">
-      I am a <span class="hi">passionate developer</span> with a love for building elegant, performant software.
-      I enjoy exploring the fields of <span class="hi">Software Engineering</span>, <span class="hi">Web Development</span>,
+      I am a <span class="hi">dedicated professional</span> with a passion for building great work and solving real problems.
+      I enjoy exploring the fields of <span class="hi">my industry</span>, <span class="hi">continuous learning</span>,
       and am always open to new opportunities and collaborations.
     </p>
   </div>
@@ -852,25 +701,21 @@
     <!-- 4-column grid populated by JS -->
     <div class="skills-grid reveal" id="skills-4col">
       <!-- Default columns, replaced by JS when data is present -->
-      <div>
+      <div id="skills-group-0">
         <div class="skill-col-title">Languages</div>
         <div class="skill-icons" id="skills-col-0"></div>
-        <p class="skill-col-desc" id="skills-desc-0"></p>
       </div>
-      <div>
+      <div id="skills-group-1">
         <div class="skill-col-title">Front-End</div>
         <div class="skill-icons" id="skills-col-1"></div>
-        <p class="skill-col-desc" id="skills-desc-1"></p>
       </div>
-      <div>
+      <div id="skills-group-2">
         <div class="skill-col-title">Back-End</div>
         <div class="skill-icons" id="skills-col-2"></div>
-        <p class="skill-col-desc" id="skills-desc-2"></p>
       </div>
-      <div>
+      <div id="skills-group-3">
         <div class="skill-col-title">Tools</div>
         <div class="skill-icons" id="skills-col-3"></div>
-        <p class="skill-col-desc" id="skills-desc-3"></p>
       </div>
     </div>
     <!-- Flat fallback used when we have all skills but no categorisation -->
@@ -1149,6 +994,16 @@ function setText(id, val) { const e = $(id); if (e && val) e.textContent = val; 
 function setHref(id, h)   { const e = $(id); if (e && h)   e.href = h; }
 function hide(id)         { const e = $(id); if (e) e.style.display = 'none'; }
 function show(id)         { const e = $(id); if (e) e.style.display = ''; }
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[c]));
+}
 
 /* ══════════════════════════════════════════════
    SKILL-CATEGORY GUESSER
@@ -1215,8 +1070,8 @@ function populateFromData(d) {
   if (d.bio) {
     const bioEl = $('story-bio');
     if (bioEl) {
-      bioEl.innerHTML = d.bio
-        .replace(/(software engineer|web developer|programmer|developer|data scientist|engineer|designer)/gi,
+      bioEl.innerHTML = escapeHtml(d.bio)
+        .replace(/(software engineer|web developer|programmer|developer|data scientist|engineer|designer|analyst|consultant|manager|marketer|marketing specialist|accountant|financial analyst|researcher|writer|editor|teacher|educator|nurse|scientist|architect|product manager|project manager|strategist|specialist|coordinator)/gi,
           m => `<span class="hi">${m}</span>`);
     }
   }
@@ -1234,34 +1089,30 @@ function populateFromData(d) {
       else     buckets.other.push(s);
     });
 
-    const colIds  = ['skills-col-0','skills-col-1','skills-col-2','skills-col-3'];
-    const descIds = ['skills-desc-0','skills-desc-1','skills-desc-2','skills-desc-3'];
+    const colIds   = ['skills-col-0','skills-col-1','skills-col-2','skills-col-3'];
+    const groupIds = ['skills-group-0','skills-group-1','skills-group-2','skills-group-3'];
     const cols    = [
       buckets.languages,
       buckets.frontend,
       buckets.backend,
       [...buckets.tools, ...buckets.other]
     ];
-    const descs = [
-      'My programming languages of choice.',
-      'Technologies for front-end development.',
-      'Back-end frameworks &amp; databases.',
-      'Favourite tools and utilities.'
-    ];
 
-    const pill = s => `<span class="skill-icon-pill">${s}</span>`;
+    const pill = s => `<span class="skill-icon-pill">${escapeHtml(s)}</span>`;
     let anyFilled = false;
     cols.forEach((arr, i) => {
-      const col  = $(colIds[i]);
-      const desc = $(descIds[i]);
+      const col   = $(colIds[i]);
+      const group = $(groupIds[i]);
       if (!col) return;
       if (arr.length) {
         col.innerHTML = arr.map(pill).join('');
         anyFilled = true;
+        if (group) group.style.display = '';
       } else {
-        col.innerHTML = '<span style="font-size:0.78rem;color:#bbb;">—</span>';
+        // No skills in this category — hide the whole column instead of
+        // showing an empty placeholder.
+        if (group) group.style.display = 'none';
       }
-      if (desc) desc.innerHTML = descs[i];
     });
 
     /* fallback: if nothing was categorised, show flat */
@@ -1289,19 +1140,20 @@ function populateFromData(d) {
     const renderRow = (p, i) => {
       const techBadges = (p.tech || '')
         .split(/[,·\/]/).map(t => t.trim()).filter(Boolean)
-        .map(t => `<span class="proj-tech-badge">${t}</span>`).join('');
+        .map(t => `<span class="proj-tech-badge">${escapeHtml(t)}</span>`).join('');
       const links = [
-        p.github && p.github !== '#' ? `<a href="${p.github}" class="proj-btn" target="_blank" rel="noopener">
+        p.github && p.github !== '#' ? `<a href="${escapeHtml(p.github)}" class="proj-btn" target="_blank" rel="noopener">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
           GitHub</a>` : '',
-        p.demo && p.demo !== '#' ? `<a href="${p.demo}" class="proj-btn" target="_blank" rel="noopener">
+        p.demo && p.demo !== '#' ? `<a href="${escapeHtml(p.demo)}" class="proj-btn" target="_blank" rel="noopener">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
           Check it out!</a>` : ''
       ].filter(Boolean).join('');
 
-      const bullets = (p.bullets || []).slice(0, 2).join(' ');
-      const desc    = bullets || `A project built with ${p.tech || 'various technologies'}.`;
+      const bullets = (p.bullets || []).slice(0, 2).map(escapeHtml).join(' ');
+      const desc    = bullets || `A project built with ${escapeHtml(p.tech) || 'various technologies'}.`;
       const isEven  = i % 2 === 1;
+      const safeName = escapeHtml(p.name) || 'Project';
 
       return `
       <div class="project-row reveal${isEven ? ' reverse' : ''}">
@@ -1310,14 +1162,14 @@ function populateFromData(d) {
             <div class="proj-placeholder-icon">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none">${icons[i % 4]}</svg>
             </div>
-            <div class="proj-placeholder-label">${p.name || 'Project'}</div>
+            <div class="proj-placeholder-label">${safeName}</div>
           </div>
         </div>
         <div class="proj-info">
-          <div class="proj-name">${p.name || 'Project'}</div>
+          <div class="proj-name">${safeName}</div>
           <div class="proj-tech-row">${techBadges}</div>
           <p class="proj-desc">${desc}</p>
-          <div class="proj-links-row">${links || '<span style="color:#aaa;font-size:.82rem;">No links provided</span>'}</div>
+          <div class="proj-links-row">${links}</div>
         </div>
       </div>`;
     };
@@ -1332,51 +1184,6 @@ function populateFromData(d) {
       list.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     }
 
-<<<<<<<< HEAD:template2.html
-    setupToggle('btn-exp-more',  'experience-extra',  'View Less', 'View More');
-    setupToggle('btn-proj-more', 'projects-extra',    'View Less', 'View More');
-    setupToggle('btn-ach-more',  'achievements-extra','View Less', 'View More');
-
-    /* Download as PDF (print) */
-    const downloadAsPdf = () => window.print();
-    document.getElementById('nav-download-btn')?.addEventListener('click', downloadAsPdf);
-
-    /* Scroll progress bar */
-    const progressBar = document.getElementById('scroll-progress');
-    const updateProgress = () => {
-      const doc = document.documentElement;
-      const max = doc.scrollHeight - doc.clientHeight;
-      progressBar.style.width = max > 0 ? `${(doc.scrollTop / max) * 100}%` : '0%';
-    };
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-
-    /* Back to top */
-    const backToTopBtn = document.getElementById('back-to-top');
-    const toggleBackToTop = () => backToTopBtn.classList.toggle('show', window.scrollY > 600);
-    window.addEventListener('scroll', toggleBackToTop, { passive: true });
-    toggleBackToTop();
-    backToTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    /* ─── Populate from Resume Data (localStorage) ── */
-    function set(id, text) {
-      const el = document.getElementById(id);
-      if (el && text) el.textContent = text;
-    }
-        function setHref(id, url) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (url && url !== '#') {
-              el.href = url;
-              el.style.display = '';
-            } else {
-              el.style.display = 'none';
-            }
-          }
-    function setHidden(id, hide) {
-      const el = document.getElementById(id);
-      if (el) el.closest('.section-card') && (el.closest('.section-card').style.display = hide ? 'none' : '');
-========
     if (extra.length) {
       const ex = $('projects-extra');
       if (ex) {
@@ -1402,12 +1209,12 @@ function populateFromData(d) {
     show('experience');
     const renderExp = arr => arr.map(exp => `
       <div class="exp-item">
-        <div class="exp-year">${exp.duration || '—'}</div>
+        <div class="exp-year">${escapeHtml(exp.duration) || '—'}</div>
         <div>
-          <div class="exp-role">${exp.role || ''}</div>
-          <div class="exp-company">${exp.company || ''}</div>
+          <div class="exp-role">${escapeHtml(exp.role)}</div>
+          <div class="exp-company">${escapeHtml(exp.company)}</div>
           <ul class="exp-bullets">
-            ${(exp.bullets || []).map(b => `<li>${b}</li>`).join('')}
+            ${(exp.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('')}
           </ul>
         </div>
       </div>`).join('');
@@ -1440,13 +1247,12 @@ function populateFromData(d) {
     if (list) {
       list.innerHTML = d.education.map(edu => `
         <div class="edu-item">
-          <div class="edu-year">${edu.year || '—'}</div>
+          <div class="edu-year">${escapeHtml(edu.year) || '—'}</div>
           <div>
-            <div class="edu-degree">${edu.degree || ''}</div>
-            <div class="edu-school">${edu.school || ''}</div>
+            <div class="edu-degree">${escapeHtml(edu.degree)}</div>
+            <div class="edu-school">${escapeHtml(edu.school)}</div>
           </div>
         </div>`).join('');
->>>>>>>> origin/main:template1.html
     }
   } else {
     hide('education');
@@ -1462,8 +1268,8 @@ function populateFromData(d) {
       <div class="ach-item">
         <div class="ach-star-ico">${starSvg}</div>
         <div>
-          <div class="ach-title">${a.title || ''}</div>
-          <div class="ach-sub">${a.sub || ''}</div>
+          <div class="ach-title">${escapeHtml(a.title)}</div>
+          <div class="ach-sub">${escapeHtml(a.sub)}</div>
         </div>
       </div>`).join('');
 
@@ -1485,223 +1291,6 @@ function populateFromData(d) {
     hide('achievements');
   }
 
-<<<<<<<< HEAD:template2.html
-    // Hides an entire section-card when its data is empty, removes its
-      // matching nav link (desktop + mobile share the same href), and fixes
-      // up the two-column grid so we don't leave an empty gap behind.
-      function hideSection(section) {
-        if (!section) return;
-        section.style.display = 'none';
-
-        const id = section.id;
-        if (id) {
-          document.querySelectorAll(`a[href="#${id}"]`).forEach(a => a.remove());
-        }
-
-        const twoCol = section.closest('.two-col');
-        if (twoCol) {
-          const anyVisible = Array.from(twoCol.children)
-            .some(child => child.style.display !== 'none');
-          if (!anyVisible) {
-            const row = twoCol.closest('.section-row');
-            if (row) row.style.display = 'none';
-          } else {
-            twoCol.style.gridTemplateColumns = '1fr';
-          }
-        }
-      }
-
-    function populateFromData(d) {
-      if (!d) return;
-
-      /* — Navbar & hero — */
-      set('nav-name',   d.name);
-      document.querySelector('#hero-name span').textContent = d.name || 'Your Name';
-      set('hero-title', d.title);
-      set('hero-desc',  d.bio);
-      document.title = `${d.name || 'Your'} — Portfolio`;
-
-            /* — Profile photo — */
-      if (d.photo) {
-        const heroWrap = document.getElementById('hero-photo-wrap');
-        if (heroWrap) heroWrap.innerHTML = `<img src="${d.photo}" alt="${escapeHtml(d.name || 'Profile photo')}">`;
-        const aboutAvatar = document.getElementById('about-avatar');
-        if (aboutAvatar) aboutAvatar.innerHTML = `<img src="${d.photo}" alt="${escapeHtml(d.name || 'Profile photo')}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-      }
-
-      /* — Social links — */
-      setHref('social-github', d.github);
-      setHref('social-linkedin', d.linkedin);
-      setHref('social-email', d.email ? `mailto:${d.email}` : null);
-      setHref('social-twitter', null); // no twitter field in the resume schema — always hide
-      setHref('c-github', d.github);
-      setHref('c-linkedin', d.linkedin);
-      setHref('c-twitter', null); // same as above
-
-      /* — About — */
-      set('about-p1', d.bio);
-      const p2 = document.getElementById('about-p2');
-      if (p2 && d.title) p2.textContent = `Specialising in ${d.title}, I bring passion and precision to every project.`;
-
-            /* — Skills — */
-      if (d.skills && d.skills.length) {
-        const half = Math.ceil(d.skills.length / 2);
-        const primary = d.skills.slice(0, half);
-        const secondary = d.skills.slice(half);
-        const renderPills = (arr) => arr.map(s =>
-          `<span class="skill-pill"><span class="skill-dot"></span>${escapeHtml(s)}</span>`).join('');
-        const sp = document.getElementById('skills-primary');
-        const ss = document.getElementById('skills-secondary');
-        if (sp) sp.innerHTML = renderPills(primary);
-        if (ss) ss.innerHTML = renderPills(secondary);
-      } else {
-        hideSection(document.getElementById('skills'));
-      }
-
-          /* — Education — */
-      if (d.education && d.education.length) {
-        const list = document.getElementById('education-list');
-
-        if (list) {
-          list.innerHTML = d.education.map((edu, i) => `
-            <div class="edu-item">
-                <div class="edu-timeline">
-                    <div class="edu-dot"></div>
-                    ${i < d.education.length - 1 ? '<div class="edu-line"></div>' : ''}
-                </div>
-
-                <div>
-                    <div class="edu-degree">
-                        ${escapeHtml(edu.degree || edu.course || '')}
-                    </div>
-
-                    <div class="edu-school">
-                        ${escapeHtml(edu.institution || edu.school || edu.university || '')}
-                    </div>
-
-                    <div class="edu-year">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                            <rect x="3" y="4" width="18" height="18" rx="2"
-                                  stroke="#9ca3af" stroke-width="1.6"/>
-                            <path d="M16 2v4M8 2v4M3 10h18"
-                                  stroke="#9ca3af"
-                                  stroke-width="1.6"
-                                  stroke-linecap="round"/>
-                        </svg>
-                        ${escapeHtml(edu.year || edu.duration || '')}
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        }
-      } else {
-        hideSection(document.getElementById('education'));
-      }
-      /* — Experience — */
-      if (d.experience && d.experience.length) {
-        const visibleEl = document.getElementById('experience-visible');
-        const extraEl   = document.getElementById('experience-extra');
-        const visible   = d.experience.slice(0, 1);
-        const extra     = d.experience.slice(1);
-        const iconSvg   = (color) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="20" height="14" rx="3" stroke="${color}" stroke-width="1.8"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="${color}" stroke-width="1.8" stroke-linecap="round"/></svg>`;
-        const colors    = ['#06b6d4', '#a78bfa', '#f59e0b', '#22c55e'];
-        const renderExp = (expArr) => expArr.map((exp, i) => `
-          <div class="exp-item">
-            <div class="exp-icon">${iconSvg(colors[i % colors.length])}</div>
-            <div>
-              <div class="exp-role">${escapeHtml(exp.role || '')}</div>
-              <div class="exp-meta">
-                <span class="exp-company">${escapeHtml(exp.company || '')}</span>
-                ${exp.duration ? `<span class="exp-sep">•</span><span class="exp-duration">${escapeHtml(exp.duration)}</span>` : ''}
-              </div>
-              <ul class="exp-bullets">
-                ${(exp.bullets || []).map(b => `<li>${escapeHtml(b)}</li>`).join('')}
-              </ul>
-            </div>
-          </div>`).join('');
-        if (visibleEl) visibleEl.innerHTML = renderExp(visible);
-        if (extraEl) extraEl.innerHTML = extra.length
-          ? `<div class="exp-list" style="margin-top:18px;">${renderExp(extra)}</div>`
-          : '';
-
-        // Hide view-more if no extras
-        const expMoreWrap = document.querySelector('#experience .view-more-wrap');
-        if (expMoreWrap) expMoreWrap.style.display = extra.length ? '' : 'none';
-
-      } else {
-        hideSection(document.getElementById('experience'));
-      }
-
-      /* — Projects — */
-      if (d.projects && d.projects.length) {
-        const thumbClasses = ['t1','t2','t3','t4'];
-        const projSvgs = [
-          `<polyline points="16 18 22 12 16 6" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="8 6 2 12 8 18" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
-          `<rect x="3" y="3" width="18" height="18" rx="3" stroke="#06b6d4" stroke-width="2"/><path d="M9 9h6M9 12h6M9 15h4" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>`,
-          `<circle cx="12" cy="12" r="9" stroke="#a78bfa" stroke-width="2"/><path d="M12 8v4l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`,
-          `<path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round"/>`,
-        ];
-        const renderProj = (arr) => arr.map((p, i) => `
-          <div class="project-card">
-            <div class="project-thumb ${thumbClasses[i % 4]}">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none">${projSvgs[i % 4]}</svg>
-            </div>
-            <div class="project-info">
-              <div class="project-name">${escapeHtml(p.name || 'Project')}</div>
-              <div class="project-tech">${escapeHtml(p.tech || '')}</div>
-              <div class="project-links">
-                ${p.github && p.github !== '#' ? `<a href="${escapeHtml(p.github)}" class="project-link" target="_blank">Code</a>` : ''}
-                ${p.demo   && p.demo   !== '#' ? `<a href="${escapeHtml(p.demo)}"   class="project-link" target="_blank">Live</a>` : ''}
-              </div>
-            </div>
-          </div>`).join('');
-        const pv = document.getElementById('projects-visible');
-        const pe = document.getElementById('projects-extra');
-        if (pv) pv.innerHTML  = renderProj(d.projects.slice(0, 2));
-        if (pe) pe.innerHTML  = d.projects.length > 2
-          ? `<div class="projects-grid" style="margin-top:14px;">${renderProj(d.projects.slice(2))}</div>` : '';
-        const projMoreWrap = document.querySelector('#projects .view-more-wrap');
-        if (projMoreWrap) projMoreWrap.style.display = d.projects.length > 2 ? '' : 'none';
-        } else {
-          hideSection(document.getElementById('projects'));
-        }
-
-            /* — Achievements — */
-      if (d.achievements && d.achievements.length) {
-        const starSvg = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9l-5.27 4.27 1.45 7.73L12 17.77l-5.18 3.23 1.45-7.73L3 9l6.91-.74z" stroke="#f59e0b" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
-        const renderAch = (arr) => arr.map(a => `
-          <div class="achievement-item">
-            <div class="achievement-icon">${starSvg}</div>
-            <div>
-              <div class="achievement-title">${escapeHtml(a.title || '')}</div>
-              <div class="achievement-sub">${escapeHtml(a.sub || '')}</div>
-            </div>
-          </div>`).join('');
-        const av = document.getElementById('achievements-visible');
-        const ae = document.getElementById('achievements-extra');
-        if (av) av.innerHTML = renderAch(d.achievements.slice(0, 3));
-        if (ae) ae.innerHTML = d.achievements.length > 3
-          ? `<div class="achievements-list" style="margin-top:12px;">${renderAch(d.achievements.slice(3))}</div>` : '';
-        const achMoreWrap = document.querySelector('#achievements .view-more-wrap');
-        if (achMoreWrap) achMoreWrap.style.display = d.achievements.length > 3 ? '' : 'none';
-      } else {
-        hideSection(document.getElementById('achievements'));
-      }
-
-      /* — Contact — */
-      const emailLink = document.getElementById('contact-email-link');
-      if (emailLink && d.email) { emailLink.href = `mailto:${d.email}`; }
-      set('contact-email',    d.email);
-      set('contact-phone',    d.phone);
-      const locationWrap = document.getElementById('contact-location-wrap');
-      if (d.location) {
-        set('contact-location', d.location);
-        if (locationWrap) locationWrap.style.display = '';
-      } else if (locationWrap) {
-        locationWrap.style.display = 'none';
-      }
-      set('contact-copyright', `© ${new Date().getFullYear()} ${d.name || 'Your Name'}. All rights reserved.`);
-========
   /* — Contact — */
   setText('cc-phone-val', d.phone);
   setText('cc-location-val', d.location);
@@ -1714,13 +1303,19 @@ function populateFromData(d) {
 ══════════════════════════════════════════════ */
 (function () {
   try {
+    // A Preview link (?preview=1) should always show the template's own sample
+    // content, never a previously generated resume sitting in localStorage.
+    const isPreview = new URLSearchParams(window.location.search).get('preview') === '1';
+    if (isPreview) {
+      console.info('ℹ️ Preview mode — showing template defaults.');
+      return;
+    }
     const raw = localStorage.getItem('portfolioData');
     if (raw) {
       populateFromData(JSON.parse(raw));
       console.log('✅ Portfolio data loaded from localStorage.');
     } else {
       console.info('ℹ️ No portfolioData in localStorage — showing defaults.');
->>>>>>>> origin/main:template1.html
     }
   } catch (e) {
     console.warn('Failed to load portfolio data:', e);

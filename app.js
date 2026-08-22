@@ -296,7 +296,10 @@ function parseResumeClientSide(text) {
 
   // Skills detection: look for lines with comma-separated short items
   const skillKeywords = ['javascript','python','react','node','java','c++','html','css','sql',
-    'typescript','vue','angular','django','flask','aws','docker','git','linux','figma','mongodb'];
+    'typescript','vue','angular','django','flask','aws','docker','git','linux','figma','mongodb',
+    'excel','powerpoint','photoshop','illustrator','seo','google analytics','salesforce',
+    'communication','leadership','project management','public speaking','data analysis',
+    'social media','content writing','copywriting','negotiation','budgeting','accounting'];
   const foundSkills = [];
   text.toLowerCase().split(/[\n,|•·]/g).forEach(chunk => {
     const trimmed = chunk.trim();
@@ -309,7 +312,7 @@ function parseResumeClientSide(text) {
 
   return {
     name:       name,
-    title:      detectTitle(text) || 'Software Engineer',
+    title:      detectTitle(text) || 'Professional',
     bio:        detectBio(lines),
     email:      emailMatch   ? emailMatch[0]   : 'your@email.com',
     phone:      phoneMatch   ? phoneMatch[0]   : '+91 00000 00000',
@@ -326,8 +329,14 @@ function parseResumeClientSide(text) {
 
 function detectTitle(text) {
   const titles = ['software engineer','frontend developer','backend developer','full stack',
-    'data scientist','ml engineer','devops','product manager','ui/ux designer','web developer',
-    'mobile developer','android developer','ios developer','cloud engineer'];
+    'data scientist','ml engineer','devops','product manager','project manager','ui/ux designer','web developer',
+    'mobile developer','android developer','ios developer','cloud engineer',
+    'marketing specialist','marketing manager','digital marketer','content writer','content strategist',
+    'financial analyst','accountant','business analyst','operations manager','hr manager',
+    'human resources','sales executive','sales manager','graphic designer','brand designer',
+    'teacher','educator','research assistant','research analyst','journalist','consultant',
+    'nurse','physician assistant','architect','civil engineer','mechanical engineer','electrical engineer',
+    'legal associate','paralegal','social media manager','customer success manager'];
   const lower = text.toLowerCase();
   return titles.find(t => lower.includes(t)) ? capitalize(titles.find(t => lower.includes(t))) : null;
 }
@@ -370,22 +379,69 @@ function detectExperience(text) {
 }
 
 function detectProjects(text) {
-  const projSection = text.match(/projects?([\s\S]{0,2000}?)(?:experience|education|skills|achievements|$)/i);
-  if (!projSection) return [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
-  const lines = projSection[1].split('\n').map(l => l.trim()).filter(l => l.length > 3);
-  const projects = [];
-  const limit = Math.min(lines.length, 6);
-  let i = 0;
-  while (i < limit && projects.length < 3) {
-    if (lines[i].length > 3 && lines[i].length < 60) {
-      const tech = lines[i + 1] || 'Tech Stack';
-      projects.push({ name: lines[i], tech, github: '#', demo: '#' });
-      i += 2; // skip the line we just used as "tech" so it isn't reused as the next project's name
+  const projSection = text.match(/projects?([\s\S]{0,3000}?)(?:experience|education|skills|achievements|$)/i);
+  if (!projSection) return [{ name: 'Project Title', tech: 'Tech Stack', bullets: [], github: '#', demo: '#' }];
+
+  const rawLines = projSection[1].split('\n').map(l => l.trim()).filter(Boolean);
+  const bulletRe = /^[•\-*▪◦]\s*/;
+  const numberedTitleRe = /^(\d+)[.)]\s*(.+)/;
+  const techLineRe = /^(tech|stack|technologies|tools)\s*:\s*(.+)/i;
+
+  // Prefer numbered markers ("1. Project Name") to split projects when present —
+  // they're unambiguous, unlike guessing from line length/casing.
+  const hasNumberedTitles = rawLines.some(l => numberedTitleRe.test(l));
+
+  const blocks = [];
+  let current = null;
+
+  rawLines.forEach(line => {
+    const numMatch  = line.match(numberedTitleRe);
+    const isBullet  = bulletRe.test(line);
+    const clean     = line.replace(bulletRe, '').trim();
+    const techMatch = clean.match(techLineRe);
+
+    let isNewTitle = false;
+    if (hasNumberedTitles) {
+      isNewTitle = !!numMatch;
     } else {
-      i += 1;
+      // No numbering to rely on: a title line is short, isn't a bullet/tech line,
+      // and doesn't look like the wrapped continuation of a previous sentence
+      // (continuations tend to start lowercase or with a connector word, or the
+      // previous line ended mid-sentence).
+      const looksLikeContinuation = /^(and|with|for|the|to|a|an|of|in|on)\b/i.test(clean) || /^[a-z]/.test(clean);
+      isNewTitle = !isBullet && !techMatch && !looksLikeContinuation &&
+        clean.length > 0 && clean.length < 70 && !/[.,;]$/.test(clean);
     }
-  }
-  return projects.length ? projects : [{ name: 'Project Title', tech: 'Tech Stack', github: '#', demo: '#' }];
+
+    if (isNewTitle) {
+      current = { name: numMatch ? numMatch[2].trim() : clean, descParts: [], tech: '' };
+      blocks.push(current);
+      return;
+    }
+
+    if (!current) return; // ignore any preamble before the first detected title
+
+    if (techMatch) {
+      current.tech = techMatch[2].trim();
+    } else {
+      // Bullet points and wrapped continuation lines both become part of the
+      // project's description — never treated as a separate project or as "tech".
+      current.descParts.push(clean);
+    }
+  });
+
+  const projects = blocks.slice(0, 3).map(b => {
+    const description = b.descParts.join(' ').replace(/\s+/g, ' ').trim();
+    return {
+      name: b.name || 'Project',
+      tech: b.tech || '',
+      bullets: description ? [description] : [],
+      github: '#',
+      demo: '#'
+    };
+  });
+
+  return projects.length ? projects : [{ name: 'Project Title', tech: 'Tech Stack', bullets: [], github: '#', demo: '#' }];
 }
 
 function detectAchievements(text) {
