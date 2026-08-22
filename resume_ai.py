@@ -22,11 +22,6 @@ client = genai.Client(api_key=API_KEY)
 
 MODEL_NAME = "gemini-3.5-flash"
 
-
-# ---------------------------------------------------------------------
-# Text extraction (txt / pdf / docx)
-# ---------------------------------------------------------------------
-
 def read_resume(filepath: str) -> str:
     """Read + validate a local resume.txt (used by the CLI)."""
     try:
@@ -109,15 +104,6 @@ def _validate(content: str) -> str:
     return cleaned
 
 
-# ---------------------------------------------------------------------
-# Gemini extraction
-# ---------------------------------------------------------------------
-
-# NOTE: this schema is intentionally flat and matches the field names
-# template1.html's populateFromData() actually reads (title/bio/email
-# at top level, education[].school, experience[].bullets,
-# projects[].name/tech/description, achievements[].title/sub).
-
 class EducationItem(BaseModel):
     degree: str = ""
     school: str = ""
@@ -159,15 +145,6 @@ class ResumeData(BaseModel):
     projects: list[ProjectItem] = []
     achievements: list[AchievementItem] = []
 
-
-# A single worked example is included directly in the prompt because the
-# model was previously chopping numbered/comma-separated resume lines
-# (e.g. "1. Student Management System: manage records, attendance and
-# grades. 2. Personal Portfolio Website") into the wrong fields —
-# splitting mid-sentence at commas/periods and scattering fragments
-# across separate project or education entries. The example below shows
-# exactly how a numbered list and a multi-line education block should
-# collapse into clean, complete entries.
 PROMPT_TEMPLATE = """You are a resume parser and professional profile generator.
 
 Convert the resume text below into a JSON object matching the given schema.
@@ -289,6 +266,7 @@ def _strip_code_fences(text: str) -> str:
 
 
 _LEADING_ENUM_RE = re.compile(r"^\s*(?:\d+[.)]|[-•*])\s+")
+_LEADING_CONJUNCTION_RE = re.compile(r"^(and|or|but|with|the|a|an)\s", re.IGNORECASE)
 
 
 def _clean_label(value: str) -> str:
@@ -301,13 +279,31 @@ def _clean_label(value: str) -> str:
 
 
 def _is_degenerate(value: str) -> bool:
-    """Flag obviously-broken fragments: empty, or a lone character/number."""
+    """Flag obviously-broken fragments: empty, a lone character/number, or
+    a sentence-tail that leaked from the previous item (e.g. "and grades.",
+    starts with a lowercase conjunction/article)."""
     if not value:
         return False
     stripped = value.strip()
     if len(stripped) <= 2:
         return True
+    if _LEADING_CONJUNCTION_RE.match(stripped):
+        return True
     return False
+
+
+def _clean_tech(value: str) -> str:
+    """"tech" should be a short comma-separated list of tool/technology
+    names. If it instead looks like a sentence fragment (long segments,
+    stray periods) that leaked in from a description, discard it rather
+    than render garbled badges on the portfolio."""
+    if not isinstance(value, str) or not value.strip():
+        return ""
+    segments = [s.strip() for s in re.split(r"[,/·]", value) if s.strip()]
+    for seg in segments:
+        if "." in seg or len(seg.split()) > 4:
+            return ""
+    return ", ".join(segments)
 
 
 def _clean_resume_data(data: dict) -> dict:
@@ -316,6 +312,7 @@ def _clean_resume_data(data: dict) -> dict:
     single bad split doesn't render as a garbled card on the portfolio."""
     for proj in data.get("projects", []) or []:
         proj["name"] = _clean_label(proj.get("name", ""))
+        proj["tech"] = _clean_tech(proj.get("tech", ""))
     data["projects"] = [
         p for p in (data.get("projects") or [])
         if not _is_degenerate(p.get("name", ""))

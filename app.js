@@ -430,16 +430,26 @@ function detectProjects(text) {
     }
   });
 
-  const projects = blocks.slice(0, 3).map(b => {
-    const description = b.descParts.join(' ').replace(/\s+/g, ' ').trim();
-    return {
-      name: b.name || 'Project',
-      tech: b.tech || '',
-      bullets: description ? [description] : [],
-      github: '#',
-      demo: '#'
-    };
-  });
+  // Drop obviously-broken fragments (e.g. a sentence-tail like "and grades."
+  // that leaked from the previous item) rather than rendering them as a project.
+  const looksDegenerate = (name) => {
+    const n = (name || '').trim();
+    return n.length <= 2 || /^(and|or|but|with|the|a|an)\s/i.test(n);
+  };
+
+  const projects = blocks
+    .filter(b => !looksDegenerate(b.name))
+    .slice(0, 3)
+    .map(b => {
+      const description = b.descParts.join(' ').replace(/\s+/g, ' ').trim();
+      return {
+        name: (b.name || 'Project').replace(/^\s*(?:\d+[.)]|[-\u2022*])\s+/, '').trim(),
+        tech: b.tech || '',
+        bullets: description ? [description] : [],
+        github: '#',
+        demo: '#'
+      };
+    });
 
   return projects.length ? projects : [{ name: 'Project Title', tech: 'Tech Stack', bullets: [], github: '#', demo: '#' }];
 }
